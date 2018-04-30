@@ -5,100 +5,60 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class ClientProxy implements Runnable
-{
+public class ClientProxy implements Runnable {
+	
 	private Socket socket;
 	private Server server;
-
 	private String nickname;
-
-	private ObjectInputStream in = null;
-	private ObjectOutputStream out = null;
-
+	private ObjectInputStream in;
+	private ObjectOutputStream out;
 	private Thread t;
 
-	public ClientProxy() // Konstruktor, um Thread zu starten
-	{
-	}
-
-	public ClientProxy(Socket socket, Server server)
-	{
+	public ClientProxy(Socket socket, Server server) {
 		this.socket = socket;
 		this.server = server;
-
-		t = new Thread(new ClientProxy());
-		t.start(); // Starte Lesen-Thread
+		t = new Thread(this);
+		t.start();
 	}
 
 	@Override
-	public void run()
-	{
-		while (t.isInterrupted() == false)
-		{
-			if (in == null)
-			{
-				in = new ObjectInputStream(socket.getInputStream());
+	public void run() {
+		while (!t.isInterrupted()) {
+			try {
+				if (in == null) {
+					in = new ObjectInputStream(socket.getInputStream());
+				}
+				String request = in.readUTF();
+				
+				//only for debugging
+				System.out.println(request);
+			} catch (IOException e) {
+				System.out.println("Failed reading request!");
+				e.printStackTrace();
 			}
-		
-			String message = in.readUTF();
 		}
 	}
 
-
-
-	protected void sendMessage(String message)
-	{
-		if (out == null)
-		{
-			out = new ObjectOutputStream(socket.getOutputStream());
-		}
-
-		out.writeUTF(message);
-	}
-
-	protected void closeClient()
-	{
-		try
-		{
-			// Protokoll
-			t.interrupt();
-			out.close();
-			socket.close();
-		}
-		catch (IOException e)
-		{
+	protected void sendMessage(String message) {
+		try {
+			if (out == null) {
+				out = new ObjectOutputStream(socket.getOutputStream());
+			}
+			out.writeUTF(message);
+		} catch (IOException e) {
+			System.out.println("Failed sending response!");
 			e.printStackTrace();
 		}
 	}
-	
-	public Socket getSocket()
-	{
-		return socket;
-	}
 
-	public void setSocket(Socket socket)
-	{
-		this.socket = socket;
+	protected void closeClient() {
+		try {
+			t.interrupt();
+			out.close();
+			socket.close();
+		} catch (IOException e) {
+			System.out.println("Failed closing client!");
+			e.printStackTrace();
+		}
 	}
-
-	public Server getServer()
-	{
-		return server;
-	}
-
-	public void setServer(Server server)
-	{
-		this.server = server;
-	}
-
-	public String getNickname()
-	{
-		return nickname;
-	}
-
-	public void setNickname(String nickname)
-	{
-		this.nickname = nickname;
-	}
-
 }
