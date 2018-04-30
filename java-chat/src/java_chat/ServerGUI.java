@@ -31,6 +31,8 @@ public class ServerGUI extends JFrame
 	private JLabel lblMembers;
 	private JList list_log;
 	private JList list_Members;
+	private JList listLog;
+	private JList listMember;
 
 	/**
 	 * Launch the application.
@@ -80,6 +82,8 @@ public class ServerGUI extends JFrame
 		contentPane.add(getLblMembers());
 		contentPane.add(getList());
 		contentPane.add(getList_1());
+		contentPane.add(getListLog());
+		contentPane.add(getListMember());
 	}
 	
 	private void startServer()
@@ -158,18 +162,19 @@ public class ServerGUI extends JFrame
 		}
 		return lblMembers;
 	}
-	private JList getList() {
-		if (list == null) {
-			list = new JList();
-			list.setBounds(25, 106, 287, 120);
+	
+	private JList getListLog() {
+		if (listLog == null) {
+			listLog = new JList();
+			listLog.setBounds(22, 96, 355, 135);
 		}
-		return list;
+		return listLog;
 	}
-	private JList getList_1() {
-		if (list_1 == null) {
-			list_1 = new JList();
-			list_1.setBounds(402, 59, 122, 171);
+	private JList getListMember() {
+		if (listMember == null) {
+			listMember = new JList();
+			listMember.setBounds(403, 59, 110, 172);
 		}
-		return list_1;
+		return listMember;
 	}
 }
