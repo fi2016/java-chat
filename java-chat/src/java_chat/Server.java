@@ -49,8 +49,7 @@ public class Server implements Runnable
 		{
 			for (ClientProxy clientProxy : clientList)
 			{
-				clientProxy.closeClient();
-				clientList.remove(clientProxy);
+				closeClient(clientProxy);
 			}
 			clientList = null;
 			
@@ -81,13 +80,12 @@ public class Server implements Runnable
 		}
 	}
 	
-	public void beendeVerbindung(ClientProxy client)
+	public void closeClient(ClientProxy client)
 	{
 		
 		client.closeClient();
 		distributeMessage(client.getNickname() + "hat sich abgemeldet!");
 		clientList.remove(client);
-		
 	}
 	
 	@Override
