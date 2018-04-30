@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
 
 public class Client implements Runnable
 {
-//	private ClientGUI client;
+	private ClientGUI client;
 	private Socket socket;
 	private ObjectOutputStream out;
 	private String nickname;
@@ -65,12 +65,18 @@ public class Client implements Runnable
 	
 	private void closeClient()
 	{
+		
 		//not finished
 	}
 	
-	private void read()
+	private void read() throws IOException
 	{
-		//kopieren von mikolai/jörg
+		String message = null;
+		if (out == null) 
+		{
+			out = new ObjectOutputStream(socket.getOutputStream());
+		}
+		out.writeUTF(message);
 		//not finished
 	}
 	
