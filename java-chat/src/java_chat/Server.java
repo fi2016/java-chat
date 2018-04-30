@@ -55,7 +55,7 @@ public class Server implements Runnable
 			Thread.currentThread().interrupt();
 			
 			//DummyConnect um Socket zu schlieﬂen
-			Socket dummySocket = new Socket(ip, 8008);
+			Socket dummySocket = new Socket(ip, port);
 			dummySocket.close();
 			serverSocket.close();
 		} catch (UnknownHostException e)
@@ -107,9 +107,7 @@ public class Server implements Runnable
 			}
 			catch (IOException e)
 			{
-				System.err.println("Exception beim Listen auf Port: " + port);
-	
-				System.err.println(e.getMessage());
+				System.err.println("IOException " + e);
 				
 			} catch (InterruptedException e)
 			{
