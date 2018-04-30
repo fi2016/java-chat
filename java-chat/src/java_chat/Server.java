@@ -128,7 +128,7 @@ public class Server implements Runnable
 		Socket clientSocket = serverSocket.accept();
 		if(clientList != null)
 		{
-			clientList.add(new ClientProxy(this,clientSocket));
+			clientList.add(new ClientProxy(clientSocket,this));
 		}
 	}
 	
