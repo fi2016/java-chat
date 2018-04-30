@@ -29,6 +29,7 @@ public class ServerGUI extends JFrame
 	private JButton btnStop;
 	private Server server;
 	private JLabel lblMembers;
+	private InetAddress host;
 	private JList<String> listLog = new JList<String>();
 	private JList<Client> listMember = new JList<Client>();
 
@@ -63,6 +64,15 @@ public class ServerGUI extends JFrame
 		setTitle("Server");
 		initialize();
 		server = new Server();
+		try
+		{
+			host.getLocalHost();
+		}
+		catch (UnknownHostException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void initialize()
@@ -86,16 +96,6 @@ public class ServerGUI extends JFrame
 
 	private void startServer()
 	{
-		InetAddress host = null;
-		try
-		{
-			host.getLocalHost();
-			//
-		}
-		catch (UnknownHostException e)
-		{
-			System.out.println();
-		}
 		server.startServer(this, Integer.valueOf(txtPort.getText()), "localhost");
 		button_Start.setEnabled(false);
 		btnStop.setEnabled(true);
@@ -104,15 +104,6 @@ public class ServerGUI extends JFrame
 
 	private void closeServer()
 	{
-		InetAddress host = null;
-		try
-		{
-			host.getLocalHost();
-		}
-		catch (UnknownHostException e)
-		{
-			System.out.println();
-		}
 		server.closeServer();
 		button_Start.setEnabled(true);
 		btnStop.setEnabled(false);
@@ -168,6 +159,7 @@ public class ServerGUI extends JFrame
 		if (btnStop == null)
 		{
 			btnStop = new JButton("Stop");
+			btnStop.setEnabled(false);
 			btnStop.setBackground(new Color(192, 192, 192));
 			btnStop.addActionListener(e -> closeServer());
 			btnStop.setBounds(166, 39, 66, 30);
