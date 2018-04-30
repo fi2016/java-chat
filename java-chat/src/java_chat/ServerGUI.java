@@ -29,10 +29,8 @@ public class ServerGUI extends JFrame
 	private JButton btnStop;
 	private Server server;
 	private JLabel lblMembers;
-	private JList list_log;
-	private JList list_Members;
-	private JList listLog;
-	private JList listMember;
+	private JList<Client> listLog = new JList<Client>();
+	private JList<Client> listMember = new JList<Cient>();
 
 	/**
 	 * Launch the application.
@@ -80,8 +78,6 @@ public class ServerGUI extends JFrame
 		contentPane.add(getLblPortname());
 		contentPane.add(getBtnStop());
 		contentPane.add(getLblMembers());
-		contentPane.add(getList());
-		contentPane.add(getList_1());
 		contentPane.add(getListLog());
 		contentPane.add(getListMember());
 	}
@@ -95,8 +91,7 @@ public class ServerGUI extends JFrame
 		}
 		catch (UnknownHostException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println();
 		}
 		server.startServer(this,Integer.valueOf(txtPort.getText()),"localhost");
 		button_Start.setEnabled(false);
@@ -104,12 +99,21 @@ public class ServerGUI extends JFrame
 		lbl_Message.setText("Server running on " + host + "/" +txtPort.getText());
 	}
 	
-	private void closeServer() throws UnknownHostException
-	{
+	private void closeServer()
+	{	
+		InetAddress host = null;
+		try
+		{
+			host.getLocalHost();
+		}
+		catch (UnknownHostException e)
+		{
+			System.out.println();
+		}
 		server.closeServer();
 		button_Start.setEnabled(true);
 		btnStop.setEnabled(false);
-		lbl_Message.setText("Server on " + InetAddress.getLocalHost() + "/" +txtPort.getText() + " closed.");
+		lbl_Message.setText("Server on " + host + "/" +txtPort.getText() + " closed.");
 	}
 	
 	private JLabel getLbl_Message() {
@@ -149,7 +153,7 @@ public class ServerGUI extends JFrame
 		if (btnStop == null) {
 			btnStop = new JButton("Stop");
 			btnStop.setBackground(new Color(192, 192, 192));
-			btnStop.addActionListener(e->closeServer());
+			btnStop.addActionListener(e-> closeServer());
 			btnStop.setBounds(166, 39, 66, 30);
 		}
 		return btnStop;
@@ -165,14 +169,14 @@ public class ServerGUI extends JFrame
 	
 	private JList getListLog() {
 		if (listLog == null) {
-			listLog = new JList();
+			listLog = new JList<Client>();
 			listLog.setBounds(22, 96, 355, 135);
 		}
 		return listLog;
 	}
 	private JList getListMember() {
 		if (listMember == null) {
-			listMember = new JList();
+			listMember = new JList<Client>();
 			listMember.setBounds(403, 59, 110, 172);
 		}
 		return listMember;
