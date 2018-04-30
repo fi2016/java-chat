@@ -78,7 +78,7 @@ public class ServerGUI extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 325);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(112, 128, 144));
+		contentPane.setBackground(Color.GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -181,6 +181,7 @@ public class ServerGUI extends JFrame
 		if (listLog == null)
 		{
 			listLog = new JList<String>();
+			listLog.setForeground(Color.WHITE);
 			listLog.setBounds(22, 96, 355, 135);
 		}
 		return listLog;
@@ -191,6 +192,7 @@ public class ServerGUI extends JFrame
 		if (listMember == null)
 		{
 			listMember = new JList<Client>();
+			listMember.setForeground(Color.WHITE);
 			listMember.setBounds(403, 59, 110, 172);
 		}
 		return listMember;
