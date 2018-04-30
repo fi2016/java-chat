@@ -44,6 +44,8 @@ public class ClientProxy implements Runnable
 		}
 	}
 
+
+
 	protected void sendMessage(String message)
 	{
 		if (out == null)
@@ -68,4 +70,35 @@ public class ClientProxy implements Runnable
 			e.printStackTrace();
 		}
 	}
+	
+	public Socket getSocket()
+	{
+		return socket;
+	}
+
+	public void setSocket(Socket socket)
+	{
+		this.socket = socket;
+	}
+
+	public Server getServer()
+	{
+		return server;
+	}
+
+	public void setServer(Server server)
+	{
+		this.server = server;
+	}
+
+	public String getNickname()
+	{
+		return nickname;
+	}
+
+	public void setNickname(String nickname)
+	{
+		this.nickname = nickname;
+	}
+
 }
