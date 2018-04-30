@@ -54,7 +54,7 @@ public class ServerGUI extends JFrame
 			}
 		});
 	}
-	//Kommentar
+	//Kommenta
 	/**
 	 * Create the frame.
 	 */
