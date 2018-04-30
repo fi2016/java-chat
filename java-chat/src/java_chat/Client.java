@@ -21,8 +21,6 @@ public class Client implements Runnable
 		t.setName("ClientReadingThread");
 		t.start();
 		
-		connectServer("/*Hostname*/");
-		
 	}
 	
 	private void connectServer(String server) throws UnknownHostException, IOException
