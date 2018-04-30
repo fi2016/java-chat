@@ -15,6 +15,10 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class ClientGUI extends JFrame
@@ -27,13 +31,14 @@ public class ClientGUI extends JFrame
 	private JPanel contentPane;
 	private JLabel lblServer;
 	private JLabel lblNickname;
-	private JTextField textFieldNickname;
+	protected JTextField textFieldNickname;
 	private JButton btnConnect;
 	private JButton btnDisconnect;
-	private JTextField textFieldMessage;
+	protected JTextField textFieldMessage;
 	private JButton btnSend;
-	private JList listChatroom;
-	private JComboBox comboBoxServerIDs;
+	protected JList listChatroom;
+	protected JComboBox comboBoxServerIDs;
+	protected Socket clientSocket;
 
 	/**
 	 * Launch the application.
@@ -58,7 +63,28 @@ public class ClientGUI extends JFrame
 	
 	protected void connectClient()
 	{
+		Object aktuell = comboBoxServerIDs.getSelectedItem();
 		
+		String hostName = (String)aktuell;
+		
+		
+		int portNumber = 8008;
+		
+		try
+				   
+		{
+			clientSocket = new Socket(hostName, portNumber);
+		}
+		catch (UnknownHostException e)  
+		{ 
+			System.err.println("Der Host " + hostName +" ist unbekannt"); 
+			System.exit(1); 
+		}  
+		catch (IOException e)  
+		{ 
+			System.err.println("Bekomme keine I/O für die Verbindung zu " + hostName); 
+			System.exit(1); 
+		}
 	}
 	
 	protected void closeClient()
@@ -80,6 +106,46 @@ public class ClientGUI extends JFrame
 	{
 		
 	}
+	
+	protected void serverListeAbrufen()
+	{
+		
+		String Daniel = "172.16.102.2";
+		comboBoxServerIDs.addItem(Daniel);
+		
+		String Stefan = "172.16.102.3";
+		comboBoxServerIDs.addItem(Stefan);
+		
+		String Thomas = "172.16.102.4";
+		comboBoxServerIDs.addItem(Thomas);
+		
+		String Garry = "172.16.102.5";
+		comboBoxServerIDs.addItem(Garry);
+		
+		String HerrGeis = "172.16.102.6";
+		comboBoxServerIDs.addItem(HerrGeis);
+		
+		String Lukas = "172.16.102.9";
+		comboBoxServerIDs.addItem(Lukas);
+		
+		String Frank = "172.16.102.8";
+		comboBoxServerIDs.addItem(Frank);
+		
+		String Marc = "172.16.102.7";
+		comboBoxServerIDs.addItem(Marc);
+		
+		String Sebastian = "172.16.102.14";
+		comboBoxServerIDs.addItem(Sebastian);
+		
+		String Lars = "172.16.102.15";
+		comboBoxServerIDs.addItem(Lars);
+		
+		String HerrWolf = "172.16.102.1";
+		comboBoxServerIDs.addItem(HerrWolf);
+		
+		
+		
+	}
 
 	/**
 	 * Create the frame.
@@ -87,6 +153,8 @@ public class ClientGUI extends JFrame
 	public ClientGUI()
 	{
 		initialize();
+		
+		serverListeAbrufen();
 	}
 	private void initialize() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
