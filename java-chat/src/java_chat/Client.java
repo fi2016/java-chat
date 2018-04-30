@@ -23,7 +23,7 @@ public class Client implements Runnable
 		
 	}
 	
-	private void connectServer(String server) throws UnknownHostException, IOException
+	protected void connectServer(String server) throws UnknownHostException, IOException
 	{
 		socket = new Socket(server, 8008);
 		//not finished
