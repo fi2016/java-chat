@@ -1,8 +1,6 @@
 package java_chat;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,17 +8,18 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JList;
 
 public class ServerGUI extends JFrame
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lbl_Message;
 	private JButton button_Start;
@@ -70,8 +69,7 @@ public class ServerGUI extends JFrame
 		}
 		catch (UnknownHostException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			lbl_Message.setText("Localhost was not found");
 		}
 	}
 
@@ -178,7 +176,7 @@ public class ServerGUI extends JFrame
 		return lblMembers;
 	}
 
-	private JList getListLog()
+	private JList<String> getListLog()
 	{
 		if (listLog == null)
 		{
@@ -188,7 +186,7 @@ public class ServerGUI extends JFrame
 		return listLog;
 	}
 
-	private JList getListMember()
+	private JList<Client> getListMember()
 	{
 		if (listMember == null)
 		{
