@@ -98,7 +98,6 @@ public class Server implements Runnable
 			{
 				serverSocket = new ServerSocket(Integer.valueOf(port));
 
-				//Wartet auf eine Verbindung
 				acceptClient();
 				
 				Thread.sleep(100);
