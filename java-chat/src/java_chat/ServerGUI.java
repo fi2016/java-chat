@@ -79,10 +79,9 @@ public class ServerGUI extends JFrame
 		contentPane.add(getLblPortname());
 		contentPane.add(getBtnStop());
 		contentPane.add(getLblMembers());
-		contentPane.add(getList());
-		contentPane.add(getList_1());
-		contentPane.add(getList_2());
-		contentPane.add(getList_3());
+		contentPane.add(getListLog());
+		contentPane.add(getListMember());
+
 	}
 	
 	private void startServer()
