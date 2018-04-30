@@ -64,7 +64,9 @@ public class ServerGUI extends JFrame
 		initialize();
 		server = new Server();
 	}
-	private void initialize() {
+
+	private void initialize()
+	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 325);
 		contentPane = new JPanel();
@@ -81,7 +83,7 @@ public class ServerGUI extends JFrame
 		contentPane.add(getListLog());
 		contentPane.add(getListMember());
 	}
-	
+
 	private void startServer()
 	{
 		InetAddress host = null;
@@ -94,14 +96,14 @@ public class ServerGUI extends JFrame
 		{
 			System.out.println();
 		}
-		server.startServer(this,Integer.valueOf(txtPort.getText()),"localhost");
+		server.startServer(this, Integer.valueOf(txtPort.getText()), "localhost");
 		button_Start.setEnabled(false);
 		btnStop.setEnabled(true);
-		lbl_Message.setText("Server running on " + host + "/" +txtPort.getText());
+		lbl_Message.setText("Server running on " + host + "/" + txtPort.getText());
 	}
-	
+
 	private void closeServer()
-	{	
+	{
 		InetAddress host = null;
 		try
 		{
@@ -114,18 +116,23 @@ public class ServerGUI extends JFrame
 		server.closeServer();
 		button_Start.setEnabled(true);
 		btnStop.setEnabled(false);
-		lbl_Message.setText("Server on " + host + "/" +txtPort.getText() + " closed.");
+		lbl_Message.setText("Server on " + host + "/" + txtPort.getText() + " closed.");
 	}
-	
-	private JLabel getLbl_Message() {
-		if (lbl_Message == null) {
+
+	private JLabel getLbl_Message()
+	{
+		if (lbl_Message == null)
+		{
 			lbl_Message = new JLabel("0.0.0.0");
 			lbl_Message.setBounds(25, 226, 287, 50);
 		}
 		return lbl_Message;
 	}
-	private JButton getButton_Start() {
-		if (button_Start == null) {
+
+	private JButton getButton_Start()
+	{
+		if (button_Start == null)
+		{
 			button_Start = new JButton("Start");
 			button_Start.addActionListener(e -> startServer());
 			button_Start.setBounds(90, 39, 66, 30);
@@ -133,8 +140,10 @@ public class ServerGUI extends JFrame
 		return button_Start;
 	}
 
-	private JTextField getTxtPort() {
-		if (txtPort == null) {
+	private JTextField getTxtPort()
+	{
+		if (txtPort == null)
+		{
 			txtPort = new JTextField();
 			txtPort.setText("8008");
 			txtPort.setColumns(10);
@@ -142,41 +151,55 @@ public class ServerGUI extends JFrame
 		}
 		return txtPort;
 	}
-	private JLabel getLblPortname() {
-		if (lblPortname == null) {
+
+	private JLabel getLblPortname()
+	{
+		if (lblPortname == null)
+		{
 			lblPortname = new JLabel("Portnr.");
 			lblPortname.setFont(new Font("Tahoma", Font.BOLD, 18));
 			lblPortname.setBounds(25, 11, 78, 22);
 		}
 		return lblPortname;
 	}
-	private JButton getBtnStop() {
-		if (btnStop == null) {
+
+	private JButton getBtnStop()
+	{
+		if (btnStop == null)
+		{
 			btnStop = new JButton("Stop");
 			btnStop.setBackground(new Color(192, 192, 192));
-			btnStop.addActionListener(e-> closeServer());
+			btnStop.addActionListener(e -> closeServer());
 			btnStop.setBounds(166, 39, 66, 30);
 		}
 		return btnStop;
 	}
-	private JLabel getLblMembers() {
-		if (lblMembers == null) {
+
+	private JLabel getLblMembers()
+	{
+		if (lblMembers == null)
+		{
 			lblMembers = new JLabel("Members");
 			lblMembers.setFont(new Font("Tahoma", Font.BOLD, 18));
 			lblMembers.setBounds(414, 18, 110, 30);
 		}
 		return lblMembers;
 	}
-	
-	private JList getListLog() {
-		if (listLog == null) {
+
+	private JList getListLog()
+	{
+		if (listLog == null)
+		{
 			listLog = new JList<Client>();
 			listLog.setBounds(22, 96, 355, 135);
 		}
 		return listLog;
 	}
-	private JList getListMember() {
-		if (listMember == null) {
+
+	private JList getListMember()
+	{
+		if (listMember == null)
+		{
 			listMember = new JList<Client>();
 			listMember.setBounds(403, 59, 110, 172);
 		}
