@@ -66,7 +66,7 @@ public class ServerGUI extends JFrame
 		server = new Server();
 		try
 		{
-			host.getLocalHost();
+			host = InetAddress.getLocalHost();
 		}
 		catch (UnknownHostException e)
 		{
