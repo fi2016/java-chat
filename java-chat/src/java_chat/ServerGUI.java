@@ -104,6 +104,7 @@ public class ServerGUI extends JFrame
 
 	private void closeServer()
 	{
+		//Kommentieren
 		InetAddress host = null;
 		try
 		{
