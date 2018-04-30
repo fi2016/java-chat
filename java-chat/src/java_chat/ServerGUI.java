@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JList;
@@ -83,15 +84,25 @@ public class ServerGUI extends JFrame
 	
 	private void startServer()
 	{
-		server.startServer(Integer.valueOf(txtPort.getText()));
+		InetAddress host = null;
+		try
+		{
+			host.getLocalHost();
+		}
+		catch (UnknownHostException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		server.startServer(this,Integer.valueOf(txtPort.getText()),"localhost");
 		button_Start.setEnabled(false);
 		btnStop.setEnabled(true);
-		lbl_Message.setText("Server running on " + InetAddress.getLocalHost() + "/" +txtPort.getText());
+		lbl_Message.setText("Server running on " + host + "/" +txtPort.getText());
 	}
 	
-	private void closeServer()
+	private void closeServer() throws UnknownHostException
 	{
-		server.closeServer(Integer.valueOf(txtPort.getText()));
+		server.closeServer();
 		button_Start.setEnabled(true);
 		btnStop.setEnabled(false);
 		lbl_Message.setText("Server on " + InetAddress.getLocalHost() + "/" +txtPort.getText() + " closed.");
