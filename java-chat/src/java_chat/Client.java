@@ -57,6 +57,10 @@ public class Client implements Runnable
 			catch (NullPointerException e)
 			{
 				
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		
