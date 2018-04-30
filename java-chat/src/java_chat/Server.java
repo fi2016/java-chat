@@ -21,7 +21,6 @@ public class Server implements Runnable
 
 	public Server()
 	{
-		
 		clientList = new ArrayList<ClientProxy>();
 	}
 	
