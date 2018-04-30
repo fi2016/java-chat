@@ -33,6 +33,7 @@ public class ServerGUI extends JFrame
 	private JList listLog;
 	private JList listMember;
 
+	//Kommentar
 	/**
 	 * Launch the application.
 	 */
