@@ -28,7 +28,7 @@ public class ServerGUI extends JFrame
 	private JButton btnStop;
 	private Server server;
 	private JLabel lblMembers;
-	private JList list;
+	private JList list_log;
 	private JList list_Members;
 
 	/**
