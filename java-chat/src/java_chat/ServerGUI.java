@@ -88,6 +88,7 @@ public class ServerGUI extends JFrame
 		try
 		{
 			host.getLocalHost();
+			//
 		}
 		catch (UnknownHostException e)
 		{
