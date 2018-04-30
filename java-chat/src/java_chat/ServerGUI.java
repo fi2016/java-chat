@@ -29,7 +29,7 @@ public class ServerGUI extends JFrame
 	private Server server;
 	private JLabel lblMembers;
 	private JList list;
-	private JList list_1;
+	private JList list_Members;
 
 	/**
 	 * Launch the application.
