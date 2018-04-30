@@ -29,8 +29,8 @@ public class ServerGUI extends JFrame
 	private JButton btnStop;
 	private Server server;
 	private JLabel lblMembers;
-	private JList<Client> listLog = new JList<Client>();
-	private JList<Client> listMember = new JList<Cient>();
+	private JList<String> listLog = new JList<String>();
+	private JList<Client> listMember = new JList<Client>();
 
 	/**
 	 * Launch the application.
@@ -104,7 +104,6 @@ public class ServerGUI extends JFrame
 
 	private void closeServer()
 	{
-		//Kommentiere
 		InetAddress host = null;
 		try
 		{
@@ -191,7 +190,7 @@ public class ServerGUI extends JFrame
 	{
 		if (listLog == null)
 		{
-			listLog = new JList<Client>();
+			listLog = new JList<String>();
 			listLog.setBounds(22, 96, 355, 135);
 		}
 		return listLog;
