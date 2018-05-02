@@ -30,6 +30,4 @@ public class Admintool extends Client
 	}
 	
 	
-
-	
 }
