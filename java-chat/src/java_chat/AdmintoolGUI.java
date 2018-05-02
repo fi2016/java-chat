@@ -115,7 +115,7 @@ public class AdmintoolGUI extends JFrame
 	private JButton getBtnKicken() {
 		if (btnKicken == null) {
 			btnKicken = new JButton("Kicken");
-			btnKicken.setBounds(361, 41, 89, 23);
+			btnKicken.setBounds(325, 38, 89, 23);
 		}
 		return btnKicken;
 	}
