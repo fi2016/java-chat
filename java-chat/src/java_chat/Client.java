@@ -25,10 +25,10 @@ public class Client implements Runnable
 	
 	protected void connectServer(String server) throws UnknownHostException, IOException
 	{
-		socket = new Socket(server, 8008);//push für nico
+		socket = new Socket(server, 8008);
 	}
 	
-	private void sendMessage(String message) throws IOException
+	protected void sendMessage(String message) throws IOException
 	{
 		if(out == null)
 		{
@@ -60,7 +60,7 @@ public class Client implements Runnable
 		}
 	}
 	
-	private void closeClient()
+	protected void closeClient()
 	{
 		
 		//not finished
