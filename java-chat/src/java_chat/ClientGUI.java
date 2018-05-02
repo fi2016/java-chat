@@ -1,6 +1,5 @@
 package java_chat;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,15 +10,14 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
 
 public class ClientGUI extends JFrame
 {
@@ -36,9 +34,11 @@ public class ClientGUI extends JFrame
 	private JButton btnDisconnect;
 	protected JTextField textFieldMessage;
 	private JButton btnSend;
-	protected JList listChatroom;
-	protected JComboBox comboBoxServerIDs;
+	protected JList<String> listChatroom;
+	protected JComboBox<String> comboBoxServerIDs;
 	protected Socket clientSocket;
+	private Client client;
+	private DefaultListModel<String> text = new DefaultListModel<String>();
 
 	/**
 	 * Launch the application.
@@ -62,27 +62,22 @@ public class ClientGUI extends JFrame
 	}
 	
 	protected void connectClient()
-	{
-		Object aktuell = comboBoxServerIDs.getSelectedItem();
+	{	
+		String hostName = comboBoxServerIDs.getSelectedItem().toString();
 		
-		String hostName = (String)aktuell;
-		
-		
-		int portNumber = 8008;
-		
-		try
-				   
+		try		   
 		{
-			clientSocket = new Socket(hostName, portNumber);
+			client = new Client();
+			client.connectServer(hostName);
 		}
 		catch (UnknownHostException e)  
 		{ 
-			System.err.println("Der Host " + hostName +" ist unbekannt"); 
+			JOptionPane.showInputDialog("Der Host " + hostName +" ist unbekannt"); 
 			System.exit(1); 
 		}  
 		catch (IOException e)  
 		{ 
-			System.err.println("Bekomme keine I/O für die Verbindung zu " + hostName); 
+			JOptionPane.showInputDialog("Bekomme keine I/O für die Verbindung zu " + hostName); 
 			System.exit(1); 
 		}
 	}
@@ -284,19 +279,19 @@ public class ClientGUI extends JFrame
 		}
 		return btnSend;
 	}
-	private JList getListChatroom() 
+	private JList<String> getListChatroom() 
 	{
 		if (listChatroom == null) 
 		{
-			listChatroom = new JList();
+			listChatroom = new JList<String>(text);
 		}
 		return listChatroom;
 	}
-	private JComboBox getComboBoxServerIDs() 
+	private JComboBox<String> getComboBoxServerIDs() 
 	{
 		if (comboBoxServerIDs == null) 
 		{
-			comboBoxServerIDs = new JComboBox();
+			comboBoxServerIDs = new JComboBox<String>();
 		}
 		return comboBoxServerIDs;
 	}
