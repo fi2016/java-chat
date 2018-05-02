@@ -87,7 +87,7 @@ public class Client implements Runnable
 			}
 		} else {
 			System.out.println("Protokoll ungültig!");
-		}//pus
+		}//push
 	}
 	
 	public void setNickname(String nickname)
