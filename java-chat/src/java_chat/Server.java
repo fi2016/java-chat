@@ -3,69 +3,52 @@ package java_chat;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public class Server implements Runnable
 {
 
-
-
 	private ServerSocket serverSocket;
-	
 	private ServerGUI serverGUI;
 	private ArrayList<ClientProxy> clientList;
 	private String ip;
 	private int port;
 	
 
-	public Server()
+	public Server(ServerGUI serverGUI, int port, String ip)
 	{
 		clientList = new ArrayList<ClientProxy>();
+		this.port = port;
+		this.ip = ip;
+		this.serverGUI = serverGUI;
 	}
-	
-	public Boolean startServer(ServerGUI serverGUI, int port, String ip)
-	{
-		try
-		{
-			(new Thread(new Server())).start();
-			
-			this.port = port;
-			this.ip = ip;
-			this.serverGUI = serverGUI;
-		}
-		catch(Exception e)
-		{
-			return false;
-		}
-		return true;
-	}
+
 	
 	public void closeServer()
 	{
 		
+		for (ClientProxy clientProxy : clientList)
+		{
+			clientProxy.closeClient();
+			clientList.remove(clientProxy);
+		}
+		clientList = null;
+		
+		
+		
 		try
 		{
-			for (ClientProxy clientProxy : clientList)
-			{
-				closeClient(clientProxy);
-			}
-			clientList = null;
+			Socket dummySocket = new Socket(ip,port);
 			
-			Thread.currentThread().interrupt();
 			
-			//DummyConnect um Socket zu schlieﬂen
-			Socket dummySocket = new Socket(ip, port);
-			dummySocket.close();
 			serverSocket.close();
-		} catch (UnknownHostException e)
-		{
-			System.err.println("UnknownHostException " + e);
+			
+			dummySocket.close();
 			
 		} catch (IOException e)
 		{
-			System.err.println("IOException " + e);
 			
+			e.printStackTrace();
 		}
 		
 				
@@ -96,13 +79,14 @@ public class Server implements Runnable
 			
 			try  
 			{
-				serverSocket = new ServerSocket(Integer.valueOf(port));
-
-				acceptClient();
-				
+				System.out.println("hier");
+				serverSocket = new ServerSocket(port);
+				Socket clientSocket = serverSocket.accept();
+				acceptClient(clientSocket);
+			
 				Thread.sleep(100);
 				
-				serverSocket.close();
+				
 				
 			}
 			catch (IOException e)
@@ -116,13 +100,16 @@ public class Server implements Runnable
 		}
 	}
 
-	private void acceptClient() throws IOException
+	private void acceptClient(Socket clientSocket) throws IOException
 	{
 		
-		Socket clientSocket = serverSocket.accept();
 		if(clientList != null)
 		{
 			clientList.add(new ClientProxy(clientSocket,this));
+		}
+		else
+		{
+			clientSocket.close();
 		}
 	}
 	
