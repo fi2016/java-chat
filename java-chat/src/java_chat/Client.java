@@ -20,13 +20,11 @@ public class Client implements Runnable
 		t = new Thread(this);
 		t.setName("ClientReadingThread");
 		t.start();
-		
 	}
 	
 	protected void connectServer(String server) throws UnknownHostException, IOException
 	{
 		socket = new Socket(server, 8008);
-		//not finished
 	}
 	
 	private void sendMessage(String message) throws IOException
@@ -35,8 +33,7 @@ public class Client implements Runnable
 		{
 			out = new ObjectOutputStream(socket.getOutputStream());
 		}
-		out.writeUTF(message);	
-		// not finished
+		out.writeUTF(message);
 	}
 	
 	public void run()
@@ -61,8 +58,6 @@ public class Client implements Runnable
 				e.printStackTrace();
 			}
 		}
-		
-		//not finished
 	}
 	
 	private void closeClient()
@@ -79,7 +74,6 @@ public class Client implements Runnable
 			out = new ObjectOutputStream(socket.getOutputStream());
 		}
 		out.writeUTF(message);
-		//not finished
 	}
 	
 	public void setNickname(String nickname)
