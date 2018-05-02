@@ -24,7 +24,7 @@ public class Client implements Runnable
 	
 	protected void connectServer(String server) throws UnknownHostException, IOException
 	{
-		socket = new Socket(server, 8008);
+		socket = new Socket(server, 8008);//push für nico
 	}
 	
 	private void sendMessage(String message) throws IOException
