@@ -31,6 +31,7 @@ public class ServerGUI extends JFrame
 	private InetAddress host;
 	private JList<String> listLog = new JList<String>();
 	private JList<Client> listMember = new JList<Client>();
+	private Thread listenThread;
 
 	/**
 	 * Launch the application.
@@ -93,8 +94,9 @@ public class ServerGUI extends JFrame
 
 	private void startServer()
 	{
-		server = new Server();
-		server.startServer(this, Integer.valueOf(txtPort.getText()), "localhost");
+		server = new Server(this, Integer.valueOf(txtPort.getText()), "localhost");
+		listenThread = new Thread(server);
+		listenThread.start();
 		button_Start.setEnabled(false);
 		btnStop.setEnabled(true);
 		lbl_Message.setText("Server running on " + host + "/" + txtPort.getText());
@@ -102,6 +104,7 @@ public class ServerGUI extends JFrame
 
 	private void closeServer()
 	{
+		listenThread.interrupt();
 		server.closeServer();
 		button_Start.setEnabled(true);
 		btnStop.setEnabled(false);
