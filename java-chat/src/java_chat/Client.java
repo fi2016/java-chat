@@ -14,6 +14,7 @@ public class Client implements Runnable
 	private String nickname;
 	private ObjectInputStream in;
 	private Thread t;
+	private String message;
 	
 	public Client() throws UnknownHostException, IOException
 	{
@@ -54,7 +55,6 @@ public class Client implements Runnable
 				
 			} catch (IOException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -72,7 +72,7 @@ public class Client implements Runnable
 		{
 			in = new ObjectInputStream(socket.getInputStream());
 		}
-		in.readUTF();
+		message = in.readUTF();
 	}
 	
 	public void setNickname(String nickname)
