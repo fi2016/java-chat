@@ -62,7 +62,6 @@ public class ServerGUI extends JFrame
 		setBackground(Color.DARK_GRAY);
 		setTitle("Server");
 		initialize();
-		server = new Server();
 		try
 		{
 			host = InetAddress.getLocalHost();
@@ -94,6 +93,7 @@ public class ServerGUI extends JFrame
 
 	private void startServer()
 	{
+		server = new Server();
 		server.startServer(this, Integer.valueOf(txtPort.getText()), "localhost");
 		button_Start.setEnabled(false);
 		btnStop.setEnabled(true);
