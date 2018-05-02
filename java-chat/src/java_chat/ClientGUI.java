@@ -105,38 +105,38 @@ public class ClientGUI extends JFrame
 	protected void serverListeAbrufen()
 	{
 		
-		String Daniel = "172.16.102.2";
-		comboBoxServerIDs.addItem(Daniel);
+		String daniel = "172.16.102.2";
+		comboBoxServerIDs.addItem(daniel);
 		
-		String Stefan = "172.16.102.3";
-		comboBoxServerIDs.addItem(Stefan);
+		String stefan = "172.16.102.3";
+		comboBoxServerIDs.addItem(stefan);
 		
-		String Thomas = "172.16.102.4";
-		comboBoxServerIDs.addItem(Thomas);
+		String thomas = "172.16.102.4";
+		comboBoxServerIDs.addItem(thomas);
 		
-		String Garry = "172.16.102.5";
-		comboBoxServerIDs.addItem(Garry);
+		String carina = "172.16.102.5";
+		comboBoxServerIDs.addItem(carina);
 		
-		String HerrGeis = "172.16.102.6";
-		comboBoxServerIDs.addItem(HerrGeis);
+		String herrGeis = "172.16.102.6";
+		comboBoxServerIDs.addItem(herrGeis);
 		
-		String Lukas = "172.16.102.9";
-		comboBoxServerIDs.addItem(Lukas);
+		String lukas = "172.16.102.9";
+		comboBoxServerIDs.addItem(lukas);
 		
-		String Frank = "172.16.102.8";
-		comboBoxServerIDs.addItem(Frank);
+		String frank = "172.16.102.8";
+		comboBoxServerIDs.addItem(frank);
 		
-		String Marc = "172.16.102.7";
-		comboBoxServerIDs.addItem(Marc);
+		String marc = "172.16.102.7";
+		comboBoxServerIDs.addItem(marc);
 		
-		String Sebastian = "172.16.102.14";
-		comboBoxServerIDs.addItem(Sebastian);
+		String sebastian = "172.16.102.14";
+		comboBoxServerIDs.addItem(sebastian);
 		
-		String Lars = "172.16.102.15";
-		comboBoxServerIDs.addItem(Lars);
+		String lars = "172.16.102.15";
+		comboBoxServerIDs.addItem(lars);
 		
-		String HerrWolf = "172.16.102.1";
-		comboBoxServerIDs.addItem(HerrWolf);
+		String herrWolf = "172.16.102.1";
+		comboBoxServerIDs.addItem(herrWolf);
 		
 		
 		
