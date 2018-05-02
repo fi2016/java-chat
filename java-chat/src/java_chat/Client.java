@@ -67,7 +67,7 @@ public class Client implements Runnable
 		//not finished
 	}
 	
-	private void read() throws IOException
+	protected String read() throws IOException
 	{
 		if (in == null) 
 		{
@@ -87,7 +87,9 @@ public class Client implements Runnable
 			}
 		} else {
 			System.out.println("Protokoll ungültig!");
-		}//pus
+		}
+		
+		return request;
 	}
 	
 	public void setNickname(String nickname)
