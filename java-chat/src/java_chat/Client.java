@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
 
 public class Client implements Runnable
 {
@@ -14,7 +15,7 @@ public class Client implements Runnable
 	private String nickname;
 	private ObjectInputStream in;
 	private Thread t;
-	private String message;
+	private String request;
 	
 	public Client() throws UnknownHostException, IOException
 	{
@@ -72,7 +73,21 @@ public class Client implements Runnable
 		{
 			in = new ObjectInputStream(socket.getInputStream());
 		}
-		message = in.readUTF();
+		request = in.readUTF();
+		
+		String[] protocol = request.split("\u001e");
+		if (protocol.length == 2) {
+			if (protocol[0].substring(0, 2).equals("TSP") && protocol[1].substring(0, 2).equals("MSG")) {
+				Timestamp tsp = Timestamp.valueOf(protocol[0].substring(2, protocol[0].length()));
+				String msg = protocol[1].substring(2, protocol[0].length());
+				System.out.println(tsp);
+				System.out.println(msg);
+			} else {
+				System.out.println("Protokoll ungültig!");
+			}
+		} else {
+			System.out.println("Protokoll ungültig!");
+		}
 	}
 	
 	public void setNickname(String nickname)
