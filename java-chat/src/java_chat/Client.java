@@ -68,12 +68,11 @@ public class Client implements Runnable
 	
 	private void read() throws IOException
 	{
-		String message = null;
-		if (out == null) 
+		if (in == null) 
 		{
-			out = new ObjectOutputStream(socket.getOutputStream());
+			in = new ObjectInputStream(socket.getInputStream());
 		}
-		out.writeUTF(message);
+		in.readUTF();
 	}
 	
 	public void setNickname(String nickname)
