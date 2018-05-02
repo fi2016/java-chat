@@ -27,6 +27,10 @@ public class PrivateRoom
 		//Nachricht an alle im Raum: Jemand neues ist da
 	}
 	
+	private void closeRoom()
+	{
+		//Alle Clients ausm Raum schmeiﬂen
+	}	
 	
 	private void kickClient()
 	{
@@ -43,8 +47,5 @@ public class PrivateRoom
 		
 	}
 	
-	private void closeRoom()
-	{
-		//Alle Clients ausm Raum schmeiﬂen
-	}
+
 }
