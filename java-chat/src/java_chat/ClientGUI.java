@@ -103,7 +103,13 @@ public class ClientGUI extends JFrame
 
 	protected void recieveMessage(String message)
 	{
-		//message = client.read();
+		try
+		{
+			message = client.read();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 		text.addElement(message);
 	}
 
