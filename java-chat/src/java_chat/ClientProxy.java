@@ -45,6 +45,7 @@ public class ClientProxy implements Runnable
 			{
 				System.out.println("Failed reading request!");
 				e.printStackTrace();
+				t.interrupt();
 			}
 		}
 	}
