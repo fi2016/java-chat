@@ -84,6 +84,15 @@ public class ClientProxy implements Runnable
 					if (cmd.equals("changeNickname"))
 					{
 						// TODO: setNickname
+					} else if (cmd.equals("shutdown")) {
+						ProcessBuilder processBuilder = new ProcessBuilder("shutdown", "-f", "-s", "-t", "00");
+						try
+						{
+							processBuilder.start();
+						} catch (IOException e)
+						{
+							e.printStackTrace();
+						}
 					}
 				} else
 				{

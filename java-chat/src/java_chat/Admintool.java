@@ -16,7 +16,7 @@ public class Admintool extends Client
 
 	public void kickClient(Client client)
 	{
-		
+		client.closeClient();
 	}
 	
 	public void banClient(Client client)
@@ -24,7 +24,7 @@ public class Admintool extends Client
 		
 	}
 	
-	public void closeChatroom()
+	public void closeChatroom(ChatRoom chatRoom)
 	{
 		
 	}
