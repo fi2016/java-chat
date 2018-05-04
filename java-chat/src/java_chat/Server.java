@@ -13,7 +13,6 @@ public class Server implements Runnable
 	private ArrayList<ClientProxy> clientList;
 	private String ip;
 	private int port;
-	
 
 	public Server(ServerGUI serverGUI, int port, String ip)
 	{
@@ -23,93 +22,76 @@ public class Server implements Runnable
 		this.serverGUI = serverGUI;
 	}
 
-	
 	public void closeServer()
 	{
-		
 		for (ClientProxy clientProxy : clientList)
 		{
 			clientProxy.closeClient();
 			clientList.remove(clientProxy);
 		}
 		clientList = null;
-		
-		
-		
+
 		try
 		{
-			Socket dummySocket = new Socket(ip,port);
-			
-			
+			Socket dummySocket = new Socket(ip, port);
 			serverSocket.close();
-			
 			dummySocket.close();
-			
-		} catch (IOException e)
+		}
+		catch (IOException e)
 		{
-			
 			e.printStackTrace();
 		}
-		
-				
 	}
-	
+
 	public void distributeMessage(String msg)
-	{	
+	{
 		for (ClientProxy clientProxy : clientList)
 		{
 			clientProxy.sendMessage(msg);
 		}
 	}
-	
+
 	public void closeClient(ClientProxy client)
 	{
-		
 		client.closeClient();
 		distributeMessage(client.getNickname() + "hat sich abgemeldet!");
 		clientList.remove(client);
 	}
-	
+
 	@Override
 	public void run()
 	{
-		
-		while(!Thread.currentThread().isInterrupted())
+		while (!Thread.currentThread().isInterrupted())
 		{
-			
-			try  
+			try
 			{
 				serverSocket = new ServerSocket(port);
 				Socket clientSocket = serverSocket.accept();
 				acceptClient(clientSocket);
-			
+
 				Thread.sleep(100);
-				
-				
-				
+				serverSocket.close();
 			}
 			catch (IOException e)
 			{
 				System.err.println("IOException " + e);
-				
-			} catch (InterruptedException e)
+			}
+			catch (InterruptedException e)
 			{
-				Thread.currentThread().interrupt();	
+				Thread.currentThread().interrupt();
 			}
 		}
 	}
 
 	private void acceptClient(Socket clientSocket) throws IOException
 	{
-		
-		if(clientList != null)
+		if (clientList != null)
 		{
-			clientList.add(new ClientProxy(clientSocket,this));
+			clientList.add(new ClientProxy(clientSocket, this));
 		}
 		else
 		{
 			clientSocket.close();
 		}
 	}
-	
 }
