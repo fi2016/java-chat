@@ -21,12 +21,14 @@ public class Client implements Runnable
 	{
 		t = new Thread(this);
 		t.setName("ClientReadingThread");
-		t.start();
+		
 	}
 	
 	protected void connectServer(String server) throws UnknownHostException, IOException
 	{
-		socket = new Socket(server, 5008);
+		
+		socket = new Socket(server, 8008);
+		t.start();
 	}
 	
 	protected void sendMessage(String message) throws IOException

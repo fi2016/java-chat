@@ -66,11 +66,12 @@ public class ClientGUI extends JFrame
 	protected void connectClient()
 	{
 		String hostName = comboBoxServerIDs.getSelectedItem().toString();
-
+		hostName = "localhost";
 		try
 		{
 			client = new Client();
 			client.connectServer(hostName);
+			
 		} catch (UnknownHostException e)
 		{
 			JOptionPane.showMessageDialog(null, "Der Host " + hostName + " ist unbekannt");
@@ -80,7 +81,7 @@ public class ClientGUI extends JFrame
 			JOptionPane.showMessageDialog(null, "Bekomme keine I/O für die Verbindung zu " + hostName);
 			System.exit(1);
 		}
-	}//halp
+	}
 
 	protected void closeClient()
 	{
