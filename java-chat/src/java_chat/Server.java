@@ -24,6 +24,7 @@ public class Server implements Runnable
 
 	public void closeServer()
 	{
+
 		for (ClientProxy clientProxy : clientList)
 		{
 			clientProxy.closeClient();
@@ -34,13 +35,18 @@ public class Server implements Runnable
 		try
 		{
 			Socket dummySocket = new Socket(ip, port);
+
 			serverSocket.close();
+
 			dummySocket.close();
+
 		}
 		catch (IOException e)
 		{
+
 			e.printStackTrace();
 		}
+
 	}
 
 	public void distributeMessage(String msg)
@@ -53,6 +59,7 @@ public class Server implements Runnable
 
 	public void closeClient(ClientProxy client)
 	{
+
 		client.closeClient();
 		distributeMessage(client.getNickname() + "hat sich abgemeldet!");
 		clientList.remove(client);
@@ -61,14 +68,15 @@ public class Server implements Runnable
 	@Override
 	public void run()
 	{
+
 		while (!Thread.currentThread().isInterrupted())
 		{
+
 			try
 			{
 				serverSocket = new ServerSocket(port);
 				Socket clientSocket = serverSocket.accept();
 				acceptClient(clientSocket);
-
 				Thread.sleep(100);
 				serverSocket.close();
 			}
@@ -85,6 +93,7 @@ public class Server implements Runnable
 
 	private void acceptClient(Socket clientSocket) throws IOException
 	{
+
 		if (clientList != null)
 		{
 			clientList.add(new ClientProxy(clientSocket, this));
@@ -94,4 +103,5 @@ public class Server implements Runnable
 			clientSocket.close();
 		}
 	}
+
 }
