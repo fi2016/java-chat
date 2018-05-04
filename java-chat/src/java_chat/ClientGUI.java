@@ -80,7 +80,7 @@ public class ClientGUI extends JFrame
 			JOptionPane.showMessageDialog(null, "Bekomme keine I/O für die Verbindung zu " + hostName);
 			System.exit(1);
 		}
-	}
+	}//halp
 
 	protected void closeClient()
 	{
