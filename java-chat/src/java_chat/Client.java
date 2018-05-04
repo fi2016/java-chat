@@ -21,12 +21,12 @@ public class Client implements Runnable
 	{
 		t = new Thread(this);
 		t.setName("ClientReadingThread");
-		t.start();
 	}
 	
 	protected void connectServer(String server) throws UnknownHostException, IOException
 	{
 		socket = new Socket(server, 8008);
+		t.start();
 	}
 	
 	protected void sendMessage(String message) throws IOException
@@ -76,16 +76,20 @@ public class Client implements Runnable
 		request = in.readUTF();
 		
 		String[] protocol = request.split("\u001e");
-		if (protocol.length == 2) {
-			if (protocol[0].substring(0, 2).equals("TSP") && protocol[1].substring(0, 2).equals("MSG")) {
+		if (protocol.length == 2) 
+		{
+			if (protocol[0].substring(0, 2).equals("TSP") && protocol[1].substring(0, 2).equals("MSG")) 
+			{
 				Timestamp tsp = Timestamp.valueOf(protocol[0].substring(2, protocol[0].length()));
 				String msg = protocol[1].substring(2, protocol[0].length());
 				System.out.println(tsp);
 				System.out.println(msg);
-			} else {
+			} else 
+			{
 				System.out.println("Protokoll ungültig!");
 			}
-		} else {
+		} else 
+		{
 			System.out.println("Protokoll ungültig!");
 		}
 		
