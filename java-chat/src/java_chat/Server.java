@@ -24,31 +24,24 @@ public class Server implements Runnable
 
 	public void closeServer()
 	{
-
 		for (ClientProxy clientProxy : clientList)
 		{
 			clientProxy.closeClient();
 			clientList.remove(clientProxy);
 		}
 		clientList = null;
-
 		try
 		{
 			Socket dummySocket = new Socket(ip, port);
-
 			serverSocket.close();
-
 			dummySocket.close();
-
 		}
 		catch (IOException e)
 		{
 
 			e.printStackTrace();
 		}
-
 	}
-
 	public void distributeMessage(String msg)
 	{
 		for (ClientProxy clientProxy : clientList)

@@ -66,8 +66,8 @@ public class ClientGUI extends JFrame
 
 	protected void connectClient()
 	{
-		
 		String hostName = comboBoxServerIDs.getSelectedItem().toString();
+		//hostName = "172.16.224.36";
 		try
 		{
 			client = new Client();
@@ -87,7 +87,7 @@ public class ClientGUI extends JFrame
 
 	protected void closeClient()
 	{
-
+		client.closeClient();
 	}
 
 	protected void handoverMessage()
@@ -119,12 +119,13 @@ public class ClientGUI extends JFrame
 
 	protected void setNickname()
 	{
-		// quatschen mit Wolf
+
+		//quatschen mit Wolf
+		//Nico mach dein Zeug
 	}
 
 	protected void serverListeAbrufen()
 	{
-
 		String daniel = "172.16.102.2";
 		comboBoxServerIDs.addItem(daniel);
 
@@ -166,7 +167,6 @@ public class ClientGUI extends JFrame
 	public ClientGUI()
 	{
 		initialize();
-
 		serverListeAbrufen();
 	}
 
