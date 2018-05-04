@@ -66,7 +66,6 @@ public class ClientGUI extends JFrame
 	protected void connectClient()
 	{
 		String hostName = comboBoxServerIDs.getSelectedItem().toString();
-		hostName = "localhost";
 		try
 		{
 			client = new Client();
