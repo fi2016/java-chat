@@ -28,7 +28,8 @@ public class Client implements Runnable
 	{
 		
 		socket = new Socket(server, 8008);
-		t.start();	
+		t.start();
+
 	}
 	
 	protected void sendMessage(String message) throws IOException
@@ -72,10 +73,18 @@ public class Client implements Runnable
 	
 	protected void closeClient()
 	{
-		
-		//not finished
+		t.interrupt();
+		try
+		{
+			out.close();
+			in.close();
+			socket.close();
+		}
+		catch(IOException e)
+		{
+			System.out.println("Fehler beim schlieﬂen!");
+		}
 	}
-	
 	protected String read() throws IOException
 	{
 		if (in == null) 
