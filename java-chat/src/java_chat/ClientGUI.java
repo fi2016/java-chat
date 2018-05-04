@@ -68,7 +68,6 @@ public class ClientGUI extends JFrame
 	{
 		
 		String hostName = comboBoxServerIDs.getSelectedItem().toString();
-		
 		try
 		{
 			client = new Client();
