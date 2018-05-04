@@ -71,21 +71,22 @@ public class ClientGUI extends JFrame
 		{
 			client = new Client();
 			client.connectServer(hostName);
-			
+
 		} catch (UnknownHostException e)
 		{
-			JOptionPane.showInputDialog("Der Host " + hostName + " ist unbekannt");
+			JOptionPane.showMessageDialog(null, "Der Host " + hostName + " ist unbekannt");
 			System.exit(1);
 		} catch (IOException e)
 		{
-			JOptionPane.showInputDialog("Bekomme keine I/O für die Verbindung zu " + hostName);
+			JOptionPane.showMessageDialog(null, "Bekomme keine I/O für die Verbindung zu " + hostName);
 			System.exit(1);
 		}
+		setNickname();
 	}
 
 	protected void closeClient()
 	{
-		
+
 	}
 
 	protected void handoverMessage()
@@ -95,12 +96,13 @@ public class ClientGUI extends JFrame
 		try
 		{
 			client.sendMessage(message);
+			textFieldMessage.setText("");
 		} catch (IOException e)
 		{
 
 			e.printStackTrace();
 		}
-	}
+	}//pushtry
 
 	protected void recieveMessage(String message)
 	{
@@ -116,44 +118,58 @@ public class ClientGUI extends JFrame
 
 	protected void setNickname()
 	{
+<<<<<<< HEAD
 		//quatschen mit Wolf
 		//Nico mach dein Zeug
+=======
+		// quatschen mit Wolf
+>>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 	}
 
 	protected void serverListeAbrufen()
+<<<<<<< HEAD
 	{		
+=======
+	{
+
+>>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 		String daniel = "172.16.102.2";
 		comboBoxServerIDs.addItem(daniel);
-		
+
 		String stefan = "172.16.102.3";
 		comboBoxServerIDs.addItem(stefan);
-		
+
 		String thomas = "172.16.102.4";
 		comboBoxServerIDs.addItem(thomas);
-		
+
 		String carina = "172.16.102.5";
 		comboBoxServerIDs.addItem(carina);
-		
+
 		String herrGeis = "172.16.102.6";
 		comboBoxServerIDs.addItem(herrGeis);
-		
+
 		String lukas = "172.16.102.9";
 		comboBoxServerIDs.addItem(lukas);
-		
+
 		String frank = "172.16.102.8";
 		comboBoxServerIDs.addItem(frank);
-		
+
 		String marc = "172.16.102.7";
 		comboBoxServerIDs.addItem(marc);
-		
+
 		String sebastian = "172.16.102.14";
 		comboBoxServerIDs.addItem(sebastian);
-		
+
 		String lars = "172.16.102.15";
 		comboBoxServerIDs.addItem(lars);
-		
+
 		String herrWolf = "172.16.102.1";
+<<<<<<< HEAD
 		comboBoxServerIDs.addItem(herrWolf);
+=======
+		comboBoxServerIDs.addItem(herrWolf);
+
+>>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 	}
 
 	/**
@@ -257,6 +273,12 @@ public class ClientGUI extends JFrame
 		if (textFieldNickname == null)
 		{
 			textFieldNickname = new JTextField();
+			textFieldNickname.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) 
+				{
+					setNickname();
+				}
+			});
 			textFieldNickname.setColumns(10);
 		}
 		return textFieldNickname;
@@ -283,6 +305,13 @@ public class ClientGUI extends JFrame
 		if (btnDisconnect == null)
 		{
 			btnDisconnect = new JButton("Disconnect");
+			btnDisconnect.addActionListener(new ActionListener() 
+			{						
+				public void actionPerformed(ActionEvent e) 
+				{
+					closeClient();
+				}
+			});
 		}
 		return btnDisconnect;
 	}
@@ -292,6 +321,13 @@ public class ClientGUI extends JFrame
 		if (textFieldMessage == null)
 		{
 			textFieldMessage = new JTextField();
+			textFieldMessage.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					handoverMessage();
+				}
+			});
 			textFieldMessage.setColumns(10);
 		}
 		return textFieldMessage;
@@ -302,7 +338,13 @@ public class ClientGUI extends JFrame
 		if (btnSend == null)
 		{
 			btnSend = new JButton("Send");
-			btnSend.addActionListener(e -> handoverMessage());
+			btnSend.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					handoverMessage();
+				}
+			});
 		}
 		return btnSend;
 	}
