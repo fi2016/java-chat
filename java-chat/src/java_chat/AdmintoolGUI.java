@@ -1,5 +1,6 @@
 package java_chat;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -13,27 +14,30 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.awt.event.ActionEvent;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import javax.swing.JComboBox;
 
 public class AdmintoolGUI extends JFrame
 {
 
 	private JPanel contentPane;
-	private JList<String> listPrivateChats;
+	private JList listPrivateChats;
 	private JLabel lblPrivateChats;
-	private JList<String> listMembers;
+	private JList listMembers;
 	private JLabel lblMember;
 	private JButton btnKicken;
 	private JButton btnBannen;
 	private Admintool admintool;
 	private JButton btnCloseChat;
 	private JLabel lblServer;
-	private JComboBox<String> comboBoxServerIDs;
+	private JComboBox comboBoxServerIDs;
 	private JButton btnConnect;
 	private JLabel lblNickname;
 	private JTextField textFieldNickname;
 	private JButton btnDisconnect;
-	private JList<String> listChatroom;
+	private JList listChatroom;
 	private JTextField textFieldMessage;
 	private JButton btnSend;
 	/**
@@ -104,9 +108,9 @@ public class AdmintoolGUI extends JFrame
 		contentPane.add(getBtnSend());
 		contentPane.add(getTextFieldMessage());
 	}
-	private JList<String> getListPrivateChats() {
+	private JList getListPrivateChats() {
 		if (listPrivateChats == null) {
-			listPrivateChats = new JList<String>();
+			listPrivateChats = new JList();
 			listPrivateChats.setBounds(572, 218, 196, 202);
 		}
 		return listPrivateChats;
@@ -118,9 +122,9 @@ public class AdmintoolGUI extends JFrame
 		}
 		return lblPrivateChats;
 	}
-	private JList<String> getListMembers() {
+	private JList getListMembers() {
 		if (listMembers == null) {
-			listMembers = new JList<String>();
+			listMembers = new JList();
 			listMembers.setBounds(572, 44, 196, 138);
 		}
 		return listMembers;
@@ -134,8 +138,6 @@ public class AdmintoolGUI extends JFrame
 	}
 	private JButton getBtnKicken() {
 		if (btnKicken == null) {
-			btnKicken = new JButton("Kicken");
-			btnKicken.setBounds(325, 38, 89, 23);
 			btnKicken = new JButton("Kicken");
 			btnKicken.setBounds(778, 41, 107, 23);
 		}
@@ -166,9 +168,9 @@ public class AdmintoolGUI extends JFrame
 		}
 		return lblServer;
 	}
-	private JComboBox<String> getComboBoxServerIDs() {
+	private JComboBox getComboBoxServerIDs() {
 		if (comboBoxServerIDs == null) {
-			comboBoxServerIDs = new JComboBox<String>();
+			comboBoxServerIDs = new JComboBox();
 			comboBoxServerIDs.setBounds(66, 22, 401, 20);
 		}
 		return comboBoxServerIDs;
@@ -203,9 +205,9 @@ public class AdmintoolGUI extends JFrame
 		}
 		return btnDisconnect;
 	}
-	private JList<String> getListChatroom() {
+	private JList getListChatroom() {
 		if (listChatroom == null) {
-			listChatroom = new JList<String>();
+			listChatroom = new JList();
 			listChatroom.setBounds(10, 92, 552, 235);
 		}
 		return listChatroom;
