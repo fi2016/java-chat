@@ -73,11 +73,11 @@ public class ClientGUI extends JFrame
 			client.connectServer(hostName);
 		} catch (UnknownHostException e)
 		{
-			JOptionPane.showInputDialog("Der Host " + hostName + " ist unbekannt");
+			JOptionPane.showMessageDialog(null, "Der Host " + hostName + " ist unbekannt");
 			System.exit(1);
 		} catch (IOException e)
 		{
-			JOptionPane.showInputDialog("Bekomme keine I/O für die Verbindung zu " + hostName);
+			JOptionPane.showMessageDialog(null, "Bekomme keine I/O für die Verbindung zu " + hostName);
 			System.exit(1);
 		}
 	}
