@@ -86,7 +86,7 @@ public class ClientGUI extends JFrame
 
 	protected void closeClient()
 	{
-
+		client.closeClient();
 	}
 
 	protected void handoverMessage()
