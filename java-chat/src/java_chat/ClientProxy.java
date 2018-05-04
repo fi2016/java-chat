@@ -53,16 +53,48 @@ public class ClientProxy implements Runnable
 	private void read(String request)
 	{
 		String[] protocol = request.split("\u001e");
-		if (protocol.length == 2) {
-			if (protocol[0].substring(0, 2).equals("TSP") && protocol[1].substring(0, 2).equals("MSG")) {
+		if (protocol.length == 3)
+		{
+			if (protocol[0].substring(0, 2).equals("TSP"))
+			{
 				Timestamp tsp = Timestamp.valueOf(protocol[0].substring(2, protocol[0].length()));
-				String msg = protocol[1].substring(2, protocol[0].length());
-				System.out.println(tsp);
-				System.out.println(msg);
-			} else {
+				if (protocol[1].substring(0, 2).equals("NIK") && protocol[2].substring(0, 2).equals("MSG"))
+				{
+					String nik = protocol[1].substring(2, protocol[1].length());
+					String msg = protocol[2].substring(2, protocol[2].length());
+
+					// only for debugging
+					System.out.println(tsp);
+					System.out.println(nik);
+					System.out.println(msg);
+
+					// should we send the whole request, or build a new request with the parameters
+					// nick and message?
+					server.distributeMessage(request);
+				} else if (protocol[1].substring(0, 2).equals("CMD") && protocol[2].substring(0, 2).equals("PAM"))
+				{
+					String cmd = protocol[1].substring(2, protocol[1].length());
+					String pam = protocol[2].substring(2, protocol[2].length());
+
+					// only for debugging
+					System.out.println(tsp);
+					System.out.println(cmd);
+					System.out.println(pam);
+
+					if (cmd.equals("changeNickname"))
+					{
+						// TODO: setNickname
+					}
+				} else
+				{
+					System.out.println("Protokoll ungültig!");
+				}
+			} else
+			{
 				System.out.println("Protokoll ungültig!");
 			}
-		} else {
+		} else
+		{
 			System.out.println("Protokoll ungültig!");
 		}
 	}
@@ -96,8 +128,9 @@ public class ClientProxy implements Runnable
 			e.printStackTrace();
 		}
 	}
-	
-	public String getNickname() {
+
+	public String getNickname()
+	{
 		return nickname;
 	}
 }
