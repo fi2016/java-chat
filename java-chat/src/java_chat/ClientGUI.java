@@ -18,6 +18,8 @@ import javax.swing.JComboBox;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ClientGUI extends JFrame
 {
@@ -60,50 +62,65 @@ public class ClientGUI extends JFrame
 			}
 		});
 	}
-	
+
 	protected void connectClient()
-	{	
+	{
 		String hostName = comboBoxServerIDs.getSelectedItem().toString();
-		
-		try		   
+
+		try
 		{
 			client = new Client();
 			client.connectServer(hostName);
-		}
-		catch (UnknownHostException e)  
-		{ 
-			JOptionPane.showInputDialog("Der Host " + hostName +" ist unbekannt"); 
-			System.exit(1); 
-		}  
-		catch (IOException e)  
-		{ 
-			JOptionPane.showInputDialog("Bekomme keine I/O für die Verbindung zu " + hostName); 
-			System.exit(1); 
+		} catch (UnknownHostException e)
+		{
+			JOptionPane.showInputDialog("Der Host " + hostName + " ist unbekannt");
+			System.exit(1);
+		} catch (IOException e)
+		{
+			JOptionPane.showInputDialog("Bekomme keine I/O für die Verbindung zu " + hostName);
+			System.exit(1);
 		}
 	}
-	
+
 	protected void closeClient()
 	{
 		
 	}
-	
+
 	protected void handoverMessage()
 	{
-		
+		String message = textFieldMessage.getText();
+
+		try
+		{
+			client.sendMessage(message);
+		} catch (IOException e)
+		{
+
+			e.printStackTrace();
+		}
 	}
-	
-	protected void recieveMessage()
+
+	protected void recieveMessage(String message)
 	{
-		
+		try
+		{
+			message = client.read();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		text.addElement(message);
 	}
-	
+
 	protected void setNickname()
 	{
-		
+		//quatschen mit Wolf
 	}
-	
+
 	protected void serverListeAbrufen()
 	{
+
 		
 		String daniel = "172.16.102.2";
 		comboBoxServerIDs.addItem(daniel);
@@ -138,8 +155,6 @@ public class ClientGUI extends JFrame
 		String herrWolf = "172.16.102.1";
 		comboBoxServerIDs.addItem(herrWolf);
 		
-		
-		
 	}
 
 	/**
@@ -148,20 +163,23 @@ public class ClientGUI extends JFrame
 	public ClientGUI()
 	{
 		initialize();
-		
+
 		serverListeAbrufen();
 	}
-	private void initialize() {
+
+	private void initialize()
+	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 601, 372);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{74, 411, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[] { 74, 411, 0, 0 };
+		gbl_contentPane.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPane.columnWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+				Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 		GridBagConstraints gbc_lblServer = new GridBagConstraints();
 		gbc_lblServer.insets = new Insets(0, 0, 5, 5);
@@ -218,78 +236,91 @@ public class ClientGUI extends JFrame
 		contentPane.add(getBtnSend(), gbc_btnSend);
 	}
 
-	private JLabel getLblServer() 
+	private JLabel getLblServer()
 	{
-		if (lblServer == null) 
+		if (lblServer == null)
 		{
 			lblServer = new JLabel("Server:");
 		}
 		return lblServer;
 	}
-	private JLabel getLblNickname() 
+
+	private JLabel getLblNickname()
 	{
-		if (lblNickname == null) 
+		if (lblNickname == null)
 		{
 			lblNickname = new JLabel("Nickname:");
 		}
 		return lblNickname;
 	}
-	private JTextField getTextFieldNickname() 
+
+	private JTextField getTextFieldNickname()
 	{
-		if (textFieldNickname == null) 
+		if (textFieldNickname == null)
 		{
 			textFieldNickname = new JTextField();
 			textFieldNickname.setColumns(10);
 		}
 		return textFieldNickname;
 	}
-	private JButton getBtnConnect() 
+
+	private JButton getBtnConnect()
 	{
-		if (btnConnect == null) 
+		if (btnConnect == null)
 		{
 			btnConnect = new JButton("Connect");
-			btnConnect.addActionListener(e -> connectClient());
+			btnConnect.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					connectClient();
+				}
+			});
 		}
 		return btnConnect;
 	}
-	private JButton getBtnDisconnect() 
+
+	private JButton getBtnDisconnect()
 	{
-		if (btnDisconnect == null) 
+		if (btnDisconnect == null)
 		{
 			btnDisconnect = new JButton("Disconnect");
-			btnDisconnect.addActionListener(e -> closeClient());
 		}
 		return btnDisconnect;
 	}
-	private JTextField getTextFieldMessage() 
+
+	private JTextField getTextFieldMessage()
 	{
-		if (textFieldMessage == null) 
+		if (textFieldMessage == null)
 		{
 			textFieldMessage = new JTextField();
 			textFieldMessage.setColumns(10);
 		}
 		return textFieldMessage;
 	}
-	private JButton getBtnSend() 
+
+	private JButton getBtnSend()
 	{
-		if (btnSend == null) 
+		if (btnSend == null)
 		{
 			btnSend = new JButton("Send");
 			btnSend.addActionListener(e -> handoverMessage());
 		}
 		return btnSend;
 	}
-	private JList<String> getListChatroom() 
+
+	private JList<String> getListChatroom()
 	{
-		if (listChatroom == null) 
+		if (listChatroom == null)
 		{
 			listChatroom = new JList<String>(text);
 		}
 		return listChatroom;
 	}
-	private JComboBox<String> getComboBoxServerIDs() 
+
+	private JComboBox<String> getComboBoxServerIDs()
 	{
-		if (comboBoxServerIDs == null) 
+		if (comboBoxServerIDs == null)
 		{
 			comboBoxServerIDs = new JComboBox<String>();
 		}

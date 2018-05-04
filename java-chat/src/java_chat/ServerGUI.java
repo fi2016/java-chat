@@ -22,7 +22,7 @@ public class ServerGUI extends JFrame
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lbl_Message;
-	private JButton button_Start;
+	private JButton btnStart;
 	private JTextField txtPort;
 	private JLabel lblPortname;
 	private JButton btnStop;
@@ -83,7 +83,7 @@ public class ServerGUI extends JFrame
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		contentPane.add(getLbl_Message());
-		contentPane.add(getButton_Start());
+		contentPane.add(getBtnStart());
 		contentPane.add(getTxtPort());
 		contentPane.add(getLblPortname());
 		contentPane.add(getBtnStop());
@@ -97,7 +97,7 @@ public class ServerGUI extends JFrame
 		server = new Server(this, Integer.valueOf(txtPort.getText()), "localhost");
 		listenThread = new Thread(server);
 		listenThread.start();
-		button_Start.setEnabled(false);
+		btnStart.setEnabled(false);
 		btnStop.setEnabled(true);
 		lbl_Message.setText("Server running on " + host + "/" + txtPort.getText());
 	}
@@ -106,7 +106,7 @@ public class ServerGUI extends JFrame
 	{
 		listenThread.interrupt();
 		server.closeServer();
-		button_Start.setEnabled(true);
+		btnStart.setEnabled(true);
 		btnStop.setEnabled(false);
 		lbl_Message.setText("Server on " + host + "/" + txtPort.getText() + " closed.");
 	}
@@ -121,15 +121,15 @@ public class ServerGUI extends JFrame
 		return lbl_Message;
 	}
 
-	private JButton getButton_Start()
+	private JButton getBtnStart()
 	{
-		if (button_Start == null)
+		if (btnStart == null)
 		{
-			button_Start = new JButton("Start");
-			button_Start.addActionListener(e -> startServer());
-			button_Start.setBounds(90, 39, 66, 30);
+			btnStart = new JButton("Start");
+			btnStart.addActionListener(e -> startServer());
+			btnStart.setBounds(90, 39, 66, 30);
 		}
-		return button_Start;
+		return btnStart;
 	}
 
 	private JTextField getTxtPort()
