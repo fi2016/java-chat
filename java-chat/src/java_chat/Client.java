@@ -27,7 +27,8 @@ public class Client implements Runnable
 	{
 		
 		socket = new Socket(server, 8008);
-		t.start();	
+		t.start();
+
 	}
 	
 	protected void sendMessage(String message) throws IOException

@@ -21,6 +21,7 @@ import java.net.UnknownHostException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+
 public class ClientGUI extends JFrame
 {
 
@@ -65,8 +66,8 @@ public class ClientGUI extends JFrame
 
 	protected void connectClient()
 	{
+		
 		String hostName = comboBoxServerIDs.getSelectedItem().toString();
-		hostName = "localhost";
 		try
 		{
 			client = new Client();
