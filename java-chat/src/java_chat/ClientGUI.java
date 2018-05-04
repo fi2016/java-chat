@@ -118,21 +118,13 @@ public class ClientGUI extends JFrame
 
 	protected void setNickname()
 	{
-<<<<<<< HEAD
+
 		//quatschen mit Wolf
 		//Nico mach dein Zeug
-=======
-		// quatschen mit Wolf
->>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 	}
 
 	protected void serverListeAbrufen()
-<<<<<<< HEAD
-	{		
-=======
 	{
-
->>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 		String daniel = "172.16.102.2";
 		comboBoxServerIDs.addItem(daniel);
 
@@ -164,12 +156,8 @@ public class ClientGUI extends JFrame
 		comboBoxServerIDs.addItem(lars);
 
 		String herrWolf = "172.16.102.1";
-<<<<<<< HEAD
-		comboBoxServerIDs.addItem(herrWolf);
-=======
 		comboBoxServerIDs.addItem(herrWolf);
 
->>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 	}
 
 	/**
