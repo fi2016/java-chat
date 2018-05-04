@@ -70,6 +70,7 @@ public class Server implements Runnable
 				acceptClient(clientSocket);
 
 				Thread.sleep(100);
+				serverSocket.close();
 			}
 			catch (IOException e)
 			{
