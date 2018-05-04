@@ -38,6 +38,7 @@ public class Client implements Runnable
 			out = new ObjectOutputStream(socket.getOutputStream());
 		}
 		out.writeUTF(message);
+		out.flush();
 	}
 	
 	public void run()
