@@ -170,7 +170,7 @@ public class AdmintoolGUI extends JFrame
 	}
 	private JComboBox<String> getComboBoxServerIDs() {
 		if (comboBoxServerIDs == null) {
-			comboBoxServerIDs = new JComboBox();
+			comboBoxServerIDs = new JComboBox<String>();
 			comboBoxServerIDs.setBounds(66, 22, 401, 20);
 		}
 		return comboBoxServerIDs;
