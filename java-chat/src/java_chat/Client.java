@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class Client implements Runnable
 {
@@ -36,6 +37,12 @@ public class Client implements Runnable
 		{
 			out = new ObjectOutputStream(socket.getOutputStream());
 		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+		Timestamp time = new Timestamp(System.currentTimeMillis());
+		String currenttime = sdf.format(time);
+		
+		message = "TSP" + currenttime + "\u001eMSG" /*nickname fehlt, channel fehlt*/ + message;
 		out.writeUTF(message);
 		out.flush();
 	}
