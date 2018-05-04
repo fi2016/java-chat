@@ -83,6 +83,39 @@ public class AdmintoolGUI extends JFrame
 			e.printStackTrace();
 		}
 	}
+	
+	public void connectAdmintool()
+	{
+		try
+		{
+			//admintool.connectServer(comboBoxServerIDs.getSelectedItem().toString());
+			admintool.connectServer("172.16.224.36");
+		}
+		catch (UnknownHostException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendMessage()
+	{
+		try
+		{
+			admintool.sendMessage(textFieldMessage.getText());
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	private void initialize() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 912, 500);
@@ -178,7 +211,7 @@ public class AdmintoolGUI extends JFrame
 	private JButton getBtnConnect() {
 		if (btnConnect == null) {
 			btnConnect = new JButton("Connect");
-			btnConnect.addActionListener(e -> admintool.connectServer(comboBoxServerIDs.getSelectedItem().toString()));
+			btnConnect.addActionListener(e -> connectAdmintool());
 			btnConnect.setBounds(477, 21, 85, 23);
 		}
 		return btnConnect;
@@ -223,6 +256,7 @@ public class AdmintoolGUI extends JFrame
 	private JButton getBtnSend() {
 		if (btnSend == null) {
 			btnSend = new JButton("Send");
+			btnSend.addActionListener(e -> sendMessage());
 			btnSend.setBounds(477, 338, 85, 23);
 		}
 		return btnSend;
