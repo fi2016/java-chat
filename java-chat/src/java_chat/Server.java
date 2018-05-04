@@ -79,7 +79,6 @@ public class Server implements Runnable
 			
 			try  
 			{
-				System.out.println("hier");
 				serverSocket = new ServerSocket(port);
 				Socket clientSocket = serverSocket.accept();
 				acceptClient(clientSocket);
