@@ -15,7 +15,7 @@ public class SpartenPhalanx
 		}
 		else
 		{
-			//return false wenn es kein DDos ist
+			//return false wenn es kein DDos ist.
 		}
 	}
 	
