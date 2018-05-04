@@ -42,7 +42,7 @@ public class Client implements Runnable
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		String currenttime = sdf.format(time);
-		// unnecessary comment
+
 		message = "TSP" + currenttime + "\u001eMSG" /*nickname fehlt, channel fehlt*/ + message;
 		out.writeUTF(message);
 		out.flush();
