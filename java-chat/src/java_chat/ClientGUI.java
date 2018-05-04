@@ -68,11 +68,12 @@ public class ClientGUI extends JFrame
 	{
 		
 		String hostName = comboBoxServerIDs.getSelectedItem().toString();
-
+		hostName = "localhost";
 		try
 		{
 			client = new Client();
 			client.connectServer(hostName);
+			
 		} catch (UnknownHostException e)
 		{
 			JOptionPane.showInputDialog("Der Host " + hostName + " ist unbekannt");

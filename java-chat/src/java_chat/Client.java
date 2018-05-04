@@ -21,12 +21,23 @@ public class Client implements Runnable
 	{
 		t = new Thread(this);
 		t.setName("ClientReadingThread");
+<<<<<<< HEAD
+		
+=======
+>>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 	}
 	
 	protected void connectServer(String server) throws UnknownHostException, IOException
+<<<<<<< HEAD
+	{
+		
+		socket = new Socket(server, 8008);
+		t.start();
+=======
 	{
 		socket = new Socket(server, 8008);
 		t.start();
+>>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 	}
 	
 	protected void sendMessage(String message) throws IOException
