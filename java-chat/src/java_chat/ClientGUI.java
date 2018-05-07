@@ -176,7 +176,7 @@ public class ClientGUI extends JFrame
 		{
 			if(nick.toUpperCase().equals(user.toUpperCase()))
 			{
-				JOptionPane.showInternalMessageDialog(null, "Username already in use!");
+				JOptionPane.showMessageDialog(null, "Username already in use!");
 				textFieldNickname.setText("");
 			}
 			else
@@ -185,6 +185,11 @@ public class ClientGUI extends JFrame
 			}
 		}
 
+	}
+	
+	protected void showNotification(String message)
+	{
+		JOptionPane.showMessageDialog(null, message);
 	}
 
 	protected void serverListeAbrufen()
