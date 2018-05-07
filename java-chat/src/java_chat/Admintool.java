@@ -2,16 +2,18 @@ package java_chat;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 public class Admintool extends Client
 {	
+	private ArrayList<Client> clients = new ArrayList<Client>();
 	
 	public Admintool() throws UnknownHostException, IOException
 	{
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public void kickClient(Client client)

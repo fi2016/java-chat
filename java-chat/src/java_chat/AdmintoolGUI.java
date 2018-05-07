@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -76,13 +77,11 @@ public class AdmintoolGUI extends JFrame
 		}
 		catch (UnknownHostException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Der angegebene Host ist nicht bekannt");
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "IO Exception AdmintoolGUI im Konstruktor");
 		}
 	}
 
@@ -95,13 +94,11 @@ public class AdmintoolGUI extends JFrame
 		}
 		catch (UnknownHostException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Der angegebene Host ist nicht bekannt");
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "IO Exception AdmintoolGUI beim connecten");
 		}
 	}
 
@@ -113,8 +110,7 @@ public class AdmintoolGUI extends JFrame
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "IO Exception AdmintoolGUI beim senden");
 		}
 	}
 
