@@ -76,6 +76,10 @@ public class Client implements Runnable
 		client.showNotification(message);
 	}
 	
+	protected void addBlacklist()
+	{
+		//TO-DO: IP an Server schicken um gesperrt zu werden
+	}
 	
 	protected void closeClient()
 	{
