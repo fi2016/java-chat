@@ -10,7 +10,7 @@ public class Admintool extends Client
 {	
 	private ArrayList<Client> clients = new ArrayList<Client>();
 	
-	public Admintool() throws UnknownHostException, IOException
+	public Admintool(Server server) throws UnknownHostException, IOException
 	{
 		super();
 		

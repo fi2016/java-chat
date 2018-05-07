@@ -69,10 +69,6 @@ public class ClientGUI extends JFrame
 
 	protected void connectClient()
 	{
-<<<<<<< HEAD
-
-=======
->>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 		String hostName = comboBoxServerIDs.getSelectedItem().toString();
 		//hostName = "172.16.224.36";
 		try
