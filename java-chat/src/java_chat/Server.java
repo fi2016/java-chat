@@ -7,18 +7,21 @@ import java.util.ArrayList;
 
 public class Server implements Runnable
 {
+	private ArrayList<ClientProxy> clientList; //Wird noch in ChatRoom-Klasse verlagert
 
 	private ServerSocket serverSocket;
 	private ServerGUI serverGUI;
-	private ArrayList<ClientProxy> clientList;
+	private ArrayList<ChatRoom> roomList;
 	private String ip;
 	private int port;
-	private SpartenPhalanx spartenPhalanx;
 
 	public Server(ServerGUI serverGUI, int port, String ip)
 	{
-		clientList = new ArrayList<ClientProxy>();
-		spartenPhalanx = new SpartenPhalanx();
+		clientList = new ArrayList<ClientProxy>(); //Wird noch in ChatRoom-Klasse verlagert
+		
+		roomList = new ArrayList<ChatRoom>();
+		createRoom("public");
+		
 		this.port = port;
 		this.ip = ip;
 		this.serverGUI = serverGUI;
@@ -44,19 +47,12 @@ public class Server implements Runnable
 			e.printStackTrace();
 		}
 	}
-	public void distributeMessage(String msg)
-	{
-		for (ClientProxy clientProxy : clientList)
-		{
-			clientProxy.sendMessage(msg);
-		}
-	}
 
 	public void closeClient(ClientProxy client)
 	{
 
 		client.closeClient();
-		distributeMessage(client.getNickname() + "hat sich abgemeldet!");
+		//distributeMessage(client.getNickname() + "hat sich abgemeldet!");
 		clientList.remove(client);
 	}
 
@@ -91,19 +87,39 @@ public class Server implements Runnable
 
 		if (clientList != null)
 		{
-			if(spartenPhalanx.identifyDDos(ip) == false)
-			{
-				clientList.add(new ClientProxy(clientSocket, this));
-			}
-			else
-			{
-				clientSocket.close();
-			}
+			ClientProxy c = new ClientProxy(clientSocket, this);
+			clientList.add(c);
+			roomList.get(0).addClient(c);
 		}
 		else
 		{
 			clientSocket.close();
 		}
+	}
+	
+	private void createRoom(String name)
+	{
+		boolean vergeben = false;
+		for (ChatRoom room : roomList)
+		{
+			if(room.getName() == name)
+			{
+				vergeben = true;				
+			}
+		}
+		
+		if(vergeben == false)
+		{
+			ChatRoom c = new ChatRoom();
+			c.setName(name);
+			
+			roomList.add(c);
+		}
+		else
+		{
+			//Fehlermeldung zurückgeben
+		}
+		
 	}
 
 }
