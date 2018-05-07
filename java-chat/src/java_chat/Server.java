@@ -15,7 +15,7 @@ public class Server implements Runnable
 	private ArrayList<ChatRoom> roomList;
 	private String ip;
 	private int port;
-	private Admintool admintool;
+	private AdmintoolGUI admintoolGUI;
 	
 	public Server(ServerGUI serverGUI, int port, String ip)
 	{
@@ -52,7 +52,7 @@ public class Server implements Runnable
 	
 	protected void openAdmintool() throws UnknownHostException, IOException
 	{
-		admintool = new Admintool(this);
+		admintoolGUI = new AdmintoolGUI(this);
 	}
 
 	public void closeClient(ClientProxy client)

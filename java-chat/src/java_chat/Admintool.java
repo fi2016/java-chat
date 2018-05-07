@@ -9,11 +9,12 @@ import javax.swing.JOptionPane;
 public class Admintool extends Client
 {	
 	private ArrayList<Client> clients = new ArrayList<Client>();
+	private Server server;
 	
 	public Admintool(Server server) throws UnknownHostException, IOException
 	{
 		super();
-		
+		this.server = server;
 	}
 
 	public void kickClient(Client client)

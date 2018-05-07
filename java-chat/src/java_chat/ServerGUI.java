@@ -12,9 +12,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.awt.Color;
 import javax.swing.JList;
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.awt.event.ActionEvent;
 
 public class ServerGUI extends JFrame
 {
@@ -76,6 +74,24 @@ public class ServerGUI extends JFrame
 			lbl_Message.setText("Localhost was not found");
 		}
 	}
+	
+	private void openAdmintool()
+	{
+		try
+		{
+			server.openAdmintool();
+		}
+		catch (UnknownHostException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	private void initialize()
 	{
@@ -116,25 +132,6 @@ public class ServerGUI extends JFrame
 		lbl_Message.setText("Server on " + host + "/" + txtPort.getText() + " closed.");
 	}
 	
-	protected void openAdmintool()
-	{
-		try
-		{
-			server.openAdmintool();
-		}
-		catch (UnknownHostException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-
 	private JLabel getLbl_Message()
 	{
 		if (lbl_Message == null)

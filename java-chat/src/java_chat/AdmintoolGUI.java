@@ -54,7 +54,7 @@ public class AdmintoolGUI extends JFrame
 			{
 				try
 				{
-					AdmintoolGUI frame = new AdmintoolGUI();
+					AdmintoolGUI frame = new AdmintoolGUI(null);
 					frame.setVisible(true);
 				}
 				catch (Exception e)
@@ -67,13 +67,14 @@ public class AdmintoolGUI extends JFrame
 
 	/**
 	 * Create the frame.
+	 * @param server 
 	 */
-	public AdmintoolGUI()
+	public AdmintoolGUI(Server server)
 	{
 		initialize();
 		try
 		{
-			admintool = new Admintool();
+			admintool = new Admintool(server);
 		}
 		catch (UnknownHostException e)
 		{
@@ -84,6 +85,8 @@ public class AdmintoolGUI extends JFrame
 			JOptionPane.showMessageDialog(null, "IO Exception AdmintoolGUI im Konstruktor");
 		}
 	}
+
+	
 
 	public void connectAdmintool()
 	{
