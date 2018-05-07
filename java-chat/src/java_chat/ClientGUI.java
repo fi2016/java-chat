@@ -126,7 +126,6 @@ public class ClientGUI extends JFrame
 
 	protected void setNickname()
 	{
-<<<<<<< HEAD
 		/*
 		 * Client Anmeldung bei Server
 		 * 
@@ -171,20 +170,26 @@ public class ClientGUI extends JFrame
 		 * proxy checkt den cmd
 		 * liste updaten
 		 */
+		String nick = getTextFieldNickname().getText();
+		
 		for (String user : userList)
 		{
-			if(textFieldNickname.getText().toUpperCase().equals(user.toUpperCase()))
+			if(nick.toUpperCase().equals(user.toUpperCase()))
 			{
-				JOptionPane.showInternalMessageDialog(null, "Username already in use!");
+				JOptionPane.showMessageDialog(null, "Username already in use!");
+				textFieldNickname.setText("");
+			}
+			else
+			{
+				userList.add(nick);
 			}
 		}
-		
-		userList.add(textFieldNickname.getText());
-=======
 
-		//quatschen mit Wolf
-		//Nico mach dein Zeug
->>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
+	}
+	
+	protected void showNotification(String message)
+	{
+		JOptionPane.showMessageDialog(null, message);
 	}
 
 	protected void serverListeAbrufen()

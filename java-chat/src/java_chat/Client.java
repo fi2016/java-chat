@@ -71,6 +71,16 @@ public class Client implements Runnable
 		}
 	}
 	
+	protected void showNotification(String message)
+	{
+		client.showNotification(message);
+	}
+	
+	protected void addBlacklist()
+	{
+		//TO-DO: IP an Server schicken um gesperrt zu werden
+	}
+	
 	protected void closeClient()
 	{
 		t.interrupt();
