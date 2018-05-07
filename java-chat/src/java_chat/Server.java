@@ -53,6 +53,7 @@ public class Server implements Runnable
 	protected void openAdmintool() throws UnknownHostException, IOException
 	{
 		admintoolGUI = new AdmintoolGUI(this);
+		admintoolGUI.setVisible(true);
 	}
 
 	public void closeClient(ClientProxy client)
