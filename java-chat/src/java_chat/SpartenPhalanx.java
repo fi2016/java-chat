@@ -29,7 +29,6 @@ public class SpartenPhalanx implements Runnable
 		}
 	}
 
-	@Override
 	public void run()
 	{
 		try
