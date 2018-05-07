@@ -159,7 +159,22 @@ public class ClientGUI extends JFrame
 		 * client gibt liste an gui
 		 * listmodel in gui updaten
 		 * 
+		 * 
+		 * Funktionsweise:
+		 * cmd via socket an server
+		 * msg vom server an alle proxies
+		 * proxy checkt den cmd
+		 * liste updaten
 		 */
+		for (String user : userList)
+		{
+			if(textFieldNickname.getText().toUpperCase().equals(user.toUpperCase()))
+			{
+				JOptionPane.showInternalMessageDialog(null, "Username already in use!");
+			}
+		}
+		
+		userList.add(textFieldNickname.getText());
 	}
 
 	protected void serverListeAbrufen()
