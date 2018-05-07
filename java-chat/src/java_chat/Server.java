@@ -13,10 +13,12 @@ public class Server implements Runnable
 	private ArrayList<ClientProxy> clientList;
 	private String ip;
 	private int port;
+	private SpartenPhalanx spartenPhalanx;
 
 	public Server(ServerGUI serverGUI, int port, String ip)
 	{
 		clientList = new ArrayList<ClientProxy>();
+		spartenPhalanx = new SpartenPhalanx();
 		this.port = port;
 		this.ip = ip;
 		this.serverGUI = serverGUI;
@@ -89,7 +91,14 @@ public class Server implements Runnable
 
 		if (clientList != null)
 		{
-			clientList.add(new ClientProxy(clientSocket, this));
+			if(spartenPhalanx.identifyDDos(ip) == false)
+			{
+				clientList.add(new ClientProxy(clientSocket, this));
+			}
+			else
+			{
+				clientSocket.close();
+			}
 		}
 		else
 		{
