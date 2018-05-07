@@ -71,6 +71,12 @@ public class Client implements Runnable
 		}
 	}
 	
+	protected void showNotification(String message)
+	{
+		client.showNotification(message);
+	}
+	
+	
 	protected void closeClient()
 	{
 		t.interrupt();
