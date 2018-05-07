@@ -12,6 +12,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.awt.Color;
 import javax.swing.JList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ServerGUI extends JFrame
 {
@@ -32,6 +34,7 @@ public class ServerGUI extends JFrame
 	private JList<String> listLog = new JList<String>();
 	private JList<Client> listMember = new JList<Client>();
 	private Thread listenThread;
+	private JButton btnAdmintool;
 
 	/**
 	 * Launch the application.
@@ -90,6 +93,7 @@ public class ServerGUI extends JFrame
 		contentPane.add(getLblMembers());
 		contentPane.add(getListLog());
 		contentPane.add(getListMember());
+		contentPane.add(getBtnAdmintool());
 	}
 
 	private void startServer()
@@ -110,6 +114,7 @@ public class ServerGUI extends JFrame
 		btnStop.setEnabled(false);
 		lbl_Message.setText("Server on " + host + "/" + txtPort.getText() + " closed.");
 	}
+	
 
 	private JLabel getLbl_Message()
 	{
@@ -199,5 +204,13 @@ public class ServerGUI extends JFrame
 			listMember.setBounds(403, 59, 110, 172);
 		}
 		return listMember;
+	}
+	private JButton getBtnAdmintool() {
+		if (btnAdmintool == null) {
+			btnAdmintool = new JButton("Admintool");
+			btnAdmintool.addActionListener(e -> server.openAdmintool());
+			btnAdmintool.setBounds(242, 39, 135, 30);
+		}
+		return btnAdmintool;
 	}
 }

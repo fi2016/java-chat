@@ -3,6 +3,7 @@ package java_chat;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public class Server implements Runnable
@@ -14,7 +15,8 @@ public class Server implements Runnable
 	private ArrayList<ChatRoom> roomList;
 	private String ip;
 	private int port;
-
+	private Admintool admintool;
+	
 	public Server(ServerGUI serverGUI, int port, String ip)
 	{
 		clientList = new ArrayList<ClientProxy>(); //Wird noch in ChatRoom-Klasse verlagert
@@ -46,6 +48,11 @@ public class Server implements Runnable
 
 			e.printStackTrace();
 		}
+	}
+	
+	protected void openAdmintool() throws UnknownHostException, IOException
+	{
+		admintool = new Admintool(this);
 	}
 
 	public void closeClient(ClientProxy client)
