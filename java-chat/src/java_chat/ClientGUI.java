@@ -69,8 +69,12 @@ public class ClientGUI extends JFrame
 
 	protected void connectClient()
 	{
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 		String hostName = comboBoxServerIDs.getSelectedItem().toString();
+		//hostName = "172.16.224.36";
 		try
 		{
 			client = new Client();
@@ -90,7 +94,7 @@ public class ClientGUI extends JFrame
 
 	protected void closeClient()
 	{
-
+		client.closeClient();
 	}
 
 	protected void handoverMessage()
@@ -122,6 +126,7 @@ public class ClientGUI extends JFrame
 
 	protected void setNickname()
 	{
+<<<<<<< HEAD
 		/*
 		 * Client Anmeldung bei Server
 		 * 
@@ -175,11 +180,15 @@ public class ClientGUI extends JFrame
 		}
 		
 		userList.add(textFieldNickname.getText());
+=======
+
+		//quatschen mit Wolf
+		//Nico mach dein Zeug
+>>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 	}
 
 	protected void serverListeAbrufen()
 	{
-
 		String daniel = "172.16.102.2";
 		comboBoxServerIDs.addItem(daniel);
 
@@ -221,7 +230,6 @@ public class ClientGUI extends JFrame
 	public ClientGUI()
 	{
 		initialize();
-
 		serverListeAbrufen();
 	}
 

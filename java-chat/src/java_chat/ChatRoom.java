@@ -2,14 +2,14 @@ package java_chat;
 
 import java.util.ArrayList;
 
-public class PrivateRoom
+public class ChatRoom
 {
 	private String name;
 	private String password = null;
 	
 	private ArrayList<ClientProxy> clientProxyList;
 	
-	public PrivateRoom()
+	public ChatRoom()
 	{
 		clientProxyList = new ArrayList<ClientProxy>();
 	}
@@ -32,6 +32,7 @@ public class PrivateRoom
 		//Alle Clients ausm Raum schmeiﬂen
 	}	
 	
+	
 	private void kickClient()
 	{
 		
@@ -46,6 +47,7 @@ public class PrivateRoom
 	{
 		
 	}
+
 	
 
 }
