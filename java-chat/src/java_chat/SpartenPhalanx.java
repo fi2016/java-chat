@@ -29,12 +29,11 @@ public class SpartenPhalanx implements Runnable
 		}
 	}
 
-	@Override
 	public void run()
 	{
 		try
 		{
-			Thread.currentThread().sleep(2000);
+			Thread.sleep(2000);
 			connectionProtocol.clear();
 		} catch (InterruptedException e)
 		{
