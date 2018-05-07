@@ -7,11 +7,12 @@ import javax.swing.JOptionPane;
 
 public class Admintool extends Client
 {	
+	private Server server;
 	
-	public Admintool() throws UnknownHostException, IOException
+	public Admintool(Server server) throws UnknownHostException, IOException
 	{
 		super();
-		// TODO Auto-generated constructor stub
+		this.server = server;
 	}
 
 	public void kickClient(Client client)
