@@ -18,9 +18,9 @@ import javax.swing.JComboBox;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 
 public class ClientGUI extends JFrame
 {
@@ -42,6 +42,9 @@ public class ClientGUI extends JFrame
 	protected Socket clientSocket;
 	private Client client;
 	private DefaultListModel<String> text = new DefaultListModel<String>();
+	private DefaultListModel<String> user = new DefaultListModel<String>();
+	private ArrayList<String> userList = new ArrayList<String>();
+	private JList<String> listUser;
 
 	/**
 	 * Launch the application.
@@ -103,7 +106,7 @@ client.sendMessage("TSP0000\\u001eCMDshutdown\\u001ePAMok");
 
 			e.printStackTrace();
 		}
-	}//pushtry
+	}// pushtry
 
 	protected void recieveMessage(String message)
 	{
@@ -119,9 +122,70 @@ client.sendMessage("TSP0000\\u001eCMDshutdown\\u001ePAMok");
 
 	protected void setNickname()
 	{
+		/*
+		 * Client Anmeldung bei Server
+		 * 
+		 * Nick an Client senden
+		 * Per Stream an Proxy
+		 * Nick über Proxy an Server
+		 * Server nimmt Nick in Liste auf
+		 * Server verteilt Liste an alle Proxys
+		 * liste über proxy an client
+		 * client gibt liste an gui
+		 * listmodel in gui updaten
+		 * 
+		 * 
+		 * Client von Server kicken (Admin tools)
+		 * 
+		 * Nick aus liste entfernen (server)
+		 * liste an alle proxys
+		 * gui über socket updaten
+		 * 
+		 * 
+		 * CLient schließen
+		 * 
+		 * Nick aus liste entfernens (client)
+		 * 
+		 * 
+		 * 
+		 * Nick ändern
+		 * 
+		 *Nick an Client senden
+		 * Per Stream an Proxy
+		 * Nick über Proxy an Server
+		 * Server nimmt Nick in Liste auf
+		 * Server verteilt Liste an alle Proxys
+		 * liste über proxy an client
+		 * client gibt liste an gui
+		 * listmodel in gui updaten
+		 * 
+		 * 
+		 * Funktionsweise:
+		 * cmd via socket an server
+		 * msg vom server an alle proxies
+		 * proxy checkt den cmd
+		 * liste updaten
+		 */
+		String nick = getTextFieldNickname().getText();
+		
+		for (String user : userList)
+		{
+			if(nick.toUpperCase().equals(user.toUpperCase()))
+			{
+				JOptionPane.showMessageDialog(null, "Username already in use!");
+				textFieldNickname.setText("");
+			}
+			else
+			{
+				userList.add(nick);
+			}
+		}
 
-		//quatschen mit Wolf
-		//Nico mach dein Zeug
+	}
+	
+	protected void showNotification(String message)
+	{
+		JOptionPane.showMessageDialog(null, message);
 	}
 
 	protected void serverListeAbrufen()
@@ -178,10 +242,10 @@ client.sendMessage("TSP0000\\u001eCMDshutdown\\u001ePAMok");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] { 74, 411, 0, 0 };
+		gbl_contentPane.columnWidths = new int[] { 74, 411, 124, 0 };
 		gbl_contentPane.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gbl_contentPane.columnWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
-		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+		gbl_contentPane.columnWeights = new double[] { 0.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 		GridBagConstraints gbc_lblServer = new GridBagConstraints();
@@ -196,7 +260,6 @@ client.sendMessage("TSP0000\\u001eCMDshutdown\\u001ePAMok");
 		gbc_comboBoxServerIDs.gridy = 0;
 		contentPane.add(getComboBoxServerIDs(), gbc_comboBoxServerIDs);
 		GridBagConstraints gbc_btnConnect = new GridBagConstraints();
-		gbc_btnConnect.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnConnect.insets = new Insets(0, 0, 5, 0);
 		gbc_btnConnect.gridx = 2;
 		gbc_btnConnect.gridy = 0;
@@ -225,6 +288,13 @@ client.sendMessage("TSP0000\\u001eCMDshutdown\\u001ePAMok");
 		gbc_listChatroom.gridx = 0;
 		gbc_listChatroom.gridy = 2;
 		contentPane.add(getListChatroom(), gbc_listChatroom);
+		GridBagConstraints gbc_listUser = new GridBagConstraints();
+		gbc_listUser.gridheight = 8;
+		gbc_listUser.insets = new Insets(0, 0, 5, 0);
+		gbc_listUser.fill = GridBagConstraints.BOTH;
+		gbc_listUser.gridx = 2;
+		gbc_listUser.gridy = 2;
+		contentPane.add(getListUser(), gbc_listUser);
 		GridBagConstraints gbc_textFieldMessage = new GridBagConstraints();
 		gbc_textFieldMessage.gridwidth = 2;
 		gbc_textFieldMessage.insets = new Insets(0, 0, 0, 5);
@@ -262,8 +332,9 @@ client.sendMessage("TSP0000\\u001eCMDshutdown\\u001ePAMok");
 		if (textFieldNickname == null)
 		{
 			textFieldNickname = new JTextField();
-			textFieldNickname.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) 
+			textFieldNickname.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
 				{
 					setNickname();
 				}
@@ -294,9 +365,9 @@ client.sendMessage("TSP0000\\u001eCMDshutdown\\u001ePAMok");
 		if (btnDisconnect == null)
 		{
 			btnDisconnect = new JButton("Disconnect");
-			btnDisconnect.addActionListener(new ActionListener() 
-			{						
-				public void actionPerformed(ActionEvent e) 
+			btnDisconnect.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
 				{
 					closeClient();
 				}
@@ -354,5 +425,14 @@ client.sendMessage("TSP0000\\u001eCMDshutdown\\u001ePAMok");
 			comboBoxServerIDs = new JComboBox<String>();
 		}
 		return comboBoxServerIDs;
+	}
+
+	private JList<String> getListUser()
+	{
+		if (listUser == null)
+		{
+			listUser = new JList<String>(user);
+		}
+		return listUser;
 	}
 }
