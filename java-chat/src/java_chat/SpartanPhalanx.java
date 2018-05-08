@@ -3,12 +3,12 @@ package java_chat;
 import java.util.HashMap;
 import java.time.*;
 
-public class SpartenPhalanx implements Runnable
+public class SpartanPhalanx implements Runnable
 {
 	private HashMap<String, LocalDateTime> connectionProtocol;
 	private Thread t;
 	
-	public SpartenPhalanx()
+	public SpartanPhalanx()
 	{
 		connectionProtocol = new HashMap<String, LocalDateTime>();
 		t = new Thread(this);
@@ -39,5 +39,10 @@ public class SpartenPhalanx implements Runnable
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	protected Boolean identifySpam()
+	{
+		return null;
 	}
 }
