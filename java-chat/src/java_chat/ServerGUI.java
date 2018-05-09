@@ -13,6 +13,8 @@ import java.net.UnknownHostException;
 import java.awt.Color;
 import javax.swing.JList;
 import java.io.IOException;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ServerGUI extends JFrame
 {
@@ -121,6 +123,7 @@ public class ServerGUI extends JFrame
 		button_Start.setEnabled(false);
 		btnStop.setEnabled(true);
 		lbl_Message.setText("Server running on " + host + "/" + txtPort.getText());
+		btnAdmintool.setEnabled(true);
 	}
 
 	private void closeServer()
@@ -224,6 +227,7 @@ public class ServerGUI extends JFrame
 	private JButton getBtnAdmintool() {
 		if (btnAdmintool == null) {
 			btnAdmintool = new JButton("Admintool");
+			btnAdmintool.setEnabled(false);
 			btnAdmintool.addActionListener(e -> openAdmintool());
 			btnAdmintool.setBounds(242, 39, 135, 30);
 		}

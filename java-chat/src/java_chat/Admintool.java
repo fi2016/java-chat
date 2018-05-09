@@ -17,23 +17,32 @@ public class Admintool extends Client
 		this.server = server;
 	}
 
-	public void kickClient(Client client)
+	protected void kickClient(Client client)
 	{
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
 		client.showNotification(message);
 		client.closeClient();
 	}
 	
-	public void banClient(Client client)
+	protected void banClient(Client client)
 	{
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
 		client.showNotification(message);
-		client.addBlacklist();
+		server.addBlacklist(client);
 		client.closeClient();
+		
 	}
 	
-	public void closeChatroom(ChatRoom chatRoom)
+	protected void closeChatroom(ChatRoom chatRoom)
 	{
 		chatRoom.closeRoom();
+	}
+	
+	private void refreshLists()
+	{
+		for (Client client : server.getClients)
+		{
+			clients.add(client);
+		}
 	}
 }
