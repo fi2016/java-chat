@@ -46,7 +46,7 @@ public class ChatRoom
 	
 	//-------------------------- Ab da ist das die Arbeit Anderer
 	
-	private void closeRoom()
+	void closeRoom()
 	{
 		//Alle Clients ausm Raum schmeiﬂen
 	}	
