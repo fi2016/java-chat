@@ -35,12 +35,15 @@ public class ClientProxy implements Runnable
 				{
 					in = new ObjectInputStream(socket.getInputStream());
 				}
-				String request = (String) in.readObject();
-
-				// only for debugging
-				System.out.println(request);
-
-				read(request);
+				try
+				{
+					read(in.readObject());
+				} catch (ClassNotFoundException e)
+				{
+					System.out.println("Class not found");
+					e.printStackTrace();
+					t.interrupt();
+				}
 			} catch (IOException e)
 			{
 				System.out.println("Failed reading request!");
@@ -50,11 +53,9 @@ public class ClientProxy implements Runnable
 		}
 	}
 
-	private void read(String request)
+	private void read(Object obj)
 	{
-		String[] protocol = request.split("\u001e");
-		String s = protocol[1];
-		System.out.println(s);
+		
 	}
 
 	protected void sendMessage(String message)
