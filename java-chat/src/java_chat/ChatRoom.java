@@ -1,3 +1,13 @@
+/*"Neuer Raum erstellen"
+- ClientGUI: GUI Knöpfe
+
+
+
+
+
+//in Client Funktion zum Erstellen eines Rooms (-> Room-Klasse) (eigene Liste führen)
+//Client: "Ich erstelle einen Raum"-Funktion (-> ChatRoom-Klasse)
+*/
 package java_chat;
 
 import java.util.ArrayList;
@@ -10,7 +20,8 @@ public class ChatRoom
 	
 
 	private ArrayList<ClientProxy> clientProxyList;
-	
+
+
 	public ChatRoom()
 	{
 		clientProxyList = new ArrayList<ClientProxy>();
@@ -24,13 +35,14 @@ public class ChatRoom
 	
 	public void inviteClient()
 	{
+		
 		//Nachricht an Client: Du wurdest eingeladen -> Willst du beitreten?
 	}
 	
 	public void addClient(ClientProxy c)
 	{
 		clientProxyList.add(c);
-		
+	//	c.joinRoom()
 		//Nachricht an Client: Du wurdest hinzugefügt
 		//Nachricht an alle im Raum: Jemand neues ist da
 	}
@@ -45,8 +57,7 @@ public class ChatRoom
 	
 	
 	//-------------------------- Ab da ist das die Arbeit Anderer
-	
-	void closeRoom()
+	protected void closeRoom()
 	{
 		//Alle Clients ausm Raum schmeißen
 	}	
@@ -86,5 +97,16 @@ public class ChatRoom
 	public void setPassword(String password)
 	{
 		this.password = password;
+	}
+	
+	
+	public ArrayList<ClientProxy> getClientProxyList()
+	{
+		return clientProxyList;
+	}
+
+	public void setClientProxyList(ArrayList<ClientProxy> clientProxyList)
+	{
+		this.clientProxyList = clientProxyList;
 	}
 }
