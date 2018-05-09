@@ -14,4 +14,13 @@ public class Room
 		history = new ArrayList<String>();
 		history.add("Room opened");
 	}
+	public Room(String name)
+	{
+		super();
+		this.name = name;
+	}
+	
+	//Was wenn nachricht kommt -> anzeigen
+	//nicknames ändern methode (wird kommen)
+	
 }
