@@ -47,8 +47,10 @@ public class AdmintoolGUI extends JFrame
 	private JButton btnKickClientRoom;
 	private JButton btnBanClientRoom;
 	private JLabel lblChatroomMitglieder;
-	private JList<String> listRoomMembers;
+	private JList<Client> listRoomMembers;
 	private JList<String> listChatRoom;
+	private DefaultListModel<String> listModelPublicChat = new DefaultListModel<String>();
+	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();
 
 	/**
 	 * Launch the application.
@@ -105,9 +107,9 @@ public class AdmintoolGUI extends JFrame
 	{
 		
 		ChatRoom cr = (ChatRoom)comboBoxChatRooms.getSelectedItem();
-		for (Client client : )
+		for (ClientProxy cp : cr.getClientProxyList())
 		{
-			
+			getListRoomMembers().add
 		}
 	}
 
@@ -332,16 +334,16 @@ public class AdmintoolGUI extends JFrame
 		}
 		return lblChatroomMitglieder;
 	}
-	private JList<String> getListRoomMembers() {
+	private JList<ClientProxy> getListRoomMembers() {
 		if (listRoomMembers == null) {
-			listRoomMembers = new JList();
+			listRoomMembers = new JList<ClientProxy>(listModelPrivateMember);
 			listRoomMembers.setBounds(572, 325, 160, 100);
 		}
 		return listRoomMembers;
 	}
 	private JList<String> getListChatRoom() {
 		if (listChatRoom == null) {
-			listChatRoom = new JList();
+			listChatRoom = new JList<String>(listModelPublicChat);
 			listChatRoom.setBounds(10, 89, 550, 240);
 		}
 		return listChatRoom;

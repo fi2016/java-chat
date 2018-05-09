@@ -13,8 +13,6 @@ import java.net.UnknownHostException;
 import java.awt.Color;
 import javax.swing.JList;
 import java.io.IOException;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class ServerGUI extends JFrame
 {
