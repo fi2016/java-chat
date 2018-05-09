@@ -47,7 +47,7 @@ public class AdmintoolGUI extends JFrame
 	private JButton btnKickClientRoom;
 	private JButton btnBanClientRoom;
 	private JLabel lblChatroomMitglieder;
-	private JList<Client> listRoomMembers;
+	private JList<ClientProxy> listRoomMembers;
 	private JList<String> listChatRoom;
 	private DefaultListModel<String> listModelPublicChat = new DefaultListModel<String>();
 	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();
@@ -109,7 +109,7 @@ public class AdmintoolGUI extends JFrame
 		ChatRoom cr = (ChatRoom)comboBoxChatRooms.getSelectedItem();
 		for (ClientProxy cp : cr.getClientProxyList())
 		{
-			getListRoomMembers().add
+			listModelPrivateMember.addElement(cp);
 		}
 	}
 
