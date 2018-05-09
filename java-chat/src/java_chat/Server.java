@@ -8,22 +8,24 @@ import java.util.ArrayList;
 
 public class Server implements Runnable
 {
-	private ArrayList<ClientProxy> clientList; //Wird noch in ChatRoom-Klasse verlagert
-
+	private ArrayList<ClientProxy> clientList; // Wird noch in ChatRoom-Klasse
+												// verlagert
+												// Carry wir brauchen auch eine MemberListe also die AdmintoolGUI grüze Dein Johann
 	private ServerSocket serverSocket;
 	private ServerGUI serverGUI;
 	private ArrayList<ChatRoom> roomList;
 	private String ip;
 	private int port;
 	private AdmintoolGUI admintoolGUI;
-	
+
 	public Server(ServerGUI serverGUI, int port, String ip)
 	{
-		clientList = new ArrayList<ClientProxy>(); //Wird noch in ChatRoom-Klasse verlagert
-		
+		clientList = new ArrayList<ClientProxy>(); // Wird noch in
+													// ChatRoom-Klasse verlagert
+
 		roomList = new ArrayList<ChatRoom>();
 		createRoom("public");
-		
+
 		this.port = port;
 		this.ip = ip;
 		this.serverGUI = serverGUI;
@@ -49,7 +51,7 @@ public class Server implements Runnable
 			e.printStackTrace();
 		}
 	}
-	
+
 	protected void openAdmintool() throws UnknownHostException, IOException
 	{
 		admintoolGUI = new AdmintoolGUI(this);
@@ -60,7 +62,7 @@ public class Server implements Runnable
 	{
 
 		client.closeClient();
-		//distributeMessage(client.getNickname() + "hat sich abgemeldet!");
+		// distributeMessage(client.getNickname() + "hat sich abgemeldet!");
 		clientList.remove(client);
 	}
 
@@ -104,30 +106,30 @@ public class Server implements Runnable
 			clientSocket.close();
 		}
 	}
-	
+
 	private void createRoom(String name)
 	{
 		boolean vergeben = false;
 		for (ChatRoom room : roomList)
 		{
-			if(room.getName() == name)
+			if (room.getName() == name)
 			{
-				vergeben = true;				
+				vergeben = true;
 			}
 		}
-		
-		if(vergeben == false)
+
+		if (vergeben == false)
 		{
 			ChatRoom c = new ChatRoom();
 			c.setName(name);
-			
+
 			roomList.add(c);
 		}
 		else
 		{
-			//Fehlermeldung zurückgeben
+			// Fehlermeldung zurückgeben
 		}
-		
+
 	}
 
 }
