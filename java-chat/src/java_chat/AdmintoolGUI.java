@@ -105,7 +105,7 @@ public class AdmintoolGUI extends JFrame
 	{
 		
 		ChatRoom cr = (ChatRoom)comboBoxChatRooms.getSelectedItem();
-		for (Client client : cr.)
+		for (Client client : )
 		{
 			
 		}
