@@ -40,7 +40,8 @@ public class Admintool extends Client
 	
 	private void refreshLists()
 	{
-		for (Client client : server.getClients)
+		clients.clear();
+		for (ClientProxy client : server.getClientList())
 		{
 			clients.add(client);
 		}

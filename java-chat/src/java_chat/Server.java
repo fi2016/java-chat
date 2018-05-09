@@ -129,7 +129,15 @@ public class Server implements Runnable
 		{
 			// Fehlermeldung zurückgeben
 		}
-
+	}
+	
+	protected void addBlacklist(Client client)
+	{
+		
 	}
 
+	public ArrayList<ClientProxy> getClientList()
+	{
+		return clientList;
+	}
 }
