@@ -3,7 +3,6 @@ package java_chat;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 
 public class Admintool extends Client
