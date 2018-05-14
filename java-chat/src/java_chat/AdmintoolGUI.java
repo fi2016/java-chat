@@ -1,8 +1,8 @@
 package java_chat;
 
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -11,15 +11,13 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class AdmintoolGUI extends JFrame
 {
-
 	/**
 	 * 
 	 */
@@ -30,7 +28,6 @@ public class AdmintoolGUI extends JFrame
 	private JLabel lblMember;
 	private JButton btnKick;
 	private JButton btnBan;
-	private Admintool admintool;
 	private JButton btnCloseChat;
 	private JLabel lblServer;
 	private JComboBox<String> comboBoxServerIDs;
@@ -42,25 +39,34 @@ public class AdmintoolGUI extends JFrame
 	private JButton btnSend;
 	private DefaultListModel<Client> lmMembers = new DefaultListModel<Client>();
 	private JComboBox<ChatRoom> comboBoxChatRooms;
-	private JTabbedPane tabbedPane;
-	private JPanel panel;
 	private JButton btnKickClientRoom;
 	private JButton btnBanClientRoom;
 	private JLabel lblChatroomMitglieder;
 	private JList<ClientProxy> listRoomMembers;
 	private JList<String> listChatRoom;
 	private DefaultListModel<String> listModelPublicChat = new DefaultListModel<String>();
-	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();
+	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();	
+	private Admintool admintool;
+	
 
 	/**
 	 * Launch the application.
 	**/
 	public AdmintoolGUI(Server server)
 	{
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) 
+			{
+				closeWindow();
+			}
+		});
 		initialize();
+		comboBoxServerIDs.addItem("localhost");
 		try
 		{
 			admintool = new Admintool(server);
+			
 		}
 		catch (UnknownHostException e)
 		{
@@ -71,8 +77,13 @@ public class AdmintoolGUI extends JFrame
 			JOptionPane.showMessageDialog(null, "IO Exception AdmintoolGUI im Konstruktor");
 		}
 	}
-
 	
+	private void closeWindow()
+	{
+		
+		dispose();
+		admintool.closeClient();
+	}
 
 	public void connectAdmintool()
 	{
@@ -103,9 +114,10 @@ public class AdmintoolGUI extends JFrame
 		}
 	}
 	
-	private void addChatRoomMember()
+	protected void addChatRoomMember()
 	{
 		listModelPrivateMember.clear();
+
 		ChatRoom cr = (ChatRoom)comboBoxChatRooms.getSelectedItem();
 		for (ClientProxy cp : cr.getClientProxyList())
 		{
@@ -113,15 +125,33 @@ public class AdmintoolGUI extends JFrame
 		}
 	}
 	
-	private void refreshChatRoomMember()
+	protected void deleteChatroomMember()
 	{
-		list
+		int index = listRoomMembers.getSelectedIndex();
+		listModelPrivateMember.remove(index);
+		addChatRoomMember();
 	}
+	
+	private void refreshChatRoomBox()
+	{
+		admintool.closeChatroom((ChatRoom)comboBoxChatRooms.getSelectedItem());
+		comboBoxChatRooms.remove(comboBoxChatRooms.getSelectedIndex());
+	}
+	
+	/* TO DO
+	private void refreshMemberList()
+	{
+		lmMembers.clear();
+		for (ClientProxy cp : )
+		{
+			listModelPrivateMember.addElement(cp);
+		}
+	}*/ 
 
 	private void initialize()
 	{
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 912, 500);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setBounds(100, 100, 1000, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -174,7 +204,7 @@ public class AdmintoolGUI extends JFrame
 		if (lblMember == null)
 		{
 			lblMember = new JLabel("Members");
-			lblMember.setBounds(572, 25, 46, 14);
+			lblMember.setBounds(572, 25, 100, 14);
 		}
 		return lblMember;
 	}
@@ -206,8 +236,8 @@ public class AdmintoolGUI extends JFrame
 		if (btnCloseChat == null)
 		{
 			btnCloseChat = new JButton("Chat Schliessen");
-			btnCloseChat.addActionListener(e -> admintool.closeChatroom((ChatRoom)comboBoxChatRooms.getSelectedItem()));
-			btnCloseChat.setBounds(677, 254, 110, 35);
+			btnCloseChat.addActionListener(e -> refreshChatRoomBox());
+			btnCloseChat.setBounds(682, 254, 138, 35);
 		}
 		return btnCloseChat;
 	}
@@ -299,29 +329,16 @@ public class AdmintoolGUI extends JFrame
 	private JComboBox<ChatRoom> getComboBoxChatRooms() {
 		if (comboBoxChatRooms == null) {
 			comboBoxChatRooms = new JComboBox<ChatRoom>();
-			comboBoxChatRooms.addActionListener(e -> machwasChatRoom());
+			comboBoxChatRooms.addActionListener(e -> addChatRoomMember());
 			comboBoxChatRooms.setBounds(572, 218, 320, 25);
 		}
 		return comboBoxChatRooms;
 	}
-	private JTabbedPane getTabbedPane() {
-		if (tabbedPane == null) {
-			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-			tabbedPane.setBounds(10, 0, 886, 20);
-			tabbedPane.addTab("New tab", null, getPanel(), null);
-		}
-		return tabbedPane;
-	}
-	private JPanel getPanel() {
-		if (panel == null) {
-			panel = new JPanel();
-		}
-		return panel;
-	}
+
 	private JButton getBtnKickClientRoom() {
 		if (btnKickClientRoom == null) {
 			btnKickClientRoom = new JButton("Kick Client");
-			btnKickClientRoom.setBounds(792, 254, 100, 35);
+			btnKickClientRoom.setBounds(830, 254, 100, 35);
 		}
 		return btnKickClientRoom;
 	}
@@ -335,7 +352,7 @@ public class AdmintoolGUI extends JFrame
 	private JLabel getLblChatroomMitglieder() {
 		if (lblChatroomMitglieder == null) {
 			lblChatroomMitglieder = new JLabel("Chatroom Mitglieder");
-			lblChatroomMitglieder.setBounds(572, 300, 110, 14);
+			lblChatroomMitglieder.setBounds(572, 300, 160, 14);
 		}
 		return lblChatroomMitglieder;
 	}
