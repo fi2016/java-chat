@@ -69,7 +69,14 @@ public class ClientProxy implements Runnable
 				Timestamp tsp = Timestamp.valueOf(protocol[0].substring(2, protocol[0].length()));
 				String msg = protocol[1].substring(2, protocol[0].length());	
 				
-				checkSpam(msg,tsp);
+				if(checkSpam(msg,tsp))
+				{
+					//Message is Spam evtl add Timeout etc
+				}
+				else
+				{
+					sendMessage(request);
+				}
 			} else 
 			{
 				System.out.println("Protokoll ungültig!");
