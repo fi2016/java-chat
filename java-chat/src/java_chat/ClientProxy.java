@@ -89,7 +89,6 @@ public class ClientProxy implements Runnable
 		//überprüfen des timestamps & channels (spam)
 		//überprüfen ob immer das selbe geschickt wird
 		
-		sendMessage(request);
 	}
 
 	
