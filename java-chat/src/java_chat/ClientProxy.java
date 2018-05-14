@@ -95,26 +95,29 @@ public class ClientProxy implements Runnable
 
 	private boolean checkSpam(String msg, Timestamp tsp)
 	{
-	
-		if(messageBuffer.containsKey(msg))
+		
+
+		for (Timestamp t : messageBuffer.values())
 		{
-			//Spam selbe Nachricht
-			return true;
-		}
-		else
-		{
-			
-			for (Timestamp t : messageBuffer.values())
+			if(t.getNanos() >= tsp.getNanos() - 100)
 			{
-				if(t.getNanos() >= tsp.getNanos() - 100)
+				return true;
+			}
+			else
+			{
+				if(messageBuffer.containsKey(msg))
 				{
 					return true;
 				}
+				else
+				{
+					messageBuffer.put(msg,tsp);
+					return false;
+				}
 			}
-			messageBuffer.put(msg,tsp);
-			return false;			
+			//Spam selbe Nachricht
 		}
-		
+		return false;
 	}
 
 	protected void sendMessage(String message)
