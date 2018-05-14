@@ -17,7 +17,7 @@ public class Server implements Runnable
 	private String ip;
 	private int port;
 	private AdmintoolGUI admintoolGUI;
-	private SpartanPhalanx spartanPhalan;
+	private SpartanPhalanx spartanPhalanx;
 
 	public Server(ServerGUI serverGUI, int port, String ip)
 	{
@@ -27,7 +27,7 @@ public class Server implements Runnable
 		roomList = new ArrayList<ChatRoom>();
 		createRoom("public");
 
-		spartanPhalan = new SpartanPhalanx();
+		spartanPhalanx = new SpartanPhalanx();
 		this.port = port;
 		this.ip = ip;
 		this.serverGUI = serverGUI;
@@ -99,7 +99,7 @@ public class Server implements Runnable
 
 		if (clientList != null)
 		{
-			if(spartanPhalan.identifyDDos(clientSocket.getInetAddress().toString()))
+			if(spartanPhalanx.identifyDDos(clientSocket.getInetAddress().toString()))
 			{
 				clientSocket.close();
 			}

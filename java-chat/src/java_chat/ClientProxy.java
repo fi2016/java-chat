@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 
 public class ClientProxy implements Runnable
 {
@@ -15,6 +17,7 @@ public class ClientProxy implements Runnable
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private Thread t;
+	private HashMap<String, Timestamp> messageBuffer;
 
 	public ClientProxy(Socket socket, Server server)
 	{
@@ -64,8 +67,8 @@ public class ClientProxy implements Runnable
 			{
 				Timestamp tsp = Timestamp.valueOf(protocol[0].substring(2, protocol[0].length()));
 				String msg = protocol[1].substring(2, protocol[0].length());	
-				
-				checkSpam(msg,tsp);
+				String nick = protocol[2].substring(2, protocol[0].length());
+				checkSpam(msg+ "\u001e" +nick,tsp);
 			} else 
 			{
 				System.out.println("Protokoll ungültig!");
@@ -83,9 +86,19 @@ public class ClientProxy implements Runnable
 
 	
 
-	private void checkSpam(String msg, Timestamp tsp)
+	private boolean checkSpam(String msg, Timestamp tsp)
 	{
-		
+	
+		if(messageBuffer.containsKey(msg))
+		{
+			//Spam
+			return true;
+		}
+		else
+		{
+			messageBuffer.add()
+			return false;
+		}
 		
 	}
 
