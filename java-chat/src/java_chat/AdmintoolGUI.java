@@ -2,7 +2,6 @@ package java_chat;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -11,13 +10,11 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class AdmintoolGUI extends JFrame
 {
-
 	/**
 	 * 
 	 */

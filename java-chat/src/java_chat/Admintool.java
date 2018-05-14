@@ -8,13 +8,20 @@ import javax.swing.JOptionPane;
 
 public class Admintool extends Client
 {	
-	private ArrayList<Client> clients = new ArrayList<Client>();
+	private ArrayList<ClientProxy> clients = new ArrayList<ClientProxy>();
 	private Server server;
+	private ArrayList<String> adminList = new ArrayList<String>();
 	
 	public Admintool(Server server) throws UnknownHostException, IOException
 	{
 		super();
 		this.server = server;
+		adminList.add("Deine Mudda");
+		adminList.add("Darth Vader");
+		adminList.add("MilianFortnite");
+		adminList.add("Mini49");
+		adminList.add("n0ize");
+		adminList.add("xXPuSsYD3Str0y3rXx");
 	}
 
 	protected void kickClient(Client client)
@@ -33,12 +40,10 @@ public class Admintool extends Client
 		client.getIp();
 		client.closeClient();
 		refreshLists();
-		
 	}
 	
 	protected void closeChatroom(ChatRoom chatRoom)
 	{
-		
 		chatRoom.closeRoom();
 		refreshRooms();
 	}
