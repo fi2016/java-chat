@@ -103,14 +103,19 @@ public class AdmintoolGUI extends JFrame
 		}
 	}
 	
-	private void machwasChatRoom()
+	private void addChatRoomMember()
 	{
-		
+		listModelPrivateMember.clear();
 		ChatRoom cr = (ChatRoom)comboBoxChatRooms.getSelectedItem();
 		for (ClientProxy cp : cr.getClientProxyList())
 		{
 			listModelPrivateMember.addElement(cp);
 		}
+	}
+	
+	private void refreshChatRoomMember()
+	{
+		list
 	}
 
 	private void initialize()
