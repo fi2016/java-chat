@@ -1,5 +1,6 @@
 package java_chat;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -67,8 +68,8 @@ public class ClientProxy implements Runnable
 			{
 				Timestamp tsp = Timestamp.valueOf(protocol[0].substring(2, protocol[0].length()));
 				String msg = protocol[1].substring(2, protocol[0].length());	
-				String nick = protocol[2].substring(2, protocol[0].length());
-				checkSpam(msg+ "\u001e" +nick,tsp);
+				
+				checkSpam(msg,tsp);
 			} else 
 			{
 				System.out.println("Protokoll ungültig!");
@@ -91,13 +92,21 @@ public class ClientProxy implements Runnable
 	
 		if(messageBuffer.containsKey(msg))
 		{
-			//Spam
+			//Spam selbe Nachricht
 			return true;
 		}
 		else
 		{
-			messageBuffer.add()
-			return false;
+			
+			for (Timestamp t : messageBuffer.values())
+			{
+				if(t.getNanos() >= tsp.getNanos() - 100)
+				{
+					return true;
+				}
+			}
+			messageBuffer.put(msg,tsp);
+			return false;			
 		}
 		
 	}
