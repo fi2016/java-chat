@@ -17,31 +17,22 @@ public class Server implements Runnable
 	private ArrayList<ChatRoom> roomList;
 	private String ip;
 	private int port;
-<<<<<<< HEAD
 	private AdmintoolGUI admintoolGUI;
 	private SpartanPhalanx spartanPhalanx;
-
-=======
-	private AdmintoolGUI admintoolGUI;
 	private long time;
 	HashMap<String, Long> blacklist = new HashMap<>();
 	private SpartanPhalanx spartanPhalan;
 	private ArrayList<String> adminList = new ArrayList<String>();
-	
->>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 	public Server(ServerGUI serverGUI, int port, String ip)
 	{
 		clientList = new ArrayList<ClientProxy>(); // Wird noch in
 													// ChatRoom-Klasse verlagert
-
 		roomList = new ArrayList<ChatRoom>();
 		createRoom("public");
-
 		spartanPhalanx = new SpartanPhalanx();
 		this.port = port;
 		this.ip = ip;
 		this.serverGUI = serverGUI;
-		
 		adminList.add("Deine Mudda");
 		adminList.add("Darth Vader");
 		adminList.add("MilianFortnite");
