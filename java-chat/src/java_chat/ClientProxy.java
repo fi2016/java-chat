@@ -63,7 +63,9 @@ public class ClientProxy implements Runnable
 			if (protocol[0].substring(0, 2).equals("TSP") && protocol[1].substring(0, 2).equals("MSG")) 
 			{
 				Timestamp tsp = Timestamp.valueOf(protocol[0].substring(2, protocol[0].length()));
-				String msg = protocol[1].substring(2, protocol[0].length());				
+				String msg = protocol[1].substring(2, protocol[0].length());	
+				
+				checkSpam(msg,tsp);
 			} else 
 			{
 				System.out.println("Protokoll ungültig!");
@@ -77,6 +79,14 @@ public class ClientProxy implements Runnable
 		//überprüfen ob immer das selbe geschickt wird
 		
 		sendMessage(request);
+	}
+
+	
+
+	private void checkSpam(String msg, Timestamp tsp)
+	{
+		
+		
 	}
 
 	protected void sendMessage(String message)

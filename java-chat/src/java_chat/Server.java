@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Server implements Runnable
 {
@@ -17,6 +18,12 @@ public class Server implements Runnable
 	private String ip;
 	private int port;
 	private AdmintoolGUI admintoolGUI;
+<<<<<<< HEAD
+	private long time;
+	HashMap<String, Long> blacklist = new HashMap<>();
+=======
+	private SpartanPhalanx spartanPhalan;
+>>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 
 	public Server(ServerGUI serverGUI, int port, String ip)
 	{
@@ -26,9 +33,16 @@ public class Server implements Runnable
 		roomList = new ArrayList<ChatRoom>();
 		createRoom("public");
 
+		spartanPhalan = new SpartanPhalanx();
 		this.port = port;
 		this.ip = ip;
 		this.serverGUI = serverGUI;
+	}
+	
+	public void addBlacklist()
+	{
+		time = System.currentTimeMillis();
+		blacklist.put(ip,time);
 	}
 
 	public void closeServer()
@@ -97,9 +111,17 @@ public class Server implements Runnable
 
 		if (clientList != null)
 		{
-			ClientProxy c = new ClientProxy(clientSocket, this);
-			clientList.add(c);
-			roomList.get(0).addClient(c);
+			if(spartanPhalan.identifyDDos(clientSocket.getInetAddress().toString()))
+			{
+				clientSocket.close();
+			}
+			else
+			{
+				ClientProxy c = new ClientProxy(clientSocket, this);
+				clientList.add(c);
+				roomList.get(0).addClient(c);
+			}
+		
 		}
 		else
 		{
