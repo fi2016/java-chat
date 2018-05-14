@@ -1,6 +1,5 @@
 package java_chat;
 
-import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import javax.swing.DefaultListModel;
@@ -80,7 +79,6 @@ public class AdmintoolGUI extends JFrame
 	
 	private void closeWindow()
 	{
-		
 		dispose();
 		admintool.closeClient();
 	}
