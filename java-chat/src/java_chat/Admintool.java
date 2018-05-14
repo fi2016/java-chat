@@ -30,6 +30,7 @@ public class Admintool extends Client
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
 		client.showNotification(message);
 		server.addBlacklist(client);
+		client.getIp();
 		client.closeClient();
 		refreshLists();
 		

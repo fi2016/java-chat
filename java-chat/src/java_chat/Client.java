@@ -18,6 +18,8 @@ public class Client implements Runnable
 	private ObjectInputStream in;
 	private Thread t;
 	private String request;
+	private String ip;
+	Server server;
 	
 	public Client() throws UnknownHostException, IOException
 	{
@@ -80,6 +82,13 @@ public class Client implements Runnable
 	protected void addBlacklist()
 	{
 		//TO-DO: IP an Server schicken um gesperrt zu werden
+	}
+	
+	protected void getIp()
+	{
+		ip = socket.getRemoteSocketAddress().toString();
+		server.addBlacklist();
+		
 	}
 	
 	protected void closeClient()

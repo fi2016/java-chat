@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Server implements Runnable
 {
@@ -17,6 +18,8 @@ public class Server implements Runnable
 	private String ip;
 	private int port;
 	private AdmintoolGUI admintoolGUI;
+	private long time;
+	HashMap<String, Long> blacklist = new HashMap<>();
 
 	public Server(ServerGUI serverGUI, int port, String ip)
 	{
@@ -29,6 +32,12 @@ public class Server implements Runnable
 		this.port = port;
 		this.ip = ip;
 		this.serverGUI = serverGUI;
+	}
+	
+	public void addBlacklist()
+	{
+		time = System.currentTimeMillis();
+		blacklist.put(ip,time);
 	}
 
 	public void closeServer()
