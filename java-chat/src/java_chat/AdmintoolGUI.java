@@ -14,8 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class AdmintoolGUI extends JFrame
 {
@@ -72,8 +70,6 @@ public class AdmintoolGUI extends JFrame
 		}
 	}
 
-	
-
 	public void connectAdmintool()
 	{
 		try
@@ -105,7 +101,6 @@ public class AdmintoolGUI extends JFrame
 	
 	private void machwasChatRoom()
 	{
-		
 		ChatRoom cr = (ChatRoom)comboBoxChatRooms.getSelectedItem();
 		for (ClientProxy cp : cr.getClientProxyList())
 		{

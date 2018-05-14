@@ -35,6 +35,7 @@ public class Admintool extends Client
 	
 	protected void closeChatroom(ChatRoom chatRoom)
 	{
+		
 		chatRoom.closeRoom();
 	}
 	
