@@ -55,7 +55,28 @@ public class ClientProxy implements Runnable
 
 	private void read(Object obj)
 	{
+		String request = (String) obj;
 		
+		String[] protocol = request.split("\u001e");
+		if (protocol.length == 2) 
+		{
+			if (protocol[0].substring(0, 2).equals("TSP") && protocol[1].substring(0, 2).equals("MSG")) 
+			{
+				Timestamp tsp = Timestamp.valueOf(protocol[0].substring(2, protocol[0].length()));
+				String msg = protocol[1].substring(2, protocol[0].length());				
+			} else 
+			{
+				System.out.println("Protokoll ungültig!");
+			}
+		} else 
+		{
+			System.out.println("Protokoll ungültig!");
+		}
+		
+		//überprüfen des timestamps & channels (spam)
+		//überprüfen ob immer das selbe geschickt wird
+		
+		sendMessage(request);
 	}
 
 	protected void sendMessage(String message)

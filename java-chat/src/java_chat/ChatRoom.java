@@ -1,12 +1,19 @@
-/*"Neuer Raum erstellen"
+/*
+==="Neuer Raum erstellen"===
+
 - ClientGUI: GUI Knöpfe
+- Client: "Ich erstelle einen Raum"-Funktion (-> ChatRoom-Klasse) -> protected void createRoom() //an Protokoll halten
+- Socket
+- ClientProxy : in Read-Methode unsern Teil hinzufüngen (Protokoll)
+- Server: CreateRoom-Methode ausführen
+- ChatRoom erstellen
 
 
 
 
 
 //in Client Funktion zum Erstellen eines Rooms (-> Room-Klasse) (eigene Liste führen)
-//Client: "Ich erstelle einen Raum"-Funktion (-> ChatRoom-Klasse)
+
 */
 package java_chat;
 
