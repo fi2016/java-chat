@@ -22,6 +22,7 @@ public class Admintool extends Client
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
 		client.showNotification(message);
 		client.closeClient();
+		refreshLists();
 	}
 	
 	protected void banClient(Client client)
@@ -30,6 +31,7 @@ public class Admintool extends Client
 		client.showNotification(message);
 		server.addBlacklist(client);
 		client.closeClient();
+		refreshLists();
 		
 	}
 	
@@ -37,6 +39,7 @@ public class Admintool extends Client
 	{
 		
 		chatRoom.closeRoom();
+		refreshRooms();
 	}
 	
 	private void refreshLists()
@@ -46,5 +49,10 @@ public class Admintool extends Client
 		{
 			clients.add(client);
 		}
+	}
+	
+	protected void refreshRooms()
+	{
+		
 	}
 }
