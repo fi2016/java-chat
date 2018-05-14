@@ -85,7 +85,7 @@ public class ClientProxy implements Runnable
 
 	private void checkSpam(String msg, Timestamp tsp)
 	{
-		// TODO Auto-generated method stub
+		
 		
 	}
 
