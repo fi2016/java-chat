@@ -127,6 +127,7 @@ public class ClientProxy implements Runnable
 			if (out == null)
 			{
 				out = new ObjectOutputStream(socket.getOutputStream());
+				//
 			}
 			out.writeUTF(message);
 		} catch (IOException e)
