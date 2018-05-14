@@ -18,13 +18,11 @@ public class Server implements Runnable
 	private String ip;
 	private int port;
 	private AdmintoolGUI admintoolGUI;
-<<<<<<< HEAD
 	private long time;
 	HashMap<String, Long> blacklist = new HashMap<>();
-=======
 	private SpartanPhalanx spartanPhalan;
->>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
-
+	private ArrayList<String> adminList = new ArrayList<String>();
+	
 	public Server(ServerGUI serverGUI, int port, String ip)
 	{
 		clientList = new ArrayList<ClientProxy>(); // Wird noch in
@@ -37,6 +35,13 @@ public class Server implements Runnable
 		this.port = port;
 		this.ip = ip;
 		this.serverGUI = serverGUI;
+		
+		adminList.add("Deine Mudda");
+		adminList.add("Darth Vader");
+		adminList.add("MilianFortnite");
+		adminList.add("Mini49");
+		adminList.add("n0ize");
+		adminList.add("xXPuSsYD3Str0y3rXx");
 	}
 	
 	public void addBlacklist()
@@ -116,7 +121,7 @@ public class Server implements Runnable
 				clientSocket.close();
 			}
 			else
-			{
+			{				
 				ClientProxy c = new ClientProxy(clientSocket, this);
 				clientList.add(c);
 				roomList.get(0).addClient(c);
@@ -127,6 +132,11 @@ public class Server implements Runnable
 		{
 			clientSocket.close();
 		}
+	}
+	
+	private void checkAdmin()
+	{
+		//TO-DO
 	}
 
 	private void createRoom(String name)

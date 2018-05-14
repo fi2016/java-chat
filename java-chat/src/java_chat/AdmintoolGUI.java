@@ -2,6 +2,8 @@ package java_chat;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -44,6 +46,7 @@ public class AdmintoolGUI extends JFrame
 	private JList<String> listChatRoom;
 	private DefaultListModel<String> listModelPublicChat = new DefaultListModel<String>();
 	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();
+	private ArrayList<String> adminList = new ArrayList<String>();
 
 	/**
 	 * Launch the application.
@@ -55,6 +58,12 @@ public class AdmintoolGUI extends JFrame
 		try
 		{
 			admintool = new Admintool(server);
+			adminList.add("Deine Mudda");
+			adminList.add("Darth Vader");
+			adminList.add("MilianFortnite");
+			adminList.add("Mini49");
+			adminList.add("n0ize");
+			adminList.add("xXPuSsYD3Str0y3rXx");
 		}
 		catch (UnknownHostException e)
 		{

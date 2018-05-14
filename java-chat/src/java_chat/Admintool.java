@@ -10,18 +10,13 @@ public class Admintool extends Client
 {	
 	private ArrayList<ClientProxy> clients = new ArrayList<ClientProxy>();
 	private Server server;
-	private ArrayList<String> adminList = new ArrayList<String>();
+	
 	
 	public Admintool(Server server) throws UnknownHostException, IOException
 	{
 		super();
 		this.server = server;
-		adminList.add("Deine Mudda");
-		adminList.add("Darth Vader");
-		adminList.add("MilianFortnite");
-		adminList.add("Mini49");
-		adminList.add("n0ize");
-		adminList.add("xXPuSsYD3Str0y3rXx");
+		
 	}
 
 	protected void kickClient(Client client)
