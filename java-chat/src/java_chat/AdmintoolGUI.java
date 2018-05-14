@@ -1,9 +1,8 @@
 package java_chat;
 
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class AdmintoolGUI extends JFrame
 {
@@ -44,8 +45,7 @@ public class AdmintoolGUI extends JFrame
 	private JList<ClientProxy> listRoomMembers;
 	private JList<String> listChatRoom;
 	private DefaultListModel<String> listModelPublicChat = new DefaultListModel<String>();
-	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();
-	
+	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();	
 	private Admintool admintool;
 	
 
@@ -54,6 +54,13 @@ public class AdmintoolGUI extends JFrame
 	**/
 	public AdmintoolGUI(Server server)
 	{
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) 
+			{
+				closeWindow();
+			}
+		});
 		initialize();
 		comboBoxServerIDs.addItem("localhost");
 		try
@@ -69,6 +76,13 @@ public class AdmintoolGUI extends JFrame
 		{
 			JOptionPane.showMessageDialog(null, "IO Exception AdmintoolGUI im Konstruktor");
 		}
+	}
+	
+	private void closeWindow()
+	{
+		
+		dispose();
+		admintool.closeClient();
 	}
 
 	public void connectAdmintool()
@@ -136,7 +150,7 @@ public class AdmintoolGUI extends JFrame
 
 	private void initialize()
 	{
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 1000, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
