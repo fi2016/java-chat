@@ -27,7 +27,6 @@ public class AdmintoolGUI extends JFrame
 	private JLabel lblMember;
 	private JButton btnKick;
 	private JButton btnBan;
-	private Admintool admintool;
 	private JButton btnCloseChat;
 	private JLabel lblServer;
 	private JComboBox<String> comboBoxServerIDs;
@@ -46,6 +45,8 @@ public class AdmintoolGUI extends JFrame
 	private JList<String> listChatRoom;
 	private DefaultListModel<String> listModelPublicChat = new DefaultListModel<String>();
 	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();
+	
+	private Admintool admintool;
 	
 
 	/**
