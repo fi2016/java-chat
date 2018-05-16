@@ -106,7 +106,7 @@ public class ClientGUI extends JFrame
 		try 
 		{
 			client.sendMessage(message, roomName);
-			textFieldMessage.setText("");
+			textFieldMessage.setText(""); //foo
 		} catch (IOException e)
 		{
 
