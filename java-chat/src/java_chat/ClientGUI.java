@@ -75,7 +75,7 @@ public class ClientGUI extends JFrame
 		{
 			client = new Client();
 			client.connectServer(hostName);
-client.sendMessage("TSP0000\\u001eCMDshutdown\\u001ePAMok");
+
 		} catch (UnknownHostException e)
 		{
 			JOptionPane.showMessageDialog(null, "Der Host " + hostName + " ist unbekannt");
