@@ -103,7 +103,7 @@ client.sendMessage("TSP0000\\u001eCMDshutdown\\u001ePAMok");
 		String message = textFieldMessage.getText();
 		String roomName = tabsHistory.getSelectedComponent().getName();
 
-		try
+		try 
 		{
 			client.sendMessage(message, roomName);
 			textFieldMessage.setText("");
