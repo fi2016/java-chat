@@ -22,6 +22,7 @@ public class ClientProxy implements Runnable
 
 	public ClientProxy(Socket socket, Server server)
 	{
+		messageBuffer = new HashMap<String, Timestamp>();
 		this.socket = socket;
 		this.server = server;
 		t = new Thread(this);
