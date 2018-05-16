@@ -20,7 +20,7 @@ public class Client implements Runnable
 	private Thread t;
 	private String request;
 	private String ip;
-	Server server;
+	private Server server;
 	
 	private ArrayList<Room> roomList = new ArrayList<Room>();
 	
@@ -59,7 +59,7 @@ public class Client implements Runnable
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		
 
-		message = "TSP" + timestamp + "\u001eCHN" + roomName /* + "\u001eNIK"  + NIK */ +  "\u001eMSG" + message;
+		message = "TSP" + timestamp + "\u001eCHN" + roomName /* + "\u001eNIK"  + NIK */ +  "\u001eMSG" + message; 
 		out.writeUTF(message);
 		out.flush();
 	}
