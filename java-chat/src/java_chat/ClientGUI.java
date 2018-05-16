@@ -117,7 +117,7 @@ client.sendMessage("TSP0000\\u001eCMDshutdown\\u001ePAMok");
 
 	protected void setNickname()
 	{
-		/*
+		/* 
 		 * Client Anmeldung bei Server
 		 * 
 		 * Nick an Client senden
