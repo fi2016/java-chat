@@ -9,11 +9,8 @@ import java.util.HashMap;
 
 public class Server implements Runnable
 {
-	private ArrayList<ClientProxy> clientList; // Wird noch in ChatRoom-Klasse
-												// verlagert
-												// Carry wir brauchen auch eine MemberListe also die AdmintoolGUI grüze Dein Johann
+	private ArrayList<ClientProxy> clientList;
 	private ServerSocket serverSocket;
-	private ServerGUI serverGUI;
 	private ArrayList<ChatRoom> roomList;
 	private String ip;
 	private int port;
@@ -23,16 +20,15 @@ public class Server implements Runnable
 	HashMap<String, Long> blacklist = new HashMap<>();
 	private SpartanPhalanx spartanPhalan;
 	private ArrayList<String> adminList = new ArrayList<String>();
+	
 	public Server(ServerGUI serverGUI, int port, String ip)
 	{
-		clientList = new ArrayList<ClientProxy>(); // Wird noch in
-													// ChatRoom-Klasse verlagert
+		clientList = new ArrayList<ClientProxy>();
 		roomList = new ArrayList<ChatRoom>();
 		createRoom("public");
 		spartanPhalanx = new SpartanPhalanx();
 		this.port = port;
 		this.ip = ip;
-		this.serverGUI = serverGUI;
 		adminList.add("Deine Mudda");
 		adminList.add("Darth Vader");
 		adminList.add("MilianFortnite");
