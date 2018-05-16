@@ -129,7 +129,7 @@ public class Server implements Runnable
 	
 	private void checkAdmin()
 	{
-		//TO-DO
+		//TO-DOoo
 	}
 
 	private void createRoom(String name)
