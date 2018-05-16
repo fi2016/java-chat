@@ -44,18 +44,18 @@ public class AdmintoolGUI extends JFrame
 	private JList<ClientProxy> listRoomMembers;
 	private JList<String> listChatRoom;
 	private DefaultListModel<String> listModelPublicChat = new DefaultListModel<String>();
-	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();	
+	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();
 	private Admintool admintool;
-	
 
 	/**
 	 * Launch the application.
-	**/
+	 **/
 	public AdmintoolGUI(Server server)
 	{
-		addWindowListener(new WindowAdapter() {
+		addWindowListener(new WindowAdapter()
+		{
 			@Override
-			public void windowClosing(WindowEvent arg0) 
+			public void windowClosing(WindowEvent arg0)
 			{
 				closeWindow();
 			}
@@ -65,7 +65,7 @@ public class AdmintoolGUI extends JFrame
 		try
 		{
 			admintool = new Admintool(server);
-			
+
 		}
 		catch (UnknownHostException e)
 		{
@@ -76,7 +76,7 @@ public class AdmintoolGUI extends JFrame
 			JOptionPane.showMessageDialog(null, "IO Exception AdmintoolGUI im Konstruktor");
 		}
 	}
-	
+
 	private void closeWindow()
 	{
 		dispose();
@@ -85,19 +85,7 @@ public class AdmintoolGUI extends JFrame
 
 	public void connectAdmintool()
 	{
-		try
-		{
-			admintool.connectServer(comboBoxServerIDs.getSelectedItem().toString());
-
-		}
-		catch (UnknownHostException e)
-		{
-			JOptionPane.showMessageDialog(null, "Der angegebene Host ist nicht bekannt");
-		}
-		catch (IOException e)
-		{
-			JOptionPane.showMessageDialog(null, "IO Exception AdmintoolGUI beim connecten");
-		}
+		admintool.connect(comboBoxServerIDs.getSelectedItem().toString());
 	}
 
 	public void sendMessage()
@@ -111,40 +99,40 @@ public class AdmintoolGUI extends JFrame
 			JOptionPane.showMessageDialog(null, "IO Exception AdmintoolGUI beim senden");
 		}
 	}
-	
+
 	protected void addChatRoomMember()
 	{
 		listModelPrivateMember.clear();
 
-		ChatRoom cr = (ChatRoom)comboBoxChatRooms.getSelectedItem();
+		ChatRoom cr = (ChatRoom) comboBoxChatRooms.getSelectedItem();
 		for (ClientProxy cp : cr.getClientProxyList())
 		{
 			listModelPrivateMember.addElement(cp);
 		}
 	}
-	
+
 	protected void deleteChatroomMember()
 	{
 		int index = listRoomMembers.getSelectedIndex();
 		listModelPrivateMember.remove(index);
 		addChatRoomMember();
 	}
-	
+
 	private void refreshChatRoomBox()
 	{
-		admintool.closeChatroom((ChatRoom)comboBoxChatRooms.getSelectedItem());
+		admintool.closeChatroom((ChatRoom) comboBoxChatRooms.getSelectedItem());
 		comboBoxChatRooms.remove(comboBoxChatRooms.getSelectedIndex());
 	}
-	
-	/* TO DO
-	private void refreshMemberList()
+
+	protected void disconnect()
 	{
-		lmMembers.clear();
-		for (ClientProxy cp : )
-		{
-			listModelPrivateMember.addElement(cp);
-		}
-	}*/ 
+		admintool.disconnect();
+	}
+
+	/*
+	 * TO DO private void refreshMemberList() { lmMembers.clear(); for
+	 * (ClientProxy cp : ) { listModelPrivateMember.addElement(cp); } }
+	 */
 
 	private void initialize()
 	{
@@ -212,7 +200,8 @@ public class AdmintoolGUI extends JFrame
 		if (btnKick == null)
 		{
 			btnKick = new JButton("Kicken");
-			btnKick.addActionListener(e -> admintool.kickClient(lmMembers.elementAt(listAllMembers.getSelectedIndex())));
+			btnKick.addActionListener(
+					e -> admintool.kickClient(lmMembers.elementAt(listAllMembers.getSelectedIndex())));
 			btnKick.setBounds(778, 40, 92, 25);
 		}
 		return btnKick;
@@ -297,11 +286,11 @@ public class AdmintoolGUI extends JFrame
 		if (btnDisconnect == null)
 		{
 			btnDisconnect = new JButton("Disconnect");
+			btnDisconnect.addActionListener(e -> disconnect());
 			btnDisconnect.setBounds(477, 55, 85, 23);
 		}
 		return btnDisconnect;
 	}
-
 
 	private JTextField getTextFieldMessage()
 	{
@@ -324,8 +313,11 @@ public class AdmintoolGUI extends JFrame
 		}
 		return btnSend;
 	}
-	private JComboBox<ChatRoom> getComboBoxChatRooms() {
-		if (comboBoxChatRooms == null) {
+
+	private JComboBox<ChatRoom> getComboBoxChatRooms()
+	{
+		if (comboBoxChatRooms == null)
+		{
 			comboBoxChatRooms = new JComboBox<ChatRoom>();
 			comboBoxChatRooms.addActionListener(e -> addChatRoomMember());
 			comboBoxChatRooms.setBounds(572, 218, 320, 25);
@@ -333,36 +325,50 @@ public class AdmintoolGUI extends JFrame
 		return comboBoxChatRooms;
 	}
 
-	private JButton getBtnKickClientRoom() {
-		if (btnKickClientRoom == null) {
+	private JButton getBtnKickClientRoom()
+	{
+		if (btnKickClientRoom == null)
+		{
 			btnKickClientRoom = new JButton("Kick Client");
 			btnKickClientRoom.setBounds(830, 254, 100, 35);
 		}
 		return btnKickClientRoom;
 	}
-	private JButton getBtnBanClientRoom() {
-		if (btnBanClientRoom == null) {
+
+	private JButton getBtnBanClientRoom()
+	{
+		if (btnBanClientRoom == null)
+		{
 			btnBanClientRoom = new JButton("Ban Client");
 			btnBanClientRoom.setBounds(572, 254, 100, 35);
 		}
 		return btnBanClientRoom;
 	}
-	private JLabel getLblChatroomMember() {
-		if (lblChatroomMember == null) {
+
+	private JLabel getLblChatroomMember()
+	{
+		if (lblChatroomMember == null)
+		{
 			lblChatroomMember = new JLabel("Chatroom Member");
 			lblChatroomMember.setBounds(572, 300, 160, 14);
 		}
 		return lblChatroomMember;
 	}
-	private JList<ClientProxy> getListRoomMembers() {
-		if (listRoomMembers == null) {
+
+	private JList<ClientProxy> getListRoomMembers()
+	{
+		if (listRoomMembers == null)
+		{
 			listRoomMembers = new JList<ClientProxy>(listModelPrivateMember);
 			listRoomMembers.setBounds(572, 325, 160, 100);
 		}
 		return listRoomMembers;
 	}
-	private JList<String> getListChatRoom() {
-		if (listChatRoom == null) {
+
+	private JList<String> getListChatRoom()
+	{
+		if (listChatRoom == null)
+		{
 			listChatRoom = new JList<String>(listModelPublicChat);
 			listChatRoom.setBounds(10, 89, 550, 240);
 		}

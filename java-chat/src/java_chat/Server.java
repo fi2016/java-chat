@@ -20,7 +20,7 @@ public class Server implements Runnable
 	HashMap<String, Long> blacklist = new HashMap<>();
 	private SpartanPhalanx spartanPhalan;
 	private ArrayList<String> adminList = new ArrayList<String>();
-	
+
 	public Server(ServerGUI serverGUI, int port, String ip)
 	{
 		clientList = new ArrayList<ClientProxy>();
@@ -36,11 +36,11 @@ public class Server implements Runnable
 		adminList.add("n0ize");
 		adminList.add("xXPuSsYD3Str0y3rXx");
 	}
-	
+
 	public void addBlacklist()
 	{
 		time = System.currentTimeMillis();
-		blacklist.put(ip,time);
+		blacklist.put(ip, time);
 	}
 
 	public void closeServer()
@@ -84,7 +84,6 @@ public class Server implements Runnable
 
 		while (!Thread.currentThread().isInterrupted())
 		{
-
 			try
 			{
 				serverSocket = new ServerSocket(port);
@@ -106,30 +105,41 @@ public class Server implements Runnable
 
 	private void acceptClient(Socket clientSocket) throws IOException
 	{
-
 		if (clientList != null)
 		{
-			if(spartanPhalanx.identifyDDos(clientSocket.getInetAddress().toString()))
+			if (spartanPhalanx.identifyDDos(clientSocket.getInetAddress().toString()))
 			{
 				clientSocket.close();
 			}
 			else
-			{				
+			{
 				ClientProxy c = new ClientProxy(clientSocket, this);
 				clientList.add(c);
 				roomList.get(0).addClient(c);
+				checkAdmin();
 			}
-		
 		}
 		else
 		{
 			clientSocket.close();
 		}
 	}
-	
+
 	private void checkAdmin()
 	{
-		//TO-DOoo
+		for (ClientProxy cp : clientList)
+		{
+			String nickname = cp.getNickname();
+			for (String admin : adminList)
+			{
+				if (nickname.equals(admin))
+				{
+					cp.sendMessage("CMD\u001eENA\u001e4True");
+					// Client anpassen das er weis was das ist *hust* Nico
+					// machmal *hust*
+				}
+			}
+		}
 	}
 
 	private void createRoom(String name)
@@ -147,7 +157,6 @@ public class Server implements Runnable
 		{
 			ChatRoom c = new ChatRoom();
 			c.setName(name);
-
 			roomList.add(c);
 		}
 		else
@@ -155,10 +164,10 @@ public class Server implements Runnable
 			// Fehlermeldung zurückgeben
 		}
 	}
-	
+
 	protected void addBlacklist(Client client)
 	{
-		
+
 	}
 
 	public ArrayList<ClientProxy> getClientList()
