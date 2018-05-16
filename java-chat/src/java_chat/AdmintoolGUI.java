@@ -40,7 +40,7 @@ public class AdmintoolGUI extends JFrame
 	private JComboBox<ChatRoom> comboBoxChatRooms;
 	private JButton btnKickClientRoom;
 	private JButton btnBanClientRoom;
-	private JLabel lblChatroomMitglieder;
+	private JLabel lblChatroomMember;
 	private JList<ClientProxy> listRoomMembers;
 	private JList<String> listChatRoom;
 	private DefaultListModel<String> listModelPublicChat = new DefaultListModel<String>();
@@ -172,7 +172,7 @@ public class AdmintoolGUI extends JFrame
 		contentPane.add(getComboBoxChatRooms());
 		contentPane.add(getBtnKickClientRoom());
 		contentPane.add(getBtnBanClientRoom());
-		contentPane.add(getLblChatroomMitglieder());
+		contentPane.add(getLblChatroomMember());
 		contentPane.add(getListRoomMembers());
 		contentPane.add(getListChatRoom());
 	}
@@ -233,7 +233,7 @@ public class AdmintoolGUI extends JFrame
 	{
 		if (btnCloseChat == null)
 		{
-			btnCloseChat = new JButton("Chat Schliessen");
+			btnCloseChat = new JButton("Close Chat");
 			btnCloseChat.addActionListener(e -> refreshChatRoomBox());
 			btnCloseChat.setBounds(682, 254, 138, 35);
 		}
@@ -347,12 +347,12 @@ public class AdmintoolGUI extends JFrame
 		}
 		return btnBanClientRoom;
 	}
-	private JLabel getLblChatroomMitglieder() {
-		if (lblChatroomMitglieder == null) {
-			lblChatroomMitglieder = new JLabel("Chatroom Mitglieder");
-			lblChatroomMitglieder.setBounds(572, 300, 160, 14);
+	private JLabel getLblChatroomMember() {
+		if (lblChatroomMember == null) {
+			lblChatroomMember = new JLabel("Chatroom Member");
+			lblChatroomMember.setBounds(572, 300, 160, 14);
 		}
-		return lblChatroomMitglieder;
+		return lblChatroomMember;
 	}
 	private JList<ClientProxy> getListRoomMembers() {
 		if (listRoomMembers == null) {
