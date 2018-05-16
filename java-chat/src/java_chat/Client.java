@@ -8,6 +8,7 @@ import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Client implements Runnable
 {
@@ -21,6 +22,18 @@ public class Client implements Runnable
 	private String ip;
 	Server server;
 	
+	private ArrayList<Room> roomList = new ArrayList<Room>();
+	
+	public ArrayList<Room> getRoomList()
+	{
+		return roomList;
+	}
+
+	public void setRoomList(ArrayList<Room> roomList)
+	{
+		this.roomList = roomList;
+	}
+
 	public Client() throws UnknownHostException, IOException
 	{
 		t = new Thread(this);

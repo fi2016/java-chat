@@ -1,5 +1,6 @@
 package java_chat;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,6 +10,8 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Label;
+
 import javax.swing.JTextField;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -21,6 +24,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTabbedPane;
 
 public class ClientGUI extends JFrame
 {
@@ -37,7 +41,6 @@ public class ClientGUI extends JFrame
 	private JButton btnDisconnect;
 	protected JTextField textFieldMessage;
 	private JButton btnSend;
-	protected JList<String> listChatroom;
 	protected JComboBox<String> comboBoxServerIDs;
 	protected Socket clientSocket;
 	private Client client;
@@ -45,7 +48,9 @@ public class ClientGUI extends JFrame
 	private DefaultListModel<String> user = new DefaultListModel<String>();
 	private ArrayList<String> userList = new ArrayList<String>();
 	private JList<String> listUser;
-
+	private JTabbedPane tabsHistory;
+	
+	DefaultListModel history = new DefaultListModel<>();
 	/**
 	 * Launch the application.
 	 */
@@ -93,36 +98,26 @@ public class ClientGUI extends JFrame
 		client.closeClient();
 	}
 
-	protected void handoverMessage()
+	protected void handoverMessage() //Message to client
 	{
 		String message = textFieldMessage.getText();
+		String roomName = tabsHistory.getSelectedComponent().getName();
 
-		try
+		try 
 		{
-			client.sendMessage(message);
-			textFieldMessage.setText("");
+			client.sendMessage(message, roomName);
+			textFieldMessage.setText(""); //foo
 		} catch (IOException e)
 		{
 
 			e.printStackTrace();
 		}
+		
 	}// pushtry
-
-	protected void recieveMessage(String message)
-	{
-		try
-		{
-			message = client.read();
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		text.addElement(message);
-	}
 
 	protected void setNickname()
 	{
-		/*
+		/* 
 		 * Client Anmeldung bei Server
 		 * 
 		 * Nick an Client senden
@@ -224,6 +219,67 @@ public class ClientGUI extends JFrame
 		comboBoxServerIDs.addItem(herrWolf);
 
 	}
+	
+	protected void createTab(Room r)
+	{
+		JPanel p = new JPanel();
+		JList<String> listHistory = new JList<String>();
+		tabsHistory.addTab(r.getName(), p);
+		
+		
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{557, 0, 0};
+		gbl_panel.rowHeights = new int[]{287, 0};
+		gbl_panel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		p.setLayout(gbl_panel);
+		
+		GridBagConstraints gbc_listHistory = new GridBagConstraints();
+		gbc_listHistory.insets = new Insets(0, 0, 0, 5);
+		gbc_listHistory.fill = GridBagConstraints.BOTH;
+		gbc_listHistory.gridx = 0;
+		gbc_listHistory.gridy = 0;
+		
+		listHistory.setModel(history);
+		p.add(listHistory, gbc_listHistory);
+		
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.gridx = 1;
+		gbc_lblNewLabel.gridy = 0;
+		p.add(new Label(r.getName()), gbc_lblNewLabel);
+	}
+
+	
+	protected void updateHistory(String message) // aufrufen, wenn Pane offen
+	{
+		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
+		
+		for (Room r : client.getRoomList())
+		{
+			if(r.getName().equals(panel.getName()))
+			{
+				history.addElement(message);
+			}
+		}
+		
+		
+	}
+	
+	protected void showHistory() //AUfrufen, wenn Pane geändert wird
+	{
+		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
+	
+		for (Room r : client.getRoomList())
+		{
+			if(r.getName().equals(panel.getName()))
+			{
+				for (String message : r.getHistory())
+				{
+					history.addElement(message);
+				}
+			}
+		}
+	}
 
 	/**
 	 * Create the frame.
@@ -232,6 +288,10 @@ public class ClientGUI extends JFrame
 	{
 		initialize();
 		serverListeAbrufen();
+		
+		//Test von Räumen
+		createTab(new Room("public"));
+		//createTab("test");
 	}
 
 	private void initialize()
@@ -244,7 +304,7 @@ public class ClientGUI extends JFrame
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[] { 74, 411, 124, 0 };
 		gbl_contentPane.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gbl_contentPane.columnWeights = new double[] { 0.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPane.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
 		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
@@ -280,14 +340,14 @@ public class ClientGUI extends JFrame
 		gbc_btnDisconnect.gridx = 2;
 		gbc_btnDisconnect.gridy = 1;
 		contentPane.add(getBtnDisconnect(), gbc_btnDisconnect);
-		GridBagConstraints gbc_listChatroom = new GridBagConstraints();
-		gbc_listChatroom.gridheight = 8;
-		gbc_listChatroom.gridwidth = 2;
-		gbc_listChatroom.insets = new Insets(0, 0, 5, 5);
-		gbc_listChatroom.fill = GridBagConstraints.BOTH;
-		gbc_listChatroom.gridx = 0;
-		gbc_listChatroom.gridy = 2;
-		contentPane.add(getListChatroom(), gbc_listChatroom);
+		GridBagConstraints gbc_tabsHistory = new GridBagConstraints();
+		gbc_tabsHistory.gridwidth = 2;
+		gbc_tabsHistory.gridheight = 8;
+		gbc_tabsHistory.insets = new Insets(0, 0, 5, 5);
+		gbc_tabsHistory.fill = GridBagConstraints.BOTH;
+		gbc_tabsHistory.gridx = 0;
+		gbc_tabsHistory.gridy = 2;
+		contentPane.add(getTabsHistory(), gbc_tabsHistory);
 		GridBagConstraints gbc_listUser = new GridBagConstraints();
 		gbc_listUser.gridheight = 8;
 		gbc_listUser.insets = new Insets(0, 0, 5, 0);
@@ -409,15 +469,6 @@ public class ClientGUI extends JFrame
 		return btnSend;
 	}
 
-	private JList<String> getListChatroom()
-	{
-		if (listChatroom == null)
-		{
-			listChatroom = new JList<String>(text);
-		}
-		return listChatroom;
-	}
-
 	private JComboBox<String> getComboBoxServerIDs()
 	{
 		if (comboBoxServerIDs == null)
@@ -434,5 +485,11 @@ public class ClientGUI extends JFrame
 			listUser = new JList<String>(user);
 		}
 		return listUser;
+	}
+	private JTabbedPane getTabsHistory() {
+		if (tabsHistory == null) {
+			tabsHistory = new JTabbedPane(JTabbedPane.TOP);
+		}
+		return tabsHistory;
 	}
 }
