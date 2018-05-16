@@ -245,7 +245,7 @@ public class AdmintoolGUI extends JFrame
 		if (lblServer == null)
 		{
 			lblServer = new JLabel("Server:");
-			lblServer.setBounds(10, 25, 36, 14);
+			lblServer.setBounds(10, 25, 56, 14);
 		}
 		return lblServer;
 	}
@@ -276,7 +276,7 @@ public class AdmintoolGUI extends JFrame
 		if (lblNickname == null)
 		{
 			lblNickname = new JLabel("Nickname:");
-			lblNickname.setBounds(10, 59, 49, 14);
+			lblNickname.setBounds(10, 59, 56, 14);
 		}
 		return lblNickname;
 	}
