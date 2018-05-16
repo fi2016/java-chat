@@ -85,19 +85,7 @@ public class AdmintoolGUI extends JFrame
 
 	public void connectAdmintool()
 	{
-		try
-		{
-			admintool.connectServer(comboBoxServerIDs.getSelectedItem().toString());
-
-		}
-		catch (UnknownHostException e)
-		{
-			JOptionPane.showMessageDialog(null, "Der angegebene Host ist nicht bekannt");
-		}
-		catch (IOException e)
-		{
-			JOptionPane.showMessageDialog(null, "IO Exception AdmintoolGUI beim connecten");
-		}
+		admintool.connect(comboBoxServerIDs.getSelectedItem().toString());
 	}
 
 	public void sendMessage()
@@ -134,6 +122,11 @@ public class AdmintoolGUI extends JFrame
 	{
 		admintool.closeChatroom((ChatRoom)comboBoxChatRooms.getSelectedItem());
 		comboBoxChatRooms.remove(comboBoxChatRooms.getSelectedIndex());
+	}
+	
+	protected void disconnect()
+	{
+		admintool.disconnect();
 	}
 	
 	/* TO DO
@@ -297,6 +290,7 @@ public class AdmintoolGUI extends JFrame
 		if (btnDisconnect == null)
 		{
 			btnDisconnect = new JButton("Disconnect");
+			btnDisconnect.addActionListener(e -> disconnect());
 			btnDisconnect.setBounds(477, 55, 85, 23);
 		}
 		return btnDisconnect;

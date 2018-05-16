@@ -84,7 +84,6 @@ public class Server implements Runnable
 
 		while (!Thread.currentThread().isInterrupted())
 		{
-
 			try
 			{
 				serverSocket = new ServerSocket(port);
@@ -106,7 +105,6 @@ public class Server implements Runnable
 
 	private void acceptClient(Socket clientSocket) throws IOException
 	{
-
 		if (clientList != null)
 		{
 			if(spartanPhalanx.identifyDDos(clientSocket.getInetAddress().toString()))
@@ -118,8 +116,8 @@ public class Server implements Runnable
 				ClientProxy c = new ClientProxy(clientSocket, this);
 				clientList.add(c);
 				roomList.get(0).addClient(c);
+				checkAdmin();
 			}
-		
 		}
 		else
 		{
@@ -129,7 +127,18 @@ public class Server implements Runnable
 	
 	private void checkAdmin()
 	{
-		//TO-DOoo
+		for (ClientProxy cp: clientList)
+		{
+			String nickname = cp.getNickname();
+			for (String admin : adminList)
+			{
+				if(nickname.equals(admin))
+				{
+					cp.sendMessage("CMD\u001eENA\u001e4True");
+					//Client anpassen das er weis was das ist *hust* Nico machmal *hust*
+				}
+			}
+		}
 	}
 
 	private void createRoom(String name)
@@ -147,7 +156,6 @@ public class Server implements Runnable
 		{
 			ChatRoom c = new ChatRoom();
 			c.setName(name);
-
 			roomList.add(c);
 		}
 		else
