@@ -76,6 +76,7 @@ public class ClientProxy implements Runnable
 			System.out.println("TSP: "+protocol[0] + " MSG: " + protocol[1]);
 			System.out.println("Protokoll ungültig!");
 		}
+		
 	}
 		
 		
