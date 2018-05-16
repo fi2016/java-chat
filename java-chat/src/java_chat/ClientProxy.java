@@ -39,15 +39,9 @@ public class ClientProxy implements Runnable
 				{
 					in = new ObjectInputStream(socket.getInputStream());
 				}
-				try
-				{
-					read(in.readObject());
-				} catch (ClassNotFoundException e)
-				{
-					System.out.println("Class not found");
-					e.printStackTrace();
-					t.interrupt();
-				}
+		
+				read(in.readUTF());
+			
 			} catch (IOException e)
 			{
 				System.out.println("Failed reading request!");
