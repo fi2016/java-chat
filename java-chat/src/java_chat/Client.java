@@ -55,11 +55,11 @@ public class Client implements Runnable
 			out = new ObjectOutputStream(socket.getOutputStream());
 		}
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
-		Timestamp time = new Timestamp(System.currentTimeMillis());
-		String currenttime = sdf.format(time);
+		
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		
 
-		message = "TSP" + System.currentTimeMillis() + "\u001eMSG" /*nickname fehlt, channel fehlt*/ + message;
+		message = "TSP" + timestamp + "\u001eMSG" /*nickname fehlt, channel fehlt*/ + message;
 		out.writeUTF(message);
 		out.flush();
 	}

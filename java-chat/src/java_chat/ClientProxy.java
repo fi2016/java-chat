@@ -22,6 +22,7 @@ public class ClientProxy implements Runnable
 
 	public ClientProxy(Socket socket, Server server)
 	{
+		messageBuffer = new HashMap<String, Timestamp>();
 		this.socket = socket;
 		this.server = server;
 		t = new Thread(this);
@@ -39,15 +40,9 @@ public class ClientProxy implements Runnable
 				{
 					in = new ObjectInputStream(socket.getInputStream());
 				}
-				try
-				{
-					read(in.readObject());
-				} catch (ClassNotFoundException e)
-				{
-					System.out.println("Class not found");
-					e.printStackTrace();
-					t.interrupt();
-				}
+		
+				read(in.readUTF());
+			
 			} catch (IOException e)
 			{
 				System.out.println("Failed reading request!");
@@ -62,41 +57,40 @@ public class ClientProxy implements Runnable
 		String request = (String) obj;
 		
 		String[] protocol = request.split("\u001e");
-		if (protocol.length == 2) 
+		
+		if (protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("MSG")) 
 		{
-			if (protocol[0].substring(0, 2).equals("TSP") && protocol[1].substring(0, 2).equals("MSG")) 
+			Timestamp tsp = Timestamp.valueOf(protocol[0].substring(3, protocol[0].length()));
+			String msg = protocol[1].substring(3, protocol[1].length());	
+			
+			if(checkSpam(msg,tsp))
 			{
-				Timestamp tsp = Timestamp.valueOf(protocol[0].substring(2, protocol[0].length()));
-				String msg = protocol[1].substring(2, protocol[0].length());	
-				
-				if(checkSpam(msg,tsp))
-				{
-					//Message is Spam evtl add Timeout etc
-				}
-				else
-				{
-					sendMessage(request);
-				}
-			} else 
+				System.out.println("Diese nachricht war SPAM!");
+			}
+			else
 			{
-				System.out.println("Protokoll ungültig!");
+				sendMessage(request);
 			}
 		} else 
 		{
+			System.out.println(protocol[0].substring(0, 3));
+			System.out.println("TSP: "+protocol[0] + " MSG: " + protocol[1]);
 			System.out.println("Protokoll ungültig!");
 		}
+		
+	}
+		
 		
 		//überprüfen des timestamps & channels (spam)
 		//überprüfen ob immer das selbe geschickt wird
 		
-	}
+	
 
 	
 
 	private boolean checkSpam(String msg, Timestamp tsp)
 	{
 		
-
 		for (Timestamp t : messageBuffer.values())
 		{
 			if(t.getNanos() >= tsp.getNanos() - 100)
