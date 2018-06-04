@@ -65,13 +65,31 @@ public class ClientProxy implements Runnable
 			
 			if(checkSpam(msg,tsp))
 			{
-				System.out.println("Diese nachricht war SPAM!");
+				System.out.println("Diese Nachricht war SPAM!");
 			}
 			else
 			{
 				sendMessage(request);
 			}
-		} else 
+		}
+		else if(protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("NIK") && protocol[2].substring(0, 3).equals("CHN") && protocol[3].substring(0, 3).equals("MSG")) 
+		{
+			// von Carry + Daniel gemacht. Nicht sicher, ob richtig so
+			Timestamp tsp = Timestamp.valueOf(protocol[0].substring(3, protocol[0].length()));
+			String nik = protocol[1].substring(3, protocol[1].length());	
+			String chn = protocol[2].substring(3, protocol[2].length());	
+			String msg = protocol[3].substring(3, protocol[3].length());	
+			
+			if(checkSpam(msg,tsp))
+			{
+				System.out.println("Diese Nachricht war SPAM!");
+			}
+			else
+			{
+				sendMessage(request);
+			}
+		}
+		else 
 		{
 			System.out.println(protocol[0].substring(0, 3));
 			System.out.println("TSP: "+protocol[0] + " MSG: " + protocol[1]);
