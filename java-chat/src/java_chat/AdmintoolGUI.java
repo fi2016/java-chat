@@ -92,7 +92,7 @@ public class AdmintoolGUI extends JFrame
 	{
 		try
 		{
-			admintool.sendMessage(textFieldMessage.getText());
+			admintool.sendMessage(textFieldMessage.getText(), getTitle());
 		}
 		catch (IOException e)
 		{

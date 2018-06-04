@@ -72,7 +72,11 @@ public class ClientGUI extends JFrame
 	protected void connectClient()
 	{
 		String hostName = comboBoxServerIDs.getSelectedItem().toString();
-		if(!textFieldNickname.getText().equals("") || !textFieldNickname.getText().equals(" "))
+		if(textFieldNickname.getText().equals("") || textFieldNickname.getText().equals(" "))
+		{
+			JOptionPane.showMessageDialog(null, "Please insert Nickname first");
+		}
+		else
 		{
 			try
 			{
