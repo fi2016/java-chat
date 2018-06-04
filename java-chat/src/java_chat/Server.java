@@ -147,7 +147,7 @@ public class Server implements Runnable
 		boolean vergeben = false;
 		for (ChatRoom room : roomList)
 		{
-			if (room.getName() == name)
+			if (room.getName().equals(name))
 			{
 				vergeben = true;
 			}

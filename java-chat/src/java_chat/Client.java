@@ -139,11 +139,11 @@ public class Client implements Runnable
 			String chn = protocol[2].substring(3, protocol[2].length());	
 			String msg = protocol[3].substring(3, protocol[3].length());	
 			
-			for (ChatRoom room : server.getRoomList())
+			for (Room room : this.getRoomList())
 			{
 				if(room.getName() == chn)
 				{
-					room.distributeMessage(request);
+					room.getHistory().add(request);
 				}
 			}
 
