@@ -86,7 +86,13 @@ public class ClientProxy implements Runnable
 			}
 			else
 			{
-				sendMessage(request);
+				for (ChatRoom room : server.getRoomList())
+				{
+					if(room.getName() == chn)
+					{
+						room.distributeMessage(request);
+					}
+				}
 			}
 		}
 		else 
