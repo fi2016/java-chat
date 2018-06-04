@@ -130,6 +130,7 @@ public class ServerGUI extends JFrame
 		server.closeServer();
 		button_Start.setEnabled(true);
 		btnStop.setEnabled(false);
+		btnAdmintool.setEnabled(false);
 		lbl_Message.setText("Server on " + host + "/" + txtPort.getText() + " closed.");
 	}
 	

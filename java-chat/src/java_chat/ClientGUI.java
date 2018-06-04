@@ -49,8 +49,8 @@ public class ClientGUI extends JFrame
 	private ArrayList<String> userList = new ArrayList<String>();
 	private JList<String> listUser;
 	private JTabbedPane tabsHistory;
-	
-	DefaultListModel history = new DefaultListModel<>();
+	private DefaultListModel<String> history = new DefaultListModel<String>();
+
 	/**
 	 * Launch the application.
 	 */
@@ -64,7 +64,8 @@ public class ClientGUI extends JFrame
 				{
 					ClientGUI frame = new ClientGUI();
 					frame.setVisible(true);
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					e.printStackTrace();
 				}
@@ -75,97 +76,60 @@ public class ClientGUI extends JFrame
 	protected void connectClient()
 	{
 		String hostName = comboBoxServerIDs.getSelectedItem().toString();
-		//hostName 172.16.224.36";
-		try
+		if(!textFieldNickname.getText().equals("") || !textFieldNickname.getText().equals(" "))
 		{
-			client = new Client();
-			client.connectServer(hostName);
-
-		} catch (UnknownHostException e)
-		{
-			JOptionPane.showMessageDialog(null, "Der Host " + hostName + " ist unbekannt");
-			System.exit(1);
-		} catch (IOException e)
-		{
-			JOptionPane.showMessageDialog(null, "Bekomme keine I/O für die Verbindung zu " + hostName);
-			System.exit(1);
+			try
+			{
+				client = new Client();
+				client.connectServer(hostName);
+				btnSend.setEnabled(false);
+				btnDisconnect.setEnabled(true);
+			}
+			catch (UnknownHostException e)
+			{
+				JOptionPane.showMessageDialog(null, "Der Host " + hostName + " ist unbekannt");
+				System.exit(1);
+			}
+			catch (IOException e)
+			{
+				JOptionPane.showMessageDialog(null, "Bekomme keine I/O für die Verbindung zu " + hostName);
+				System.exit(1);
+			}
+			setNickname();
 		}
-		setNickname();
 	}
 
 	protected void closeClient()
 	{
 		client.closeClient();
+		btnSend.setEnabled(true);
+		btnDisconnect.setEnabled(false);
 	}
 
-	protected void handoverMessage() //Message to client
+	protected void handoverMessage() // Message to client
 	{
 		String message = textFieldMessage.getText();
 		String roomName = tabsHistory.getSelectedComponent().getName();
 
-		try 
+		try
 		{
 			client.sendMessage(message, roomName);
-			textFieldMessage.setText(""); //foo
-		} catch (IOException e)
+			textFieldMessage.setText(""); // foo
+		}
+		catch (IOException e)
 		{
-
 			e.printStackTrace();
 		}
-		
+
 	}// pushtry
 
 	protected void setNickname()
 	{
-		/* 
-		 * Client Anmeldung bei Server
-		 * 
-		 * Nick an Client senden
-		 * Per Stream an Proxy
-		 * Nick über Proxy an Server
-		 * Server nimmt Nick in Liste auf
-		 * Server verteilt Liste an alle Proxys
-		 * liste über proxy an client
-		 * client gibt liste an gui
-		 * listmodel in gui updaten
-		 * 
-		 * 
-		 * Client von Server kicken (Admin tools)
-		 * 
-		 * Nick aus liste entfernen (server)
-		 * liste an alle proxys
-		 * gui über socket updaten
-		 * 
-		 * 
-		 * CLient schließen
-		 * 
-		 * Nick aus liste entfernens (client)
-		 * 
-		 * 
-		 * 
-		 * Nick ändern
-		 * 
-		 *Nick an Client senden
-		 * Per Stream an Proxy
-		 * Nick über Proxy an Server
-		 * Server nimmt Nick in Liste auf
-		 * Server verteilt Liste an alle Proxys
-		 * liste über proxy an client
-		 * client gibt liste an gui
-		 * listmodel in gui updaten
-		 * 
-		 * 
-		 * Funktionsweise:
-		 * cmd via socket an server
-		 * msg vom server an alle proxies
-		 * proxy checkt den cmd
-		 * liste updaten
-		 */
 		String nick = getTextFieldNickname().getText();
-		
+
 		for (String user : userList)
 		{
-			if(nick.toUpperCase().equals(user.toUpperCase()))
+			if (nick.toUpperCase().equals(user.toUpperCase()))
 			{
 				JOptionPane.showMessageDialog(null, "Username already in use!");
 				textFieldNickname.setText("");
@@ -175,9 +139,8 @@ public class ClientGUI extends JFrame
 				userList.add(nick);
 			}
 		}
-
 	}
-	
+
 	protected void showNotification(String message)
 	{
 		JOptionPane.showMessageDialog(null, message);
@@ -219,59 +182,60 @@ public class ClientGUI extends JFrame
 		comboBoxServerIDs.addItem(herrWolf);
 
 	}
-	
+
 	protected void createTab(Room r)
 	{
 		JPanel p = new JPanel();
 		JList<String> listHistory = new JList<String>();
 		tabsHistory.addTab(r.getName(), p);
-		
-		
+
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{557, 0, 0};
-		gbl_panel.rowHeights = new int[]{287, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panel.columnWidths = new int[]
+		{ 557, 0, 0 };
+		gbl_panel.rowHeights = new int[]
+		{ 287, 0 };
+		gbl_panel.columnWeights = new double[]
+		{ 0.0, 0.0, Double.MIN_VALUE };
+		gbl_panel.rowWeights = new double[]
+		{ 0.0, Double.MIN_VALUE };
 		p.setLayout(gbl_panel);
-		
+
 		GridBagConstraints gbc_listHistory = new GridBagConstraints();
 		gbc_listHistory.insets = new Insets(0, 0, 0, 5);
 		gbc_listHistory.fill = GridBagConstraints.BOTH;
 		gbc_listHistory.gridx = 0;
 		gbc_listHistory.gridy = 0;
-		
+
 		listHistory.setModel(history);
 		p.add(listHistory, gbc_listHistory);
-		
+
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.gridx = 1;
 		gbc_lblNewLabel.gridy = 0;
 		p.add(new Label(r.getName()), gbc_lblNewLabel);
 	}
 
-	
 	protected void updateHistory(String message) // aufrufen, wenn Pane offen
 	{
 		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
-		
+
 		for (Room r : client.getRoomList())
 		{
-			if(r.getName().equals(panel.getName()))
+			if (r.getName().equals(panel.getName()))
 			{
 				history.addElement(message);
 			}
 		}
-		
-		
+
 	}
-	
-	protected void showHistory() //AUfrufen, wenn Pane geändert wird
+
+	protected void showHistory() // AUfrufen, wenn Pane geändert wird
 	{
 		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
-	
+
 		for (Room r : client.getRoomList())
 		{
-			if(r.getName().equals(panel.getName()))
+			if (r.getName().equals(panel.getName()))
 			{
 				for (String message : r.getHistory())
 				{
@@ -288,10 +252,10 @@ public class ClientGUI extends JFrame
 	{
 		initialize();
 		serverListeAbrufen();
-		
-		//Test von Räumen
+
+		// Test von Räumen
 		createTab(new Room("public"));
-		//createTab("test");
+		// createTab("test");
 	}
 
 	private void initialize()
@@ -302,11 +266,14 @@ public class ClientGUI extends JFrame
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] { 74, 411, 124, 0 };
-		gbl_contentPane.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gbl_contentPane.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
-		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-				Double.MIN_VALUE };
+		gbl_contentPane.columnWidths = new int[]
+		{ 74, 411, 124, 0 };
+		gbl_contentPane.rowHeights = new int[]
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPane.columnWeights = new double[]
+		{ 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[]
+		{ 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 		GridBagConstraints gbc_lblServer = new GridBagConstraints();
 		gbc_lblServer.insets = new Insets(0, 0, 5, 5);
@@ -409,13 +376,7 @@ public class ClientGUI extends JFrame
 		if (btnConnect == null)
 		{
 			btnConnect = new JButton("Connect");
-			btnConnect.addActionListener(new ActionListener()
-			{
-				public void actionPerformed(ActionEvent e)
-				{
-					connectClient();
-				}
-			});
+			btnConnect.addActionListener(e -> connectClient());
 		}
 		return btnConnect;
 	}
@@ -425,13 +386,8 @@ public class ClientGUI extends JFrame
 		if (btnDisconnect == null)
 		{
 			btnDisconnect = new JButton("Disconnect");
-			btnDisconnect.addActionListener(new ActionListener()
-			{
-				public void actionPerformed(ActionEvent e)
-				{
-					closeClient();
-				}
-			});
+			btnDisconnect.setEnabled(false);
+			btnDisconnect.addActionListener(e -> closeClient());
 		}
 		return btnDisconnect;
 	}
@@ -441,13 +397,7 @@ public class ClientGUI extends JFrame
 		if (textFieldMessage == null)
 		{
 			textFieldMessage = new JTextField();
-			textFieldMessage.addActionListener(new ActionListener()
-			{
-				public void actionPerformed(ActionEvent e)
-				{
-					handoverMessage();
-				}
-			});
+			textFieldMessage.addActionListener(e -> handoverMessage());
 			textFieldMessage.setColumns(10);
 		}
 		return textFieldMessage;
@@ -458,13 +408,7 @@ public class ClientGUI extends JFrame
 		if (btnSend == null)
 		{
 			btnSend = new JButton("Send");
-			btnSend.addActionListener(new ActionListener()
-			{
-				public void actionPerformed(ActionEvent e)
-				{
-					handoverMessage();
-				}
-			});
+			btnSend.addActionListener(e -> handoverMessage());
 		}
 		return btnSend;
 	}
@@ -486,8 +430,11 @@ public class ClientGUI extends JFrame
 		}
 		return listUser;
 	}
-	private JTabbedPane getTabsHistory() {
-		if (tabsHistory == null) {
+
+	private JTabbedPane getTabsHistory()
+	{
+		if (tabsHistory == null)
+		{
 			tabsHistory = new JTabbedPane(JTabbedPane.TOP);
 		}
 		return tabsHistory;
