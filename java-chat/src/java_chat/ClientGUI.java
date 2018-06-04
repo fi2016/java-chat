@@ -109,11 +109,13 @@ public class ClientGUI extends JFrame
 	protected void handoverMessage() // Message to client
 	{
 		String message = textFieldMessage.getText();
-		String roomName = tabsHistory.getSelectedComponent().getName();
+		String chn = tabsHistory.getSelectedComponent().getName();
+		
+		
 
 		try
 		{
-			client.sendMessage(message, roomName);
+			client.sendMessage(message, chn);
 			textFieldMessage.setText(""); // foo
 		}
 		catch (IOException e)
