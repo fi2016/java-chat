@@ -120,7 +120,6 @@ public class ClientGUI extends JFrame
 		{
 			e.printStackTrace();
 		}
-
 	}// pushtry
 
 	protected void setNickname()

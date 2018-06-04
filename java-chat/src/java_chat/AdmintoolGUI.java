@@ -46,7 +46,6 @@ public class AdmintoolGUI extends JFrame
 	private DefaultListModel<String> listModelPublicChat = new DefaultListModel<String>();
 	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();
 	private Admintool admintool;
-
 	/**
 	 * Launch the application.
 	 **/
