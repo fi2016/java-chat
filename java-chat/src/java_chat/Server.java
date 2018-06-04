@@ -165,6 +165,16 @@ public class Server implements Runnable
 		}
 	}
 
+	public ArrayList<ChatRoom> getRoomList()
+	{
+		return roomList;
+	}
+
+	public void setRoomList(ArrayList<ChatRoom> roomList)
+	{
+		this.roomList = roomList;
+	}
+
 	protected void addBlacklist(Client client)
 	{
 
