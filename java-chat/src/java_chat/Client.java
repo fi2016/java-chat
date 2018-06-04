@@ -70,7 +70,13 @@ public class Client implements Runnable
 		{
 			try
 			{
-				read();
+				if (in == null)
+				{
+					in = new ObjectInputStream(socket.getInputStream());
+				}
+		
+				read(in.readUTF());
+				
 				Thread.sleep(10);
 			}
 			catch (InterruptedException e)
@@ -118,33 +124,36 @@ public class Client implements Runnable
 			System.out.println("Fehler beim schließen!");
 		}
 	}
-	protected String read() throws IOException
+	
+	protected void read(Object obj)
 	{
-		if (in == null) 
-		{
-			in = new ObjectInputStream(socket.getInputStream());
-		}
-		request = in.readUTF();
+		String request = (String) obj;
 		
 		String[] protocol = request.split("\u001e");
-		if (protocol.length == 2) 
+		
+		if(protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("NIK") && protocol[2].substring(0, 3).equals("CHN") && protocol[3].substring(0, 3).equals("MSG")) 
 		{
-			if (protocol[0].substring(0, 2).equals("TSP") && protocol[1].substring(0, 2).equals("MSG")) 
+			// von Carry + Daniel gemacht. Nicht sicher, ob richtig so
+			Timestamp tsp = Timestamp.valueOf(protocol[0].substring(3, protocol[0].length()));
+			String nik = protocol[1].substring(3, protocol[1].length());	
+			String chn = protocol[2].substring(3, protocol[2].length());	
+			String msg = protocol[3].substring(3, protocol[3].length());	
+			
+			for (ChatRoom room : server.getRoomList())
 			{
-				Timestamp tsp = Timestamp.valueOf(protocol[0].substring(2, protocol[0].length()));
-				String msg = protocol[1].substring(2, protocol[0].length());
-				System.out.println(tsp);
-				System.out.println(msg);
-			} else 
-			{
-				System.out.println("Protokoll ungültig!");
+				if(room.getName() == chn)
+				{
+					room.distributeMessage(request);
+				}
 			}
-		} else 
+
+		}
+		else 
 		{
+			System.out.println(protocol[0].substring(0, 3));
+			System.out.println("TSP: "+protocol[0] + " MSG: " + protocol[1]);
 			System.out.println("Protokoll ungültig!");
 		}
-		
-		return request;
 	}
 	
 	protected void setNickname(String nickname)
