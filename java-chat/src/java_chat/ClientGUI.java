@@ -101,9 +101,10 @@ public class ClientGUI extends JFrame
 
 	protected void closeClient()
 	{
-		client.closeClient();
 		btnSend.setEnabled(true);
 		btnDisconnect.setEnabled(false);
+		client.closeClient();
+		
 	}
 
 	protected void handoverMessage() // Message to client

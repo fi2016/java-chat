@@ -55,7 +55,6 @@ public class Client implements Runnable
 			out = new ObjectOutputStream(socket.getOutputStream());
 		}
 		
-		
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		
 

@@ -58,21 +58,7 @@ public class ClientProxy implements Runnable
 		
 		String[] protocol = request.split("\u001e");
 		
-		if (protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("MSG")) 
-		{
-			Timestamp tsp = Timestamp.valueOf(protocol[0].substring(3, protocol[0].length()));
-			String msg = protocol[1].substring(3, protocol[1].length());	
-			
-			if(checkSpam(msg,tsp))
-			{
-				System.out.println("Diese Nachricht war SPAM!");
-			}
-			else
-			{
-				sendMessage(request);
-			}
-		}
-		else if(protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("NIK") && protocol[2].substring(0, 3).equals("CHN") && protocol[3].substring(0, 3).equals("MSG")) 
+		if(protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("NIK") && protocol[2].substring(0, 3).equals("CHN") && protocol[3].substring(0, 3).equals("MSG")) 
 		{
 			// von Carry + Daniel gemacht. Nicht sicher, ob richtig so
 			Timestamp tsp = Timestamp.valueOf(protocol[0].substring(3, protocol[0].length()));
@@ -86,13 +72,17 @@ public class ClientProxy implements Runnable
 			}
 			else
 			{
-				for (ChatRoom room : server.getRoomList())
-				{
-					if(room.getName() == chn)
-					{
-						room.distributeMessage(request);
-					}
-				}
+				//An Server schicken und er verteilt an ClientPRoxys im Raum
+				//vlt Nickname in Message einbauen
+				//andere Nachrichtentypen abfangen CMD usw.
+				
+//				for (ChatRoom room : server.getRoomList())
+//				{
+//					if(room.getName() == chn)
+//					{
+//						room.distributeMessage(request);
+//					}
+//				}
 			}
 		}
 		else 
@@ -101,16 +91,9 @@ public class ClientProxy implements Runnable
 			System.out.println("TSP: "+protocol[0] + " MSG: " + protocol[1]);
 			System.out.println("Protokoll ungültig!");
 		}
-		
 	}
-		
-		
 		//überprüfen des timestamps & channels (spam)
 		//überprüfen ob immer das selbe geschickt wird
-		
-	
-
-	
 
 	private boolean checkSpam(String msg, Timestamp tsp)
 	{
@@ -147,6 +130,8 @@ public class ClientProxy implements Runnable
 				out = new ObjectOutputStream(socket.getOutputStream());
 			}
 			out.writeUTF(message);
+			out.flush();
+			
 		} catch (IOException e)
 		{
 			System.out.println("Failed sending response!");

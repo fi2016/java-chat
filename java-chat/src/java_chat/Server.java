@@ -45,12 +45,15 @@ public class Server implements Runnable
 
 	public void closeServer()
 	{
-		for (ClientProxy clientProxy : clientList)
+		if(clientList.isEmpty() != true)
 		{
-			clientProxy.closeClient();
-			clientList.remove(clientProxy);
+			for (ClientProxy clientProxy : clientList)
+			{
+				clientProxy.closeClient();
+				clientList.remove(clientProxy);
+			}
+			clientList = null;
 		}
-		clientList = null;
 		try
 		{
 			Socket dummySocket = new Socket(ip, port);
@@ -59,7 +62,6 @@ public class Server implements Runnable
 		}
 		catch (IOException e)
 		{
-
 			e.printStackTrace();
 		}
 	}
