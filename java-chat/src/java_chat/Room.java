@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class Room
 {
 	private String name;
-	private ArrayList<ClientProxy> memberList;
+	private ArrayList<String> memberList;
 	private ArrayList<String> history;
 	
 	public Room()
 	{
-		memberList = new ArrayList<ClientProxy>();
+		memberList = new ArrayList<String>();
 		history = new ArrayList<String>();
 		history.add("Room opened");
 	}
@@ -24,11 +24,11 @@ public class Room
 	{
 		this.name = name;
 	}
-	public ArrayList<ClientProxy> getMemberList()
+	public ArrayList<String> getMemberList()
 	{
 		return memberList;
 	}
-	public void setMemberList(ArrayList<ClientProxy> memberList)
+	public void setMemberList(ArrayList<String> memberList)
 	{
 		this.memberList = memberList;
 	}

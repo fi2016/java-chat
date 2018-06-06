@@ -77,13 +77,7 @@ public class ClientProxy implements Runnable
 				// vlt Nickname in Message einbauen
 				// andere Nachrichtentypen abfangen CMD usw.
 
-				// for (ChatRoom room : server.getRoomList())
-				// {
-				// if(room.getName() == chn)
-				// {
-				// room.distributeMessage(request);
-				// }
-				// }
+
 			}
 		}
 		else
