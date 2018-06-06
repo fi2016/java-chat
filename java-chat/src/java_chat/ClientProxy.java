@@ -88,7 +88,7 @@ public class ClientProxy implements Runnable
 		else 
 		{
 			System.out.println(protocol[0].substring(0, 3));
-			System.out.println("TSP: "+protocol[0] + " MSG: " + protocol[1]);
+			System.out.println("TSP: "+protocol[0] + " CHN: " + protocol[1]);
 			System.out.println("Protokoll ungültig!");
 		}
 	}
