@@ -129,6 +129,7 @@ public class Client implements Runnable
 		
 		if(protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("NIK") && protocol[2].substring(0, 3).equals("CHN") && protocol[3].substring(0, 3).equals("MSG")) 
 		{
+			
 			// von Carry + Daniel gemacht. Nicht sicher, ob richtig so
 			Timestamp tsp = Timestamp.valueOf(protocol[0].substring(3, protocol[0].length()));
 			String nik = protocol[1].substring(3, protocol[1].length());	
@@ -137,15 +138,20 @@ public class Client implements Runnable
 			
 			for (Room room : this.getRoomList())
 			{
+				System.out.println("in Client: room added  in FOR");
 				if(room.getName().equals(chn))
 				{
 					room.getHistory().add(request);
+					System.out.println("in Client: room added to lsit ");
+					
 				}
 			}
 			System.out.println("Client nach for" + msg);
 		}
 		else 
 		{
+			System.out.println("in Client ELSE");
+			System.out.println(request);
 			//System.out.println(protocol[0].substring(0, 3));
 			//System.out.println("TSP: "+protocol[0] + " MSG: " + protocol[1]);
 			//System.out.println("Protokoll ungültig!");

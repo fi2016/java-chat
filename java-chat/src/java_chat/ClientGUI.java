@@ -22,6 +22,12 @@ import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ClientGUI extends JFrame
 {
@@ -230,16 +236,27 @@ public class ClientGUI extends JFrame
 	{
 		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
 
-		for (Room r : client.getRoomList())
+		history.clear();
+		
+		if(client.getRoomList() == null)
 		{
-			if (r.getName().equals(panel.getName()))
+			
+		}
+		else
+		{
+			for (Room r : client.getRoomList())
 			{
-				for (String message : r.getHistory())
+				if (r.getName().equals(panel.getName()))
 				{
-					history.addElement(message);
+					for (String message : r.getHistory())
+					{
+						history.addElement(message);
+					}
 				}
 			}
 		}
+		
+	
 	}
 
 	/**
@@ -432,7 +449,13 @@ public class ClientGUI extends JFrame
 	{
 		if (tabsHistory == null)
 		{
-			tabsHistory = new JTabbedPane(JTabbedPane.TOP);
+			tabsHistory = new JTabbedPane(JTabbedPane.TOP);			
+			tabsHistory.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					showHistory();
+				}
+			});
 		}
 		return tabsHistory;
 	}

@@ -73,7 +73,7 @@ public class ClientProxy implements Runnable
 			}
 			else
 			{
-				server.verteileNachricht(nikmsg, chn);
+				server.verteileNachricht(nikmsg, chn); //WIESO GENAU JETZT EIGENTLICH NUR DAS UND NICHT PROTOKOLL? -> IM CLIENT GEHTS' IN DIE ELSE BEIM IF.
 				// An Server schicken und er verteilt an ClientPRoxys im Raum
 				// vlt Nickname in Message einbauen
 				// andere Nachrichtentypen abfangen CMD usw.
