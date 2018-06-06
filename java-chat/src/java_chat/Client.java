@@ -139,7 +139,7 @@ public class Client implements Runnable
 			
 			for (Room room : this.getRoomList())
 			{
-				if(room.getName() == chn)
+				if(room.getName().equals(chn))
 				{
 					room.getHistory().add(request);
 				}
