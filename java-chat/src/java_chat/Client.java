@@ -136,15 +136,20 @@ public class Client implements Runnable
 			
 			for (Room room : this.getRoomList())
 			{
+				System.out.println("in Client: room added  in FOR");
 				if(room.getName().equals(chn))
 				{
 					room.getHistory().add(request);
+					System.out.println("in Client: room added to lsit ");
+					
 				}
 			}
 			System.out.println("Client nach for" + msg);
 		}
 		else 
 		{
+			System.out.println("in Client ELSE");
+			System.out.println(request);
 			//System.out.println(protocol[0].substring(0, 3));
 			//System.out.println("TSP: "+protocol[0] + " MSG: " + protocol[1]);
 			//System.out.println("Protokoll ungültig!");
