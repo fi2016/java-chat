@@ -58,8 +58,7 @@ public class ClientProxy implements Runnable
 
 		String[] protocol = request.split("\u001e");
 
-		if (protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("NIK")
-				&& protocol[2].substring(0, 3).equals("CHN") && protocol[3].substring(0, 3).equals("MSG"))
+		if (protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("NIK") && protocol[2].substring(0, 3).equals("CHN") && protocol[3].substring(0, 3).equals("MSG"))
 		{
 			// von Carry + Daniel gemacht. Nicht sicher, ob richtig so
 			Timestamp tsp = Timestamp.valueOf(protocol[0].substring(3, protocol[0].length()));
@@ -67,22 +66,25 @@ public class ClientProxy implements Runnable
 			String chn = protocol[2].substring(3, protocol[2].length());
 			String msg = protocol[3].substring(3, protocol[3].length());
 
+			String nikmsg = nik + ": " + msg;
 			if (checkSpam(msg, tsp))
 			{
 				System.out.println("Diese Nachricht war SPAM!");
 			}
 			else
 			{
+				server.verteileNachricht(nikmsg, chn);
 				// An Server schicken und er verteilt an ClientPRoxys im Raum
 				// vlt Nickname in Message einbauen
 				// andere Nachrichtentypen abfangen CMD usw.
-
-
 			}
 		}
 		else
 		{
-			System.out.println(protocol[0].substring(0, 3));
+			
+			//NIK = null
+			System.out.println(request);
+			//System.out.println(protocol[0].substring(0, 3));
 			System.out.println("TSP: " + protocol[0] + " CHN: " + protocol[1]);
 			System.out.println("Protokoll ungültig!");
 		}

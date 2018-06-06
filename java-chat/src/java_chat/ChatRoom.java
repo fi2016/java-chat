@@ -59,6 +59,7 @@ public class ChatRoom
 		for (ClientProxy clientProxy : clientProxyList)
 		{
 			clientProxy.sendMessage(msg);
+			System.out.println("CHATROOM distribute" + msg);
 		}
 	}
 	

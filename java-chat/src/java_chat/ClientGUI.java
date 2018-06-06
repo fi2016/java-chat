@@ -88,12 +88,10 @@ public class ClientGUI extends JFrame
 			catch (UnknownHostException e)
 			{
 				JOptionPane.showMessageDialog(null, "Der Host " + hostName + " ist unbekannt");
-				System.exit(1);
 			}
 			catch (IOException e)
 			{
 				JOptionPane.showMessageDialog(null, "Bekomme keine I/O für die Verbindung zu " + hostName);
-				System.exit(1);
 			}
 			setNickname();
 		}
@@ -104,24 +102,24 @@ public class ClientGUI extends JFrame
 		btnSend.setEnabled(true);
 		btnDisconnect.setEnabled(false);
 		client.closeClient();
-		
 	}
 
 	protected void handoverMessage() // Message to client
 	{
 		String message = textFieldMessage.getText();
-		String chn = tabsHistory.getSelectedComponent().getName();
+		int index = tabsHistory.getSelectedIndex();
+		String chn = tabsHistory.getTitleAt(index);
 
 		try
 		{
 			client.sendMessage(message, chn);
-			textFieldMessage.setText(""); // foo
+			textFieldMessage.setText("");
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-	}// pushtry
+	}
 
 	protected void setNickname()
 	{
