@@ -43,6 +43,16 @@ public class Server implements Runnable
 		blacklist.put(ip, time);
 	}
 
+	public void verteileNachricht(String msg, String chn)
+	{
+		for (ChatRoom room : roomList)
+		{
+			if(room.getName().equals(chn))
+			{
+				room.distributeMessage(msg);
+			}
+		}
+	}
 	
 	public void closeServer()
 	{
