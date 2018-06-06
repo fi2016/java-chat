@@ -1,12 +1,10 @@
 package java_chat;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class ClientProxy implements Runnable
