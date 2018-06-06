@@ -57,7 +57,6 @@ public class Client implements Runnable
 		
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		
-
 		message = "TSP" + timestamp + "\u001eCHN" + roomName /* + "\u001eNIK"  + NIK */ +  "\u001eMSG" + message; 
 		out.writeUTF(message);
 		out.flush();

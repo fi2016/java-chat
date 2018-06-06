@@ -43,6 +43,7 @@ public class Server implements Runnable
 		blacklist.put(ip, time);
 	}
 
+	
 	public void closeServer()
 	{
 		if(clientList.isEmpty() != true)

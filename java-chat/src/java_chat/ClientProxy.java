@@ -40,10 +40,10 @@ public class ClientProxy implements Runnable
 				{
 					in = new ObjectInputStream(socket.getInputStream());
 				}
-		
+
 				read(in.readUTF());
-			
-			} catch (IOException e)
+			}
+			catch (IOException e)
 			{
 				System.out.println("Failed reading request!");
 				e.printStackTrace();
@@ -55,68 +55,69 @@ public class ClientProxy implements Runnable
 	private void read(Object obj)
 	{
 		String request = (String) obj;
-		
+
 		String[] protocol = request.split("\u001e");
-		
-		if(protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("NIK") && protocol[2].substring(0, 3).equals("CHN") && protocol[3].substring(0, 3).equals("MSG")) 
+
+		if (protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("NIK")
+				&& protocol[2].substring(0, 3).equals("CHN") && protocol[3].substring(0, 3).equals("MSG"))
 		{
 			// von Carry + Daniel gemacht. Nicht sicher, ob richtig so
 			Timestamp tsp = Timestamp.valueOf(protocol[0].substring(3, protocol[0].length()));
-			String nik = protocol[1].substring(3, protocol[1].length());	
-			String chn = protocol[2].substring(3, protocol[2].length());	
-			String msg = protocol[3].substring(3, protocol[3].length());	
-			
-			if(checkSpam(msg,tsp))
+			String nik = protocol[1].substring(3, protocol[1].length());
+			String chn = protocol[2].substring(3, protocol[2].length());
+			String msg = protocol[3].substring(3, protocol[3].length());
+
+			if (checkSpam(msg, tsp))
 			{
 				System.out.println("Diese Nachricht war SPAM!");
 			}
 			else
 			{
-				//An Server schicken und er verteilt an ClientPRoxys im Raum
-				//vlt Nickname in Message einbauen
-				//andere Nachrichtentypen abfangen CMD usw.
-				
-//				for (ChatRoom room : server.getRoomList())
-//				{
-//					if(room.getName() == chn)
-//					{
-//						room.distributeMessage(request);
-//					}
-//				}
+				// An Server schicken und er verteilt an ClientPRoxys im Raum
+				// vlt Nickname in Message einbauen
+				// andere Nachrichtentypen abfangen CMD usw.
+
+				// for (ChatRoom room : server.getRoomList())
+				// {
+				// if(room.getName() == chn)
+				// {
+				// room.distributeMessage(request);
+				// }
+				// }
 			}
 		}
-		else 
+		else
 		{
 			System.out.println(protocol[0].substring(0, 3));
-			System.out.println("TSP: "+protocol[0] + " CHN: " + protocol[1]);
+			System.out.println("TSP: " + protocol[0] + " CHN: " + protocol[1]);
 			System.out.println("Protokoll ungültig!");
 		}
 	}
-		//überprüfen des timestamps & channels (spam)
-		//überprüfen ob immer das selbe geschickt wird
+	// überprüfen des timestamps & channels (spam)
+	// überprüfen ob immer das selbe geschickt wird
 
 	private boolean checkSpam(String msg, Timestamp tsp)
 	{
-		
+
 		for (Timestamp t : messageBuffer.values())
 		{
-			if(t.getNanos() >= tsp.getNanos() - 100)
+			if (t.getNanos() >= tsp.getNanos() - 100)
 			{
 				return true;
 			}
 			else
 			{
-				if(messageBuffer.containsKey(msg))
+				if (messageBuffer.containsKey(msg))
 				{
 					return true;
 				}
 				else
 				{
-					messageBuffer.put(msg,tsp);
+					messageBuffer.put(msg, tsp);
 					return false;
 				}
 			}
-			//Spam selbe Nachricht
+			// Spam selbe Nachricht
 		}
 		return false;
 	}
@@ -131,8 +132,9 @@ public class ClientProxy implements Runnable
 			}
 			out.writeUTF(message);
 			out.flush();
-			
-		} catch (IOException e)
+
+		}
+		catch (IOException e)
 		{
 			System.out.println("Failed sending response!");
 			e.printStackTrace();
@@ -146,7 +148,8 @@ public class ClientProxy implements Runnable
 			t.interrupt();
 			out.close();
 			socket.close();
-		} catch (IOException e)
+		}
+		catch (IOException e)
 		{
 			System.out.println("Failed closing client!");
 			e.printStackTrace();

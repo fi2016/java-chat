@@ -111,8 +111,6 @@ public class ClientGUI extends JFrame
 	{
 		String message = textFieldMessage.getText();
 		String chn = tabsHistory.getSelectedComponent().getName();
-		
-		
 
 		try
 		{
