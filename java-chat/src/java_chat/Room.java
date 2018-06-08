@@ -46,7 +46,4 @@ public class Room
 		this.name = name;
 	}
 	
-	//Was wenn nachricht kommt -> anzeigen
-	//nicknames ändern methode (wird kommen)
-	
 }
