@@ -10,19 +10,20 @@ import java.util.HashMap;
 
 public class Server implements Runnable
 {
-	private ArrayList<ClientProxy> clientList;
+	private ArrayList<ClientProxy> clientList; // Schwachsinn da Public room
+												// ClientList hat bitte ändern
+												// bzw entfernen
+
 	private ServerSocket serverSocket;
 	private ArrayList<ChatRoom> roomList;
 	private String ip;
 	private int port;
 	private AdmintoolGUI admintoolGUI;
 	private SpartanPhalanx spartanPhalanx;
-	private long time;
-	HashMap<String, Long> blacklist = new HashMap<>();
-	private SpartanPhalanx spartanPhalan;
+	private HashMap<String, Long> blacklist = new HashMap<>();
 	private ArrayList<String> adminList = new ArrayList<String>();
 
-	public Server(ServerGUI serverGUI, int port, String ip)
+	public Server(int port, String ip)
 	{
 		clientList = new ArrayList<ClientProxy>();
 		roomList = new ArrayList<ChatRoom>();
@@ -40,35 +41,30 @@ public class Server implements Runnable
 
 	public void addBlacklist()
 	{
-		time = System.currentTimeMillis();
-		blacklist.put(ip, time);
+		blacklist.put(ip, System.currentTimeMillis());
 	}
 
-	public void verteileNachricht(String msg, String chn)
+	public void distributeMessage(String msg, String chn)
 	{
 		for (ChatRoom room : roomList)
 		{
-			if(room.getName().equals(chn))
+			if (room.getName().equals(chn))
 			{
 				room.distributeMessage(msg);
 			}
 		}
 	}
-	
+
 	public void closeServer()
 	{
-		if(clientList.isEmpty() == true)
-		{
-			clientList.clear();
-			clientList = null;
-		}
-		else
+		if (clientList.isEmpty() != true)
 		{
 			for (ClientProxy clientProxy : clientList)
 			{
 				clientProxy.closeClient();
 				clientList.remove(clientProxy);
 			}
+			clientList = null;
 		}
 		try
 		{
@@ -80,8 +76,6 @@ public class Server implements Runnable
 		{
 			e.printStackTrace();
 		}
-		clientList.clear();
-		clientList = null;
 	}
 
 	protected void openAdmintool() throws UnknownHostException, IOException
@@ -94,13 +88,14 @@ public class Server implements Runnable
 	{
 
 		client.closeClient();
-		//verteileNachricht(client.getNickname() + "hat sich abgemeldet!", );
+		// distributeMessage(client.getNickname() + "hat sich abgemeldet!");
 		clientList.remove(client);
 	}
 
 	@Override
 	public void run()
 	{
+
 		while (!Thread.currentThread().isInterrupted())
 		{
 			try
@@ -135,12 +130,11 @@ public class Server implements Runnable
 				ClientProxy c = new ClientProxy(clientSocket, this);
 				clientList.add(c);
 				roomList.get(0).addClient(c);
-				//checkAdmin();
+				// checkAdmin();
 			}
 		}
 		else
 		{
-			clientList = new ArrayList<ClientProxy>();
 			clientSocket.close();
 		}
 	}
@@ -195,13 +189,13 @@ public class Server implements Runnable
 		this.roomList = roomList;
 	}
 
+	protected void addBlacklist(ClientProxy client)
+	{
+
+	}
+
 	public ArrayList<ClientProxy> getClientList()
 	{
 		return clientList;
-	}
-
-	public void addBlacklist(Client client)
-	{
-		// TODO Auto-generated method stub	
 	}
 }
