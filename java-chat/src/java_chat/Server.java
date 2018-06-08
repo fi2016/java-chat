@@ -13,7 +13,6 @@ public class Server implements Runnable
 	private ArrayList<ClientProxy> clientList; // Schwachsinn da Public room
 												// ClientList hat bitte ändern
 												// bzw entfernen
-
 	private ServerSocket serverSocket;
 	private ArrayList<ChatRoom> roomList;
 	private String ip;
@@ -37,11 +36,6 @@ public class Server implements Runnable
 		adminList.add("Mini49");
 		adminList.add("n0ize");
 		adminList.add("xXPuSsYD3Str0y3rXx");
-	}
-
-	public void addBlacklist()
-	{
-		blacklist.put(ip, System.currentTimeMillis());
 	}
 
 	public void distributeMessage(String msg, String chn)
@@ -191,7 +185,8 @@ public class Server implements Runnable
 
 	protected void addBlacklist(ClientProxy client)
 	{
-
+		String clip = client.toString();
+		blacklist.put(clip, System.currentTimeMillis());
 	}
 
 	public ArrayList<ClientProxy> getClientList()
