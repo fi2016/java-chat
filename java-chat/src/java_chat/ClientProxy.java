@@ -138,6 +138,11 @@ public class ClientProxy implements Runnable
 			e.printStackTrace();
 		}
 	}
+	
+	public void setNickname(String nick)
+	{
+		nickname = nick;
+	}
 
 	public String getNickname()
 	{
