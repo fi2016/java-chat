@@ -2,6 +2,8 @@ package java_chat;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,9 +14,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Label;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 
 public class AdmintoolGUI extends JFrame
 {
@@ -38,17 +46,18 @@ public class AdmintoolGUI extends JFrame
 	private JTextField textFieldMessage;
 	private JButton btnSend;
 	private DefaultListModel<Client> lmMembers = new DefaultListModel<Client>();
-	private JComboBox<ChatRoom> comboBoxChatRooms;
+	private JComboBox<Room> comboBoxChatRooms;
 	private JButton btnKickClientRoom;
 	private JButton btnBanClientRoom;
 	private JLabel lblChatroomMember;
 	private JList<ClientProxy> listRoomMembers;
-	private JList<String> listChatRoom;
-	private DefaultListModel<String> listModelPublicChat = new DefaultListModel<String>();
 	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();
 	private Admintool admintool;
-	private JScrollPane scrollPane;
-	private JScrollPane scrollPane_1;
+	private JScrollPane scrollPane_AllMember;
+	private JScrollPane scrollPane_RoomMember;
+	private JTabbedPane tabsHistory;
+	private DefaultListModel<String> history = new DefaultListModel<String>();
+	private JTabbedPane tabbedPane;
 	/**
 	 * Launch the application.
 	 **/
@@ -87,7 +96,16 @@ public class AdmintoolGUI extends JFrame
 
 	public void connectAdmintool()
 	{
-		admintool.connect(comboBoxServerIDs.getSelectedItem().toString());
+		if(textFieldNickname.getText().equals("") || textFieldNickname.getText().equals(" "))
+		{
+			JOptionPane.showMessageDialog(null, "Bitte einen Nickname eingeben");
+		}
+		else
+		{
+			btnDisconnect.setEnabled(true);
+			btnConnect.setEnabled(true);
+			admintool.connect(comboBoxServerIDs.getSelectedItem().toString());
+		}
 	}
 
 	public void sendMessage()
@@ -104,12 +122,23 @@ public class AdmintoolGUI extends JFrame
 
 	protected void addChatRoomMember()
 	{
+		refreshRooms();
 		listModelPrivateMember.clear();
-
+		
 		ChatRoom cr = (ChatRoom) comboBoxChatRooms.getSelectedItem();
 		for (ClientProxy cp : cr.getClientProxyList())
 		{
 			listModelPrivateMember.addElement(cp);
+		}
+	}
+
+	private void refreshRooms()
+	{
+		comboBoxChatRooms.removeAll();
+		ArrayList<Room> roomlist = admintool.getRoomList();
+		for (Room room : roomlist)
+		{
+			comboBoxChatRooms.addItem(room);
 		}
 	}
 
@@ -120,22 +149,57 @@ public class AdmintoolGUI extends JFrame
 		addChatRoomMember();
 	}
 
-	private void refreshChatRoomBox()
+	private void closeChatRoom()
 	{
 		admintool.closeChatroom((ChatRoom) comboBoxChatRooms.getSelectedItem());
 		comboBoxChatRooms.remove(comboBoxChatRooms.getSelectedIndex());
+		refreshRooms();
 	}
 
 	protected void disconnect()
 	{
+		btnDisconnect.setEnabled(false);
+		btnConnect.setEnabled(true);
 		admintool.disconnect();
 	}
 
+	protected void createTab(Room r)
+	{
+		JPanel p = new JPanel();
+		JList<String> listHistory = new JList<String>();
+		tabsHistory.addTab(r.getName(), p);
+
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]
+		{ 557, 0, 0 };
+		gbl_panel.rowHeights = new int[]
+		{ 287, 0 };
+		gbl_panel.columnWeights = new double[]
+		{ 0.0, 0.0, Double.MIN_VALUE };
+		gbl_panel.rowWeights = new double[]
+		{ 0.0, Double.MIN_VALUE };
+		p.setLayout(gbl_panel);
+
+		GridBagConstraints gbc_listHistory = new GridBagConstraints();
+		gbc_listHistory.insets = new Insets(0, 0, 0, 5);
+		gbc_listHistory.fill = GridBagConstraints.BOTH;
+		gbc_listHistory.gridx = 0;
+		gbc_listHistory.gridy = 0;
+
+		listHistory.setModel(history);
+		p.add(listHistory, gbc_listHistory);
+
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.gridx = 1;
+		gbc_lblNewLabel.gridy = 0;
+		p.add(new Label(r.getName()), gbc_lblNewLabel);
+	}
 	/*
 	 * TO DO private void refreshMemberList() { lmMembers.clear(); for
 	 * (ClientProxy cp : ) { listModelPrivateMember.addElement(cp); } }
 	 */
 
+	
 	private void initialize()
 	{
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -164,7 +228,7 @@ public class AdmintoolGUI extends JFrame
 		contentPane.add(getBtnBanClientRoom());
 		contentPane.add(getLblChatroomMember());
 		contentPane.add(getScrollPane_1());
-		contentPane.add(getListChatRoom());
+		contentPane.add(getTabbedPane());
 	}
 
 	private JLabel getLblChatRoomsChats()
@@ -224,7 +288,7 @@ public class AdmintoolGUI extends JFrame
 		if (btnCloseChat == null)
 		{
 			btnCloseChat = new JButton("Close Chat");
-			btnCloseChat.addActionListener(e -> refreshChatRoomBox());
+			btnCloseChat.addActionListener(e -> closeChatRoom());
 			btnCloseChat.setBounds(682, 254, 138, 35);
 		}
 		return btnCloseChat;
@@ -287,6 +351,7 @@ public class AdmintoolGUI extends JFrame
 		if (btnDisconnect == null)
 		{
 			btnDisconnect = new JButton("Disconnect");
+			btnDisconnect.setEnabled(false);
 			btnDisconnect.addActionListener(e -> disconnect());
 			btnDisconnect.setBounds(477, 55, 85, 23);
 		}
@@ -315,11 +380,11 @@ public class AdmintoolGUI extends JFrame
 		return btnSend;
 	}
 
-	private JComboBox<ChatRoom> getComboBoxChatRooms()
+	private JComboBox<Room> getComboBoxChatRooms()
 	{
 		if (comboBoxChatRooms == null)
 		{
-			comboBoxChatRooms = new JComboBox<ChatRoom>();
+			comboBoxChatRooms = new JComboBox<Room>();
 			comboBoxChatRooms.addActionListener(e -> addChatRoomMember());
 			comboBoxChatRooms.setBounds(572, 218, 320, 25);
 		}
@@ -364,30 +429,27 @@ public class AdmintoolGUI extends JFrame
 		}
 		return listRoomMembers;
 	}
-
-	private JList<String> getListChatRoom()
-	{
-		if (listChatRoom == null)
-		{
-			listChatRoom = new JList<String>(listModelPublicChat);
-			listChatRoom.setBounds(10, 89, 550, 240);
-		}
-		return listChatRoom;
-	}
 	private JScrollPane getScrollPane() {
-		if (scrollPane == null) {
-			scrollPane = new JScrollPane();
-			scrollPane.setBounds(572, 44, 196, 138);
-			scrollPane.setViewportView(getListAllMembers());
+		if (scrollPane_AllMember == null) {
+			scrollPane_AllMember = new JScrollPane();
+			scrollPane_AllMember.setBounds(572, 44, 196, 138);
+			scrollPane_AllMember.setViewportView(getListAllMembers());
 		}
-		return scrollPane;
+		return scrollPane_AllMember;
 	}
 	private JScrollPane getScrollPane_1() {
-		if (scrollPane_1 == null) {
-			scrollPane_1 = new JScrollPane();
-			scrollPane_1.setBounds(572, 325, 160, 100);
-			scrollPane_1.setViewportView(getListRoomMembers());
+		if (scrollPane_RoomMember == null) {
+			scrollPane_RoomMember = new JScrollPane();
+			scrollPane_RoomMember.setBounds(572, 325, 160, 100);
+			scrollPane_RoomMember.setViewportView(getListRoomMembers());
 		}
-		return scrollPane_1;
+		return scrollPane_RoomMember;
+	}
+	private JTabbedPane getTabbedPane() {
+		if (tabbedPane == null) {
+			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+			tabbedPane.setBounds(20, 84, 542, 240);
+		}
+		return tabbedPane;
 	}
 }
