@@ -134,7 +134,7 @@ public class Server implements Runnable
 				ClientProxy c = new ClientProxy(clientSocket, this);
 				clientList.add(c);
 				roomList.get(0).addClient(c);
-				//checkAdmin();
+				checkAdmin();
 			}
 		}
 		else

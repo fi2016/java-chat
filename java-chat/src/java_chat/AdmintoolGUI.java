@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JScrollPane;
 
 public class AdmintoolGUI extends JFrame
 {
@@ -46,6 +47,8 @@ public class AdmintoolGUI extends JFrame
 	private DefaultListModel<String> listModelPublicChat = new DefaultListModel<String>();
 	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();
 	private Admintool admintool;
+	private JScrollPane scrollPane;
+	private JScrollPane scrollPane_1;
 	/**
 	 * Launch the application.
 	 **/
@@ -143,7 +146,7 @@ public class AdmintoolGUI extends JFrame
 		setTitle("Admintool");
 		contentPane.setLayout(null);
 		contentPane.add(getLblChatRoomsChats());
-		contentPane.add(getListAllMembers());
+		contentPane.add(getScrollPane());
 		contentPane.add(getLblMember());
 		contentPane.add(getBtnKick());
 		contentPane.add(getBtnBan());
@@ -160,7 +163,7 @@ public class AdmintoolGUI extends JFrame
 		contentPane.add(getBtnKickClientRoom());
 		contentPane.add(getBtnBanClientRoom());
 		contentPane.add(getLblChatroomMember());
-		contentPane.add(getListRoomMembers());
+		contentPane.add(getScrollPane_1());
 		contentPane.add(getListChatRoom());
 	}
 
@@ -179,7 +182,6 @@ public class AdmintoolGUI extends JFrame
 		if (listAllMembers == null)
 		{
 			listAllMembers = new JList<Client>(lmMembers);
-			listAllMembers.setBounds(572, 44, 196, 138);
 		}
 		return listAllMembers;
 	}
@@ -359,7 +361,6 @@ public class AdmintoolGUI extends JFrame
 		if (listRoomMembers == null)
 		{
 			listRoomMembers = new JList<ClientProxy>(listModelPrivateMember);
-			listRoomMembers.setBounds(572, 325, 160, 100);
 		}
 		return listRoomMembers;
 	}
@@ -372,5 +373,21 @@ public class AdmintoolGUI extends JFrame
 			listChatRoom.setBounds(10, 89, 550, 240);
 		}
 		return listChatRoom;
+	}
+	private JScrollPane getScrollPane() {
+		if (scrollPane == null) {
+			scrollPane = new JScrollPane();
+			scrollPane.setBounds(572, 44, 196, 138);
+			scrollPane.setViewportView(getListAllMembers());
+		}
+		return scrollPane;
+	}
+	private JScrollPane getScrollPane_1() {
+		if (scrollPane_1 == null) {
+			scrollPane_1 = new JScrollPane();
+			scrollPane_1.setBounds(572, 325, 160, 100);
+			scrollPane_1.setViewportView(getListRoomMembers());
+		}
+		return scrollPane_1;
 	}
 }
