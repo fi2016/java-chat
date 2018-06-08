@@ -1,3 +1,4 @@
+
 package java_chat;
 
 import java.io.IOException;
@@ -56,14 +57,18 @@ public class Server implements Runnable
 	
 	public void closeServer()
 	{
-		if(clientList.isEmpty() != true)
+		if(clientList.isEmpty() == true)
+		{
+			clientList.clear();
+			clientList = null;
+		}
+		else
 		{
 			for (ClientProxy clientProxy : clientList)
 			{
 				clientProxy.closeClient();
 				clientList.remove(clientProxy);
 			}
-			clientList = null;
 		}
 		try
 		{
@@ -75,6 +80,8 @@ public class Server implements Runnable
 		{
 			e.printStackTrace();
 		}
+		clientList.clear();
+		clientList = null;
 	}
 
 	protected void openAdmintool() throws UnknownHostException, IOException
@@ -87,14 +94,13 @@ public class Server implements Runnable
 	{
 
 		client.closeClient();
-		// distributeMessage(client.getNickname() + "hat sich abgemeldet!");
+		//verteileNachricht(client.getNickname() + "hat sich abgemeldet!", );
 		clientList.remove(client);
 	}
 
 	@Override
 	public void run()
 	{
-
 		while (!Thread.currentThread().isInterrupted())
 		{
 			try
@@ -129,11 +135,12 @@ public class Server implements Runnable
 				ClientProxy c = new ClientProxy(clientSocket, this);
 				clientList.add(c);
 				roomList.get(0).addClient(c);
-				checkAdmin();
+				//checkAdmin();
 			}
 		}
 		else
 		{
+			clientList = new ArrayList<ClientProxy>();
 			clientSocket.close();
 		}
 	}
@@ -188,13 +195,13 @@ public class Server implements Runnable
 		this.roomList = roomList;
 	}
 
-	protected void addBlacklist(Client client)
-	{
-
-	}
-
 	public ArrayList<ClientProxy> getClientList()
 	{
 		return clientList;
+	}
+
+	public void addBlacklist(Client client)
+	{
+		// TODO Auto-generated method stub	
 	}
 }

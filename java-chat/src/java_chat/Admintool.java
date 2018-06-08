@@ -74,6 +74,10 @@ public class Admintool extends Client
 
 	protected void refreshRooms()
 	{
-
+	
+		for (ChatRoom cr : clients)
+		{
+		
+		}
 	}
 }

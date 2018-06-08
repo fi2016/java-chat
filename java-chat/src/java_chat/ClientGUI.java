@@ -1,27 +1,30 @@
 package java_chat;
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Label;
-import javax.swing.JTextField;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class ClientGUI extends JFrame
 {
@@ -88,12 +91,10 @@ public class ClientGUI extends JFrame
 			catch (UnknownHostException e)
 			{
 				JOptionPane.showMessageDialog(null, "Der Host " + hostName + " ist unbekannt");
-				System.exit(1);
 			}
 			catch (IOException e)
 			{
 				JOptionPane.showMessageDialog(null, "Bekomme keine I/O für die Verbindung zu " + hostName);
-				System.exit(1);
 			}
 			setNickname("add");
 		}
@@ -104,24 +105,24 @@ public class ClientGUI extends JFrame
 		btnSend.setEnabled(true);
 		btnDisconnect.setEnabled(false);
 		client.closeClient();
-		
 	}
 
 	protected void handoverMessage() // Message to client
 	{
 		String message = textFieldMessage.getText();
-		String chn = tabsHistory.getSelectedComponent().getName();
+		int index = tabsHistory.getSelectedIndex();
+		String chn = tabsHistory.getTitleAt(index);
 
 		try
 		{
 			client.sendMessage(message, chn);
-			textFieldMessage.setText(""); // foo
+			textFieldMessage.setText("");
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-	}// pushtry
+	}
 
 	protected void setNickname(String command)
 	{
@@ -223,16 +224,27 @@ public class ClientGUI extends JFrame
 	{
 		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
 
-		for (Room r : client.getRoomList())
+		history.clear();
+		
+		if(client.getRoomList() == null)
 		{
-			if (r.getName().equals(panel.getName()))
+			
+		}
+		else
+		{
+			for (Room r : client.getRoomList())
 			{
-				for (String message : r.getHistory())
+				if (r.getName().equals(panel.getName()))
 				{
-					history.addElement(message);
+					for (String message : r.getHistory())
+					{
+						history.addElement(message);
+					}
 				}
 			}
 		}
+		
+	
 	}
 
 	/**
@@ -425,7 +437,13 @@ public class ClientGUI extends JFrame
 	{
 		if (tabsHistory == null)
 		{
-			tabsHistory = new JTabbedPane(JTabbedPane.TOP);
+			tabsHistory = new JTabbedPane(JTabbedPane.TOP);			
+			tabsHistory.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					showHistory();
+				}
+			});
 		}
 		return tabsHistory;
 	}

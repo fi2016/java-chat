@@ -67,6 +67,10 @@ public class ChatRoom
 	protected void closeRoom()
 	{
 		//Alle Clients ausm Raum schmeiﬂen
+		for (ClientProxy clientProxy : clientProxyList)
+		{
+			clientProxy.closeClient();
+		}
 	}	
 	
 	
