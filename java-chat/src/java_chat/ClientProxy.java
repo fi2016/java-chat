@@ -56,32 +56,32 @@ public class ClientProxy implements Runnable
 
 		String[] protocol = request.split("\u001e");
 
-		if (protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("NIK") && protocol[2].substring(0, 3).equals("CHN") && protocol[3].substring(0, 3).equals("MSG"))
+		if (protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("CHN") && protocol[2].substring(0, 3).equals("MSG"))
 		{
 			// von Carry + Daniel gemacht. Nicht sicher, ob richtig so
 			Timestamp tsp = Timestamp.valueOf(protocol[0].substring(3, protocol[0].length()));
-			String nik = protocol[1].substring(3, protocol[1].length());
-			String chn = protocol[2].substring(3, protocol[2].length());
-			String msg = protocol[3].substring(3, protocol[3].length());
+			String chn = protocol[1].substring(3, protocol[2].length());
+			String msg = protocol[2].substring(3, protocol[3].length());
 
-			String nikmsg = nik + ": " + msg;
+			String nikmsg = nickname + ": " + msg;
+			
+			String fullmessage = tsp + "\u001e" + chn + "\u001e" + nikmsg; //Message zusammengesetzt nach Protokoll
+			
+			
 			if (checkSpam(msg, tsp))
 			{
 				System.out.println("Diese Nachricht war SPAM!");
 			}
 			else
 			{
-				server.verteileNachricht(nikmsg, chn); //WIESO GENAU JETZT EIGENTLICH NUR DAS UND NICHT PROTOKOLL? -> IM CLIENT GEHTS' IN DIE ELSE BEIM IF.
-				// An Server schicken und er verteilt an ClientPRoxys im Raum
-				// vlt Nickname in Message einbauen
-				// andere Nachrichtentypen abfangen CMD usw.
+				server.verteileNachricht(fullmessage, chn);
 			}
 		}
 		else
 		{
 			
 			//NIK = null
-			System.out.println(request);
+			System.out.println("Protocol: im Else-Zweig" + request);
 			//System.out.println(protocol[0].substring(0, 3));
 			System.out.println("TSP: " + protocol[0] + " CHN: " + protocol[1]);
 			System.out.println("Protokoll ungültig!");
