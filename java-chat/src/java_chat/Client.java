@@ -44,7 +44,7 @@ public class Client implements Runnable
 		t.start();
 	}
 	
-	protected void sendMessage(String message, String roomName) throws IOException
+	protected void sendMessage(String message, String chn) throws IOException
 	{
 		if(out == null)
 		{
@@ -53,7 +53,8 @@ public class Client implements Runnable
 		
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		
-		message = "TSP" + timestamp + "\u001eNIK"  + nickname   + "\u001eCHN" + roomName +  "\u001eMSG" + message; 
+		message = "TSP" + timestamp + "\u001eCHN" + chn +  "\u001eMSG" + message; 
+		
 		out.writeUTF(message);
 		out.flush();
 	}
@@ -122,37 +123,31 @@ public class Client implements Runnable
 	protected void read(Object obj)
 	{
 		String request = (String) obj;
-		
+
 		String[] protocol = request.split("\u001e");
-		
-		if(protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("NIK") && protocol[2].substring(0, 3).equals("CHN") && protocol[3].substring(0, 3).equals("MSG")) 
+
+		if (protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("CHN") && protocol[2].substring(0, 3).equals("MSG"))
 		{
-			
-			// von Carry + Daniel gemacht. Nicht sicher, ob richtig so
 			Timestamp tsp = Timestamp.valueOf(protocol[0].substring(3, protocol[0].length()));
-			String nik = protocol[1].substring(3, protocol[1].length());	
-			String chn = protocol[2].substring(3, protocol[2].length());	
-			String msg = protocol[3].substring(3, protocol[3].length());	
+			String chn = protocol[1].substring(3, protocol[2].length());
+			String msg = protocol[2].substring(3, protocol[3].length());			
 			
-			for (Room room : this.getRoomList())
-			{
-				System.out.println("in Client: room added  in FOR");
-				if(room.getName().equals(chn))
-				{
-					room.getHistory().add(request);
-					System.out.println("in Client: room added to lsit ");
-					
-				}
-			}
-			System.out.println("Client nach for" + msg);
+			this.distributeMessage(tsp, chn, msg);
 		}
-		else 
+		else
 		{
-			System.out.println("in Client ELSE");
-			System.out.println(request);
-			//System.out.println(protocol[0].substring(0, 3));
-			//System.out.println("TSP: "+protocol[0] + " MSG: " + protocol[1]);
-			//System.out.println("Protokoll ungültig!");
+			System.out.println("Ungültiges Protokoll im Client (read-Methode)!");
+		}
+	}
+	
+	protected void distributeMessage(Timestamp tsp, String chn, String msg)
+	{
+		for (Room room : roomList)
+		{
+			if(room.getName().equals(chn))
+			{
+				room.getHistory().add("["+tsp+"] "+msg);
+			}
 		}
 	}
 	

@@ -65,8 +65,7 @@ public class ClientProxy implements Runnable
 
 			String nikmsg = nickname + ": " + msg;
 			
-			String fullmessage = tsp + "\u001e" + chn + "\u001e" + nikmsg; //Message zusammengesetzt nach Protokoll
-			
+			String fullmessage = "TSP" + tsp + "\u001eCHN" + chn + "\u001eMSG" + nikmsg; //Message zusammengesetzt nach Protokoll		
 			
 			if (checkSpam(msg, tsp))
 			{
