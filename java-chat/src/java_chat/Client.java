@@ -129,8 +129,8 @@ public class Client implements Runnable
 		if (protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("CHN") && protocol[2].substring(0, 3).equals("MSG"))
 		{
 			Timestamp tsp = Timestamp.valueOf(protocol[0].substring(3, protocol[0].length()));
-			String chn = protocol[1].substring(3, protocol[2].length());
-			String msg = protocol[2].substring(3, protocol[3].length());			
+			String chn = protocol[1].substring(3, protocol[1].length());
+			String msg = protocol[2].substring(3, protocol[2].length());			
 			
 			this.distributeMessage(tsp, chn, msg);
 		}
@@ -146,9 +146,14 @@ public class Client implements Runnable
 		{
 			if(room.getName().equals(chn))
 			{
-				room.getHistory().add("["+tsp+"] "+ msg);
+				room.getHistory().add("[" + tsp + "] " + msg);
 			}
 		}
+	}
+	
+	protected void sendCommand(String cmd)
+	{
+		
 	}
 	
 	protected void setNickname(String nickname)
