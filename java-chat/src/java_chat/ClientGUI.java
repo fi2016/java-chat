@@ -128,9 +128,9 @@ public class ClientGUI extends JFrame
 	{
 		String nick = getTextFieldNickname().getText();
 		
-		String message = "CMD" + command + "\u1001ePAM" + nick;
+		String cmd = "CMD" + command + "\u1001ePAM" + nick;
 
-		client.sendCommand(message);
+		client.sendCommand(cmd);
 	}
 
 	protected void showNotification(String message)
