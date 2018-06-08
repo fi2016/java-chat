@@ -95,7 +95,7 @@ public class ClientGUI extends JFrame
 				JOptionPane.showMessageDialog(null, "Bekomme keine I/O für die Verbindung zu " + hostName);
 				System.exit(1);
 			}
-			setNickname();
+			setNickname("add");
 		}
 	}
 
@@ -123,22 +123,13 @@ public class ClientGUI extends JFrame
 		}
 	}// pushtry
 
-	protected void setNickname()
+	protected void setNickname(String command)
 	{
 		String nick = getTextFieldNickname().getText();
+		
+		String message = "CMD" + command + "\u1001ePAM" + nick;
 
-		for (String user : userList)
-		{
-			if (nick.toUpperCase().equals(user.toUpperCase()))
-			{
-				JOptionPane.showMessageDialog(null, "Username already in use!");
-				textFieldNickname.setText("");
-			}
-			else
-			{
-				userList.add(nick);
-			}
-		}
+		client.sendCommand(message);
 	}
 
 	protected void showNotification(String message)
@@ -362,7 +353,7 @@ public class ClientGUI extends JFrame
 			{
 				public void actionPerformed(ActionEvent e)
 				{
-					setNickname();
+					setNickname("alt");
 				}
 			});
 			textFieldNickname.setColumns(10);
