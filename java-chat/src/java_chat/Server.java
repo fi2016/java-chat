@@ -183,9 +183,8 @@ public class Server implements Runnable
 		this.roomList = roomList;
 	}
 
-	protected void addBlacklist(ClientProxy client)
+	protected void addBlacklist(String clip)
 	{
-		String clip = client.toString();
 		blacklist.put(clip, System.currentTimeMillis());
 	}
 
