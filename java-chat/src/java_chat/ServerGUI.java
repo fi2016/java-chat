@@ -116,7 +116,7 @@ public class ServerGUI extends JFrame
 
 	private void startServer()
 	{
-		server = new Server(this, Integer.valueOf(txtPort.getText()), "localhost");
+		server = new Server(Integer.valueOf(txtPort.getText()), "localhost");
 		listenThread = new Thread(server);
 		listenThread.start();
 		button_Start.setEnabled(false);

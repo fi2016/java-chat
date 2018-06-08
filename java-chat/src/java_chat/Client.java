@@ -101,7 +101,7 @@ public class Client implements Runnable
 	protected void getIp()
 	{
 		ip = socket.getRemoteSocketAddress().toString();
-		server.addBlacklist();
+		server.addBlacklist(ip);
 		
 	}
 	
