@@ -64,19 +64,28 @@ public class ClientProxy implements Runnable
 
 			String nikmsg = nickname + ": " + msg;
 			
+<<<<<<< HEAD
 			String fullmessage = tsp + "\u001e" + chn + "\u001e" + nikmsg; //Message zusammengesetzt nach Protokoll
 			
+=======
+			String fullmessage = "TSP" + tsp + "\u001eCHN" + chn + "\u001eMSG" + nikmsg; //Message zusammengesetzt nach Protokoll		
+>>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 			
 			if (checkSpam(msg, tsp))
 			{
 				System.out.println("Diese Nachricht war SPAM!");
 			}
 			else
+<<<<<<< HEAD
 			{
 				server.verteileNachricht(nikmsg, chn); //WIESO GENAU JETZT EIGENTLICH NUR DAS UND NICHT PROTOKOLL? -> IM CLIENT GEHTS' IN DIE ELSE BEIM IF.
 				// An Server schicken und er verteilt an ClientPRoxys im Raum
 				// andere Nachrichtentypen abfangen CMD usw.
 				server.verteileNachricht(fullmessage, chn);
+=======
+			{
+				server.verteileNachricht(fullmessage, chn);
+>>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 			}
 		}
 		else
@@ -84,7 +93,11 @@ public class ClientProxy implements Runnable
 			System.out.println(request);
 			
 			//NIK = null
+<<<<<<< HEAD
 			System.out.println("Protocol: im Else-Zweig" + request);
+=======
+			System.out.println("Protocol: im Else-Zweig" + request);
+>>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 			//System.out.println(protocol[0].substring(0, 3));
 			System.out.println("TSP: " + protocol[0] + " CHN: " + protocol[1]);
 			System.out.println("Protokoll ungültig!");
