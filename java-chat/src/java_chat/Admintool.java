@@ -37,6 +37,7 @@ public class Admintool extends Client
 	protected void disconnect()
 	{
 		closeClient();
+
 	}
 
 	protected void kickClient(Client client)
@@ -51,7 +52,6 @@ public class Admintool extends Client
 	{
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
 		client.showNotification(message);
-		server.addBlacklist(client);
 		client.getIp();
 		client.closeClient();
 		refreshLists();
@@ -60,7 +60,6 @@ public class Admintool extends Client
 	protected void closeChatroom(ChatRoom chatRoom)
 	{
 		chatRoom.closeRoom();
-		refreshRooms();
 	}
 
 	private void refreshLists()
@@ -71,13 +70,44 @@ public class Admintool extends Client
 			clients.add(client);
 		}
 	}
-
-	protected void refreshRooms()
+/*
+	protected void updateHistory(String message) // aufrufen, wenn Pane offen
 	{
-	
-		for (ChatRoom cr : clients)
+		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
+
+		for (Room r : client.getRoomList())
 		{
-		
+			if (r.getName().equals(panel.getName()))
+			{
+				history.addElement(message);
+			}
 		}
 	}
+
+	protected void showHistory() // AUfrufen, wenn Pane geändert wird
+	{
+		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
+
+		history.clear();
+		
+		if(client.getRoomList() == null)
+		{
+			
+		}
+		else
+		{
+			for (Room r : client.getRoomList())
+			{
+				if (r.getName().equals(panel.getName()))
+				{
+					for (String message : r.getHistory())
+					{
+						history.addElement(message);
+					}
+				}
+			}
+		}
+	}
+	*/
 }
+
