@@ -146,7 +146,7 @@ public class Client implements Runnable
 		{
 			if(room.getName().equals(chn))
 			{
-				room.getHistory().add("["+tsp+"] "+msg);
+				room.getHistory().add("["+tsp+"] "+ msg);
 			}
 		}
 	}
