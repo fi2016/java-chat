@@ -68,7 +68,11 @@ public class Client implements Runnable
 			{
 				if (in == null)
 				{
-					in = new ObjectInputStream(socket.getInputStream());
+					if(socket.isConnected())
+					{
+						in = new ObjectInputStream(socket.getInputStream());
+						System.out.println("einmal hats geklappt");
+					}	
 				}
 		
 				read(in.readUTF());

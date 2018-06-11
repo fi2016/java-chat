@@ -48,7 +48,6 @@ public class Server implements Runnable
 			if (room.getName().equals(chn))
 			{
 				room.distributeMessage(msg);
-				
 			}
 		}
 	}
@@ -93,16 +92,21 @@ public class Server implements Runnable
 	@Override
 	public void run()
 	{
-
-		while (!Thread.currentThread().isInterrupted())
-		{
 			try
 			{
 				serverSocket = new ServerSocket(port);
+			}
+			catch (IOException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		while (!Thread.currentThread().isInterrupted())
+		{
+			try  {
 				Socket clientSocket = serverSocket.accept();
 				acceptClient(clientSocket);
 				Thread.sleep(100);
-				serverSocket.close();
 			}
 			catch (IOException e)
 			{
@@ -112,6 +116,15 @@ public class Server implements Runnable
 			{
 				Thread.currentThread().interrupt();
 			}
+		}
+		try
+		{
+			serverSocket.close();
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
