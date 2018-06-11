@@ -13,9 +13,9 @@ public class Admintool extends Client
 
 	public Admintool(Server server) throws UnknownHostException, IOException
 	{
-		super();
+		super(null);
 		this.server = server;
-		client = new Client();
+		client = new Client(null);
 	}
 
 	protected void connect(String server)
