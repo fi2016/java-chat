@@ -19,8 +19,11 @@ public class Server implements Runnable
 	private int port;
 	private AdmintoolGUI admintoolGUI;
 	private SpartanPhalanx spartanPhalanx;
+	private boolean nickInUse;
 	private HashMap<String, Long> blacklist = new HashMap<>();
 	private ArrayList<String> adminList = new ArrayList<String>();
+	
+	
 
 	public Server(int port, String ip)
 	{
@@ -192,5 +195,84 @@ public class Server implements Runnable
 	public ArrayList<ClientProxy> getClientList()
 	{
 		return clientList;
+	}
+	
+	protected void checkCommandType(String cmd)
+	{
+		String[] array = cmd.split("\u001e");
+		
+		String command = array[0].substring(3, 5);
+		String parameter = array[1].substring(3, array[1].length());
+		
+		switch (command)
+		{
+		case "add":
+			addUser(parameter);
+			break;
+			
+		case "del":
+			deleteUser(parameter);
+			break;
+
+		case "alt":
+			changeUsername(parameter);
+			break;
+			
+		case "ena":
+			
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	protected void changeUsername(String nick)
+	{
+		for (ChatRoom room : roomList)
+		{
+			if(room.getName().equals("public"))
+			{
+				
+				nickInUse = room.searchUsername();
+				
+			}
+		}
+		if(nickInUse == false)
+		{
+			//Nick in Proxy setzen
+			//RoomList updaten
+		}
+		else
+		{
+			//Fehlermeldung
+		}
+	}
+	
+	protected void deleteUser(String nick)
+	{
+		
+	}
+	
+	protected void addUser(String nick)
+	{
+		for (ChatRoom room : roomList)
+		{
+			if(room.getName().equals("public"))
+			{
+				
+				nickInUse = room.searchUsername();
+				
+			}
+		}
+		if(nickInUse == false)
+		{
+			//Nick in Proxy setzen
+			//RoomList updaten
+		}
+		else
+		{
+			//Fehlermeldung
+		}
 	}
 }
