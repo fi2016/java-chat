@@ -25,6 +25,11 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ListModel;
+import javax.swing.JMenu;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import javax.swing.JMenuItem;
 
 public class ClientGUI extends JFrame
 {
@@ -49,6 +54,11 @@ public class ClientGUI extends JFrame
 	private JList<String> listUser;
 	private JTabbedPane tabsHistory;
 	private DefaultListModel<String> history = new DefaultListModel<String>();
+	private JList<String> listRoom;
+	private JButton btnJoinRoom;
+	private JButton btnRoom;
+	private JPopupMenu popupMenu;
+	private JMenuItem mntmNewRoom;
 
 	/**
 	 * Launch the application.
@@ -75,7 +85,7 @@ public class ClientGUI extends JFrame
 	protected void connectClient()
 	{
 		String hostName = comboBoxServerIDs.getSelectedItem().toString();
-		if(textFieldNickname.getText().equals("") || textFieldNickname.getText().equals(" "))
+		if (textFieldNickname.getText().equals("") || textFieldNickname.getText().equals(" "))
 		{
 			JOptionPane.showMessageDialog(null, "Please insert Nickname first");
 		}
@@ -84,17 +94,17 @@ public class ClientGUI extends JFrame
 			try
 			{
 				client = new Client(this);
-				
+
 				client.connectServer(hostName);
-				btnSend.setEnabled(false);
+				btnSend.setEnabled(true);
 				btnDisconnect.setEnabled(true);
-				
+
 				Room r = new Room("public");
 				createTab(r);
 				client.getRoomList().add(r);
-				
+
 				showHistory();
-				
+
 			}
 			catch (UnknownHostException e)
 			{
@@ -110,7 +120,7 @@ public class ClientGUI extends JFrame
 
 	protected void closeClient()
 	{
-		btnSend.setEnabled(true);
+		btnSend.setEnabled(false);
 		btnDisconnect.setEnabled(false);
 		client.closeClient();
 	}
@@ -135,7 +145,7 @@ public class ClientGUI extends JFrame
 	protected void setNickname(String command)
 	{
 		String nick = getTextFieldNickname().getText();
-		
+
 		String cmd = "CMD" + command + "\u1001ePAM" + nick;
 
 		client.sendCommand(cmd);
@@ -187,7 +197,7 @@ public class ClientGUI extends JFrame
 	{
 		JPanel p = new JPanel();
 		JList<String> listHistory = new JList<String>();
-		tabsHistory.addTab(r.getName(), p); //HIER ACHTUNG TABS UND SO
+		tabsHistory.addTab(r.getName(), p); // HIER ACHTUNG TABS UND SO
 		p.setName(r.getName());
 
 		GridBagLayout gbl_panel = new GridBagLayout();
@@ -234,8 +244,8 @@ public class ClientGUI extends JFrame
 		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
 
 		history.clear();
-		
-		if(client.getRoomList() == null)
+
+		if (client.getRoomList() == null)
 		{
 		}
 		else
@@ -252,8 +262,7 @@ public class ClientGUI extends JFrame
 				}
 			}
 		}
-		
-	
+
 	}
 
 	/**
@@ -262,6 +271,7 @@ public class ClientGUI extends JFrame
 	public ClientGUI()
 	{
 		initialize();
+		btnSend.setEnabled(false);
 		serverListeAbrufen();
 	}
 
@@ -274,28 +284,29 @@ public class ClientGUI extends JFrame
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]
-		{ 74, 411, 124, 0 };
+		{ 74, 411, 0, 124, 0 };
 		gbl_contentPane.rowHeights = new int[]
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_contentPane.columnWeights = new double[]
-		{ 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		{ 1.0, 1.0, 0.0, 1.0, Double.MIN_VALUE };
 		gbl_contentPane.rowWeights = new double[]
-		{ 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		{ 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 		GridBagConstraints gbc_lblServer = new GridBagConstraints();
 		gbc_lblServer.insets = new Insets(0, 0, 5, 5);
 		gbc_lblServer.gridx = 0;
 		gbc_lblServer.gridy = 0;
 		contentPane.add(getLblServer(), gbc_lblServer);
-		GridBagConstraints gbc_comboBoxServerIDs = new GridBagConstraints();
-		gbc_comboBoxServerIDs.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBoxServerIDs.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBoxServerIDs.gridx = 1;
-		gbc_comboBoxServerIDs.gridy = 0;
-		contentPane.add(getComboBoxServerIDs(), gbc_comboBoxServerIDs);
+
+		GridBagConstraints gbc_btnRoom = new GridBagConstraints();
+		gbc_btnRoom.insets = new Insets(0, 0, 5, 5);
+		gbc_btnRoom.gridx = 2;
+		gbc_btnRoom.gridy = 0;
+		contentPane.add(getBtnRoom(), gbc_btnRoom);
 		GridBagConstraints gbc_btnConnect = new GridBagConstraints();
+		gbc_btnConnect.fill = GridBagConstraints.BOTH;
 		gbc_btnConnect.insets = new Insets(0, 0, 5, 0);
-		gbc_btnConnect.gridx = 2;
+		gbc_btnConnect.gridx = 3;
 		gbc_btnConnect.gridy = 0;
 		contentPane.add(getBtnConnect(), gbc_btnConnect);
 		GridBagConstraints gbc_lblNickname = new GridBagConstraints();
@@ -310,8 +321,9 @@ public class ClientGUI extends JFrame
 		gbc_textFieldNickname.gridy = 1;
 		contentPane.add(getTextFieldNickname(), gbc_textFieldNickname);
 		GridBagConstraints gbc_btnDisconnect = new GridBagConstraints();
+		gbc_btnDisconnect.fill = GridBagConstraints.BOTH;
 		gbc_btnDisconnect.insets = new Insets(0, 0, 5, 0);
-		gbc_btnDisconnect.gridx = 2;
+		gbc_btnDisconnect.gridx = 3;
 		gbc_btnDisconnect.gridy = 1;
 		contentPane.add(getBtnDisconnect(), gbc_btnDisconnect);
 		GridBagConstraints gbc_tabsHistory = new GridBagConstraints();
@@ -322,12 +334,26 @@ public class ClientGUI extends JFrame
 		gbc_tabsHistory.gridx = 0;
 		gbc_tabsHistory.gridy = 2;
 		contentPane.add(getTabsHistory(), gbc_tabsHistory);
+		GridBagConstraints gbc_listRoom = new GridBagConstraints();
+		gbc_listRoom.gridheight = 3;
+		gbc_listRoom.insets = new Insets(0, 0, 5, 0);
+		gbc_listRoom.fill = GridBagConstraints.BOTH;
+		gbc_listRoom.gridx = 3;
+		gbc_listRoom.gridy = 2;
+		contentPane.add(getListRoom(), gbc_listRoom);
+		GridBagConstraints gbc_btnJoinRoom = new GridBagConstraints();
+		gbc_btnJoinRoom.anchor = GridBagConstraints.NORTH;
+		gbc_btnJoinRoom.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnJoinRoom.insets = new Insets(0, 0, 5, 0);
+		gbc_btnJoinRoom.gridx = 3;
+		gbc_btnJoinRoom.gridy = 5;
+		contentPane.add(getBtnJoinRoom(), gbc_btnJoinRoom);
 		GridBagConstraints gbc_listUser = new GridBagConstraints();
-		gbc_listUser.gridheight = 8;
+		gbc_listUser.gridheight = 4;
 		gbc_listUser.insets = new Insets(0, 0, 5, 0);
 		gbc_listUser.fill = GridBagConstraints.BOTH;
-		gbc_listUser.gridx = 2;
-		gbc_listUser.gridy = 2;
+		gbc_listUser.gridx = 3;
+		gbc_listUser.gridy = 6;
 		contentPane.add(getListUser(), gbc_listUser);
 		GridBagConstraints gbc_textFieldMessage = new GridBagConstraints();
 		gbc_textFieldMessage.gridwidth = 2;
@@ -338,7 +364,7 @@ public class ClientGUI extends JFrame
 		contentPane.add(getTextFieldMessage(), gbc_textFieldMessage);
 		GridBagConstraints gbc_btnSend = new GridBagConstraints();
 		gbc_btnSend.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnSend.gridx = 2;
+		gbc_btnSend.gridx = 3;
 		gbc_btnSend.gridy = 10;
 		contentPane.add(getBtnSend(), gbc_btnSend);
 	}
@@ -442,8 +468,35 @@ public class ClientGUI extends JFrame
 	{
 		if (tabsHistory == null)
 		{
-			tabsHistory = new JTabbedPane(JTabbedPane.TOP);			
+			tabsHistory = new JTabbedPane(JTabbedPane.TOP);
 		}
 		return tabsHistory;
+	}
+
+	private JList<String> getListRoom()
+	{
+		if (listRoom == null)
+		{
+			listRoom = new JList<String>();
+		}
+		return listRoom;
+	}
+
+	private JButton getBtnJoinRoom()
+	{
+		if (btnJoinRoom == null)
+		{
+			btnJoinRoom = new JButton("Join Room");
+		}
+		return btnJoinRoom;
+	}
+
+	private JButton getBtnRoom()
+	{
+		if (btnRoom == null)
+		{
+			btnRoom = new JButton("Room...");
+		}
+		return btnRoom;
 	}
 }
