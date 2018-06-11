@@ -1,43 +1,16 @@
 package java_chat;
 
-import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-public class Admintool extends Client
+public class Admintool
 {
 	private ArrayList<ClientProxy> clients = new ArrayList<ClientProxy>();
 	private Server server;
-	private Client client;
 
-	public Admintool(Server server) throws UnknownHostException, IOException
+	public Admintool(Server server)
 	{
-		super(null);
 		this.server = server;
-		client = new Client(null);
-	}
-
-	protected void connect(String server)
-	{
-		try
-		{
-			client.connectServer(server);
-		}
-		catch (UnknownHostException e)
-		{
-			JOptionPane.showMessageDialog(null, "Der angegebene Host ist nicht bekannt");
-		}
-		catch (IOException e)
-		{
-			JOptionPane.showMessageDialog(null, "IO Exception AdmintoolGUI beim connecten");
-		}
-	}
-
-	protected void disconnect()
-	{
-		closeClient();
-
 	}
 
 	protected void kickClient(Client client)
@@ -70,44 +43,11 @@ public class Admintool extends Client
 			clients.add(client);
 		}
 	}
-/*
-	protected void updateHistory(String message) // aufrufen, wenn Pane offen
+
+	public ArrayList<Room> getRoomList()
 	{
-		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
-
-		for (Room r : client.getRoomList())
-		{
-			if (r.getName().equals(panel.getName()))
-			{
-				history.addElement(message);
-			}
-		}
+		// TODO Auto-generated method stub
+		return null;
 	}
-
-	protected void showHistory() // AUfrufen, wenn Pane geändert wird
-	{
-		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
-
-		history.clear();
-		
-		if(client.getRoomList() == null)
-		{
-			
-		}
-		else
-		{
-			for (Room r : client.getRoomList())
-			{
-				if (r.getName().equals(panel.getName()))
-				{
-					for (String message : r.getHistory())
-					{
-						history.addElement(message);
-					}
-				}
-			}
-		}
-	}
-	*/
 }
 

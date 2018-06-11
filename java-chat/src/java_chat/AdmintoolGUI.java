@@ -1,7 +1,5 @@
 package java_chat;
 
-import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -10,9 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.GridBagConstraints;
@@ -63,32 +59,13 @@ public class AdmintoolGUI extends JFrame
 			}
 		});
 		initialize();
-		try
-		{
-			admintool = new Admintool(server);
-
-		}
-		catch (UnknownHostException e)
-		{
-			JOptionPane.showMessageDialog(null, "Der angegebene Host ist nicht bekannt");
-		}
-		catch (IOException e)
-		{
-			JOptionPane.showMessageDialog(null, "IO Exception AdmintoolGUI im Konstruktor");
-		}
+		admintool = new Admintool(server);
 	}
 
 	private void closeWindow()
 	{
 		dispose();
-		admintool.closeClient();
 	}
-
-//	public void connectAdmintool()
-//	{
-//		
-//	}
-
 	protected void addChatRoomMember()
 	{
 		refreshRooms();
@@ -125,7 +102,6 @@ public class AdmintoolGUI extends JFrame
 		refreshRooms();
 	}
 
-
 	protected void createTab(Room r)
 	{
 		JPanel p = new JPanel();
@@ -157,11 +133,6 @@ public class AdmintoolGUI extends JFrame
 		gbc_lblNewLabel.gridy = 0;
 		p.add(new Label(r.getName()), gbc_lblNewLabel);
 	}
-	/*
-	 * TO DO private void refreshMemberList() { lmMembers.clear(); for
-	 * (ClientProxy cp : ) { listModelPrivateMember.addElement(cp); } }
-	 */
-
 	
 	private void initialize()
 	{

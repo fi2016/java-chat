@@ -81,6 +81,7 @@ public class ServerGUI extends JFrame
 		try
 		{
 			server.openAdmintool();
+			btnAdmintool.setEnabled(false);
 		}
 		catch (UnknownHostException e)
 		{
