@@ -37,14 +37,6 @@ public class AdmintoolGUI extends JFrame
 	private JButton btnKick;
 	private JButton btnBan;
 	private JButton btnCloseChat;
-	private JLabel lblServer;
-	private JComboBox<String> comboBoxServerIDs;
-	private JButton btnConnect;
-	private JLabel lblNickname;
-	private JTextField textFieldNickname;
-	private JButton btnDisconnect;
-	private JTextField textFieldMessage;
-	private JButton btnSend;
 	private DefaultListModel<Client> lmMembers = new DefaultListModel<Client>();
 	private JComboBox<Room> comboBoxChatRooms;
 	private JButton btnKickClientRoom;
@@ -53,11 +45,10 @@ public class AdmintoolGUI extends JFrame
 	private JList<ClientProxy> listRoomMembers;
 	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();
 	private Admintool admintool;
-	private JScrollPane scrollPane_AllMember;
-	private JScrollPane scrollPane_RoomMember;
 	private JTabbedPane tabsHistory;
 	private DefaultListModel<String> history = new DefaultListModel<String>();
-	private JTabbedPane tabbedPane;
+	private JScrollPane scrollPane;
+	private JScrollPane scrollPane_1;
 	/**
 	 * Launch the application.
 	 **/
@@ -72,7 +63,6 @@ public class AdmintoolGUI extends JFrame
 			}
 		});
 		initialize();
-		comboBoxServerIDs.addItem("localhost");
 		try
 		{
 			admintool = new Admintool(server);
@@ -94,31 +84,10 @@ public class AdmintoolGUI extends JFrame
 		admintool.closeClient();
 	}
 
-	public void connectAdmintool()
-	{
-		if(textFieldNickname.getText().equals("") || textFieldNickname.getText().equals(" "))
-		{
-			JOptionPane.showMessageDialog(null, "Bitte einen Nickname eingeben");
-		}
-		else
-		{
-			btnDisconnect.setEnabled(true);
-			btnConnect.setEnabled(true);
-			admintool.connect(comboBoxServerIDs.getSelectedItem().toString());
-		}
-	}
-
-	public void sendMessage()
-	{
-		try
-		{
-			admintool.sendMessage(textFieldMessage.getText(), getTitle());
-		}
-		catch (IOException e)
-		{
-			JOptionPane.showMessageDialog(null, "IO Exception AdmintoolGUI beim senden");
-		}
-	}
+//	public void connectAdmintool()
+//	{
+//		
+//	}
 
 	protected void addChatRoomMember()
 	{
@@ -156,12 +125,6 @@ public class AdmintoolGUI extends JFrame
 		refreshRooms();
 	}
 
-	protected void disconnect()
-	{
-		btnDisconnect.setEnabled(false);
-		btnConnect.setEnabled(true);
-		admintool.disconnect();
-	}
 
 	protected void createTab(Room r)
 	{
@@ -203,32 +166,23 @@ public class AdmintoolGUI extends JFrame
 	private void initialize()
 	{
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setBounds(100, 100, 1000, 500);
+		setBounds(100, 100, 372, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setTitle("Admintool");
 		contentPane.setLayout(null);
 		contentPane.add(getLblChatRoomsChats());
-		contentPane.add(getScrollPane());
 		contentPane.add(getLblMember());
 		contentPane.add(getBtnKick());
 		contentPane.add(getBtnBan());
 		contentPane.add(getBtnCloseChat());
-		contentPane.add(getLblServer());
-		contentPane.add(getComboBoxServerIDs());
-		contentPane.add(getBtnConnect());
-		contentPane.add(getBtnDisconnect());
-		contentPane.add(getLblNickname());
-		contentPane.add(getTextFieldNickname());
-		contentPane.add(getBtnSend());
-		contentPane.add(getTextFieldMessage());
 		contentPane.add(getComboBoxChatRooms());
 		contentPane.add(getBtnKickClientRoom());
 		contentPane.add(getBtnBanClientRoom());
 		contentPane.add(getLblChatroomMember());
-		contentPane.add(getScrollPane_1());
-		contentPane.add(getTabbedPane());
+		contentPane.add(getScrollPane_2());
+		contentPane.add(getScrollPane_1_1());
 	}
 
 	private JLabel getLblChatRoomsChats()
@@ -236,7 +190,7 @@ public class AdmintoolGUI extends JFrame
 		if (lblChatRoomsChats == null)
 		{
 			lblChatRoomsChats = new JLabel("Chat Rooms");
-			lblChatRoomsChats.setBounds(572, 193, 81, 14);
+			lblChatRoomsChats.setBounds(10, 196, 81, 14);
 		}
 		return lblChatRoomsChats;
 	}
@@ -255,7 +209,7 @@ public class AdmintoolGUI extends JFrame
 		if (lblMember == null)
 		{
 			lblMember = new JLabel("Members");
-			lblMember.setBounds(572, 25, 100, 14);
+			lblMember.setBounds(10, 21, 100, 14);
 		}
 		return lblMember;
 	}
@@ -267,7 +221,7 @@ public class AdmintoolGUI extends JFrame
 			btnKick = new JButton("Kicken");
 			btnKick.addActionListener(
 					e -> admintool.kickClient(lmMembers.elementAt(listAllMembers.getSelectedIndex())));
-			btnKick.setBounds(778, 40, 92, 25);
+			btnKick.setBounds(214, 44, 92, 25);
 		}
 		return btnKick;
 	}
@@ -278,7 +232,7 @@ public class AdmintoolGUI extends JFrame
 		{
 			btnBan = new JButton("Bannen");
 			btnBan.addActionListener(e -> admintool.banClient(lmMembers.elementAt(listAllMembers.getSelectedIndex())));
-			btnBan.setBounds(780, 75, 92, 25);
+			btnBan.setBounds(214, 80, 92, 25);
 		}
 		return btnBan;
 	}
@@ -289,95 +243,9 @@ public class AdmintoolGUI extends JFrame
 		{
 			btnCloseChat = new JButton("Close Chat");
 			btnCloseChat.addActionListener(e -> closeChatRoom());
-			btnCloseChat.setBounds(682, 254, 138, 35);
+			btnCloseChat.setBounds(116, 254, 106, 35);
 		}
 		return btnCloseChat;
-	}
-
-	private JLabel getLblServer()
-	{
-		if (lblServer == null)
-		{
-			lblServer = new JLabel("Server:");
-			lblServer.setBounds(10, 25, 56, 14);
-		}
-		return lblServer;
-	}
-
-	private JComboBox<String> getComboBoxServerIDs()
-	{
-		if (comboBoxServerIDs == null)
-		{
-			comboBoxServerIDs = new JComboBox<String>();
-			comboBoxServerIDs.setBounds(66, 22, 401, 20);
-		}
-		return comboBoxServerIDs;
-	}
-
-	private JButton getBtnConnect()
-	{
-		if (btnConnect == null)
-		{
-			btnConnect = new JButton("Connect");
-			btnConnect.addActionListener(e -> connectAdmintool());
-			btnConnect.setBounds(477, 21, 85, 23);
-		}
-		return btnConnect;
-	}
-
-	private JLabel getLblNickname()
-	{
-		if (lblNickname == null)
-		{
-			lblNickname = new JLabel("Nickname:");
-			lblNickname.setBounds(10, 59, 56, 14);
-		}
-		return lblNickname;
-	}
-
-	private JTextField getTextFieldNickname()
-	{
-		if (textFieldNickname == null)
-		{
-			textFieldNickname = new JTextField();
-			textFieldNickname.setBounds(66, 56, 401, 20);
-			textFieldNickname.setColumns(10);
-		}
-		return textFieldNickname;
-	}
-
-	private JButton getBtnDisconnect()
-	{
-		if (btnDisconnect == null)
-		{
-			btnDisconnect = new JButton("Disconnect");
-			btnDisconnect.setEnabled(false);
-			btnDisconnect.addActionListener(e -> disconnect());
-			btnDisconnect.setBounds(477, 55, 85, 23);
-		}
-		return btnDisconnect;
-	}
-
-	private JTextField getTextFieldMessage()
-	{
-		if (textFieldMessage == null)
-		{
-			textFieldMessage = new JTextField();
-			textFieldMessage.setBounds(6, 338, 461, 20);
-			textFieldMessage.setColumns(10);
-		}
-		return textFieldMessage;
-	}
-
-	private JButton getBtnSend()
-	{
-		if (btnSend == null)
-		{
-			btnSend = new JButton("Send");
-			btnSend.addActionListener(e -> sendMessage());
-			btnSend.setBounds(477, 338, 85, 23);
-		}
-		return btnSend;
 	}
 
 	private JComboBox<Room> getComboBoxChatRooms()
@@ -386,7 +254,7 @@ public class AdmintoolGUI extends JFrame
 		{
 			comboBoxChatRooms = new JComboBox<Room>();
 			comboBoxChatRooms.addActionListener(e -> addChatRoomMember());
-			comboBoxChatRooms.setBounds(572, 218, 320, 25);
+			comboBoxChatRooms.setBounds(10, 221, 320, 25);
 		}
 		return comboBoxChatRooms;
 	}
@@ -396,7 +264,7 @@ public class AdmintoolGUI extends JFrame
 		if (btnKickClientRoom == null)
 		{
 			btnKickClientRoom = new JButton("Kick Client");
-			btnKickClientRoom.setBounds(830, 254, 100, 35);
+			btnKickClientRoom.setBounds(232, 254, 100, 35);
 		}
 		return btnKickClientRoom;
 	}
@@ -406,7 +274,7 @@ public class AdmintoolGUI extends JFrame
 		if (btnBanClientRoom == null)
 		{
 			btnBanClientRoom = new JButton("Ban Client");
-			btnBanClientRoom.setBounds(572, 254, 100, 35);
+			btnBanClientRoom.setBounds(10, 254, 100, 35);
 		}
 		return btnBanClientRoom;
 	}
@@ -416,7 +284,7 @@ public class AdmintoolGUI extends JFrame
 		if (lblChatroomMember == null)
 		{
 			lblChatroomMember = new JLabel("Chatroom Member");
-			lblChatroomMember.setBounds(572, 300, 160, 14);
+			lblChatroomMember.setBounds(10, 300, 160, 14);
 		}
 		return lblChatroomMember;
 	}
@@ -429,27 +297,20 @@ public class AdmintoolGUI extends JFrame
 		}
 		return listRoomMembers;
 	}
-	private JScrollPane getScrollPane() {
-		if (scrollPane_AllMember == null) {
-			scrollPane_AllMember = new JScrollPane();
-			scrollPane_AllMember.setBounds(572, 44, 196, 138);
-			scrollPane_AllMember.setViewportView(getListAllMembers());
+	private JScrollPane getScrollPane_2() {
+		if (scrollPane == null) {
+			scrollPane = new JScrollPane();
+			scrollPane.setBounds(10, 46, 194, 136);
+			scrollPane.setViewportView(getListAllMembers());
 		}
-		return scrollPane_AllMember;
+		return scrollPane;
 	}
-	private JScrollPane getScrollPane_1() {
-		if (scrollPane_RoomMember == null) {
-			scrollPane_RoomMember = new JScrollPane();
-			scrollPane_RoomMember.setBounds(572, 325, 160, 100);
-			scrollPane_RoomMember.setViewportView(getListRoomMembers());
+	private JScrollPane getScrollPane_1_1() {
+		if (scrollPane_1 == null) {
+			scrollPane_1 = new JScrollPane();
+			scrollPane_1.setBounds(10, 326, 158, 98);
+			scrollPane_1.setViewportView(getListRoomMembers());
 		}
-		return scrollPane_RoomMember;
-	}
-	private JTabbedPane getTabbedPane() {
-		if (tabbedPane == null) {
-			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-			tabbedPane.setBounds(20, 84, 542, 240);
-		}
-		return tabbedPane;
+		return scrollPane_1;
 	}
 }
