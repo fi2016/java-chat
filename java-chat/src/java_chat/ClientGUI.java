@@ -83,10 +83,18 @@ public class ClientGUI extends JFrame
 		{
 			try
 			{
-				client = new Client();
+				client = new Client(this);
+				
 				client.connectServer(hostName);
 				btnSend.setEnabled(false);
 				btnDisconnect.setEnabled(true);
+				
+				Room r = new Room("public");
+				createTab(r);
+				client.getRoomList().add(r);
+				
+				showHistory();
+				
 			}
 			catch (UnknownHostException e)
 			{
@@ -179,7 +187,8 @@ public class ClientGUI extends JFrame
 	{
 		JPanel p = new JPanel();
 		JList<String> listHistory = new JList<String>();
-		tabsHistory.addTab(r.getName(), p);
+		tabsHistory.addTab(r.getName(), p); //HIER ACHTUNG TABS UND SO
+		p.setName(r.getName());
 
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]
@@ -228,7 +237,6 @@ public class ClientGUI extends JFrame
 		
 		if(client.getRoomList() == null)
 		{
-			
 		}
 		else
 		{
@@ -236,7 +244,8 @@ public class ClientGUI extends JFrame
 			{
 				if (r.getName().equals(panel.getName()))
 				{
-					for (String message : r.getHistory())
+					ArrayList<String> al = r.getHistory();
+					for (String message : al)
 					{
 						history.addElement(message);
 					}
@@ -254,10 +263,6 @@ public class ClientGUI extends JFrame
 	{
 		initialize();
 		serverListeAbrufen();
-
-		// Test von Räumen
-		createTab(new Room("public"));
-		// createTab("test");
 	}
 
 	private void initialize()
@@ -438,12 +443,6 @@ public class ClientGUI extends JFrame
 		if (tabsHistory == null)
 		{
 			tabsHistory = new JTabbedPane(JTabbedPane.TOP);			
-			tabsHistory.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					showHistory();
-				}
-			});
 		}
 		return tabsHistory;
 	}

@@ -45,6 +45,7 @@ public class Server implements Runnable
 			if (room.getName().equals(chn))
 			{
 				room.distributeMessage(msg);
+				
 			}
 		}
 	}

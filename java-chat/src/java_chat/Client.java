@@ -32,9 +32,10 @@ public class Client implements Runnable
 		this.roomList = roomList;
 	}
 
-	public Client() throws UnknownHostException, IOException
+	public Client(ClientGUI gui) throws UnknownHostException, IOException
 	{
 		t = new Thread(this);
+		this.client = gui;
 		t.setName("ClientReadingThread");
 	}
 	
@@ -80,7 +81,7 @@ public class Client implements Runnable
 			}
 			catch (NullPointerException e)
 			{
-				
+				e.printStackTrace();
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -123,14 +124,20 @@ public class Client implements Runnable
 	protected void read(Object obj)
 	{
 		String request = (String) obj;
+		System.out.println("requst:" + request);
 
 		String[] protocol = request.split("\u001e");
 
 		if (protocol[0].substring(0, 3).equals("TSP") && protocol[1].substring(0, 3).equals("CHN") && protocol[2].substring(0, 3).equals("MSG"))
 		{
+			
 			Timestamp tsp = Timestamp.valueOf(protocol[0].substring(3, protocol[0].length()));
 			String chn = protocol[1].substring(3, protocol[1].length());
 			String msg = protocol[2].substring(3, protocol[2].length());			
+			
+			System.out.println("TSP: " +tsp);
+			System.out.println("CHN: " +chn);
+			System.out.println("MSG: " +msg);
 			
 			this.distributeMessage(tsp, chn, msg);
 		}
@@ -144,10 +151,18 @@ public class Client implements Runnable
 	{
 		for (Room room : roomList)
 		{
+			System.out.println("vor if" + msg);
+			System.out.println("room " + room.getName() + "!");
+			System.out.println("CHN " + chn+ "!");
 			if(room.getName().equals(chn))
 			{
-				room.getHistory().add("[" + tsp + "] " + msg);
+				System.out.println("driN");
+				//room.getHistory().add(msg); // tsp +
+				room.addMessage(msg);
+				client.showHistory();
+				System.out.println(msg);
 			}
+			System.out.println("nach if" + msg);
 		}
 	}
 	

@@ -10,9 +10,7 @@ public class Room
 	
 	public Room()
 	{
-		memberList = new ArrayList<String>();
-		history = new ArrayList<String>();
-		history.add("Room opened");
+	
 	}
 	
 	
@@ -36,13 +34,20 @@ public class Room
 	{
 		return history;
 	}
+	
+	public void addMessage(String msg)
+	{
+		history.add(msg);
+	}
 	public void setHistory(ArrayList<String> history)
 	{
 		this.history = history;
 	}
 	public Room(String name)
 	{
-		super();
+		memberList = new ArrayList<String>();
+		history = new ArrayList<String>();
+		history.add("Room opened");
 		this.name = name;
 	}
 	
