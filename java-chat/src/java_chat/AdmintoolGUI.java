@@ -84,31 +84,10 @@ public class AdmintoolGUI extends JFrame
 		admintool.closeClient();
 	}
 
-	public void connectAdmintool()
-	{
-		if(textFieldNickname.getText().equals("") || textFieldNickname.getText().equals(" "))
-		{
-			JOptionPane.showMessageDialog(null, "Bitte einen Nickname eingeben");
-		}
-		else
-		{
-			btnDisconnect.setEnabled(true);
-			btnConnect.setEnabled(true);
-			admintool.connect(comboBoxServerIDs.getSelectedItem().toString());
-		}
-	}
-
-	public void sendMessage()
-	{
-		try
-		{
-			admintool.sendMessage(textFieldMessage.getText(), getTitle());
-		}
-		catch (IOException e)
-		{
-			JOptionPane.showMessageDialog(null, "IO Exception AdmintoolGUI beim senden");
-		}
-	}
+//	public void connectAdmintool()
+//	{
+//		
+//	}
 
 	protected void addChatRoomMember()
 	{
@@ -146,12 +125,6 @@ public class AdmintoolGUI extends JFrame
 		refreshRooms();
 	}
 
-	protected void disconnect()
-	{
-		btnDisconnect.setEnabled(false);
-		btnConnect.setEnabled(true);
-		admintool.disconnect();
-	}
 
 	protected void createTab(Room r)
 	{
