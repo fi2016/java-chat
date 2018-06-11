@@ -1,5 +1,6 @@
 package java_chat;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,16 +21,13 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.ListModel;
-import javax.swing.JMenu;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import javax.swing.JMenuItem;
 
 public class ClientGUI extends JFrame
 {
@@ -58,7 +56,6 @@ public class ClientGUI extends JFrame
 	private JButton btnJoinRoom;
 	private JButton btnRoom;
 	private JPopupMenu popupMenu;
-	private JMenuItem mntmNewRoom;
 
 	/**
 	 * Launch the application.
@@ -297,7 +294,12 @@ public class ClientGUI extends JFrame
 		gbc_lblServer.gridx = 0;
 		gbc_lblServer.gridy = 0;
 		contentPane.add(getLblServer(), gbc_lblServer);
-
+		GridBagConstraints gbc_comboBoxServerIDs = new GridBagConstraints();
+		gbc_comboBoxServerIDs.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBoxServerIDs.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxServerIDs.gridx = 1;
+		gbc_comboBoxServerIDs.gridy = 0;
+		contentPane.add(getComboBoxServerIDs(), gbc_comboBoxServerIDs);
 		GridBagConstraints gbc_btnRoom = new GridBagConstraints();
 		gbc_btnRoom.insets = new Insets(0, 0, 5, 5);
 		gbc_btnRoom.gridx = 2;
@@ -315,6 +317,7 @@ public class ClientGUI extends JFrame
 		gbc_lblNickname.gridy = 1;
 		contentPane.add(getLblNickname(), gbc_lblNickname);
 		GridBagConstraints gbc_textFieldNickname = new GridBagConstraints();
+		gbc_textFieldNickname.gridwidth = 2;
 		gbc_textFieldNickname.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldNickname.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldNickname.gridx = 1;
@@ -327,7 +330,7 @@ public class ClientGUI extends JFrame
 		gbc_btnDisconnect.gridy = 1;
 		contentPane.add(getBtnDisconnect(), gbc_btnDisconnect);
 		GridBagConstraints gbc_tabsHistory = new GridBagConstraints();
-		gbc_tabsHistory.gridwidth = 2;
+		gbc_tabsHistory.gridwidth = 3;
 		gbc_tabsHistory.gridheight = 8;
 		gbc_tabsHistory.insets = new Insets(0, 0, 5, 5);
 		gbc_tabsHistory.fill = GridBagConstraints.BOTH;
@@ -356,7 +359,7 @@ public class ClientGUI extends JFrame
 		gbc_listUser.gridy = 6;
 		contentPane.add(getListUser(), gbc_listUser);
 		GridBagConstraints gbc_textFieldMessage = new GridBagConstraints();
-		gbc_textFieldMessage.gridwidth = 2;
+		gbc_textFieldMessage.gridwidth = 3;
 		gbc_textFieldMessage.insets = new Insets(0, 0, 0, 5);
 		gbc_textFieldMessage.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldMessage.gridx = 0;
