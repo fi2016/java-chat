@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -263,6 +264,12 @@ public class ClientGUI extends JFrame
 			}
 		}
 
+	}
+	
+	protected void createRoom()
+	{
+		DialogNewRoom dialog = new DialogNewRoom();
+		
 	}
 
 	/**
@@ -559,8 +566,31 @@ public class ClientGUI extends JFrame
 		if (mntmNewRoom == null)
 		{
 			mntmNewRoom = new JMenuItem("New Room");
+			mntmNewRoom.addActionListener(e ->  createRoom());
 		}
 		return mntmNewRoom;
 	}
 
+	
+	//---------- ROOMS
+	public class DialogNewRoom
+	{
+		JDialog newRoomDialog;
+		public DialogNewRoom()
+		{
+	        JDialog newRoomDialog = new JDialog();
+	        // Titel wird gesetzt
+	        newRoomDialog.setTitle("New Room");
+	        // Breite und Höhe des Fensters werden 
+	        // auf 200 Pixel gesetzt
+	        newRoomDialog.setSize(200,200);
+	        // Dialog wird auf modal gesetzt
+	        newRoomDialog.setModal(true);
+	        // Wir lassen unseren Dialog anzeigen
+	        newRoomDialog.setVisible(true);
+		}
+		
+		//---------- ROOMS ENDE		
+	   
+	}
 }
