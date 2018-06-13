@@ -28,6 +28,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JMenu;
 
 public class ClientGUI extends JFrame
 {
@@ -54,8 +55,10 @@ public class ClientGUI extends JFrame
 	private DefaultListModel<String> history = new DefaultListModel<String>();
 	private JList<String> listRoom;
 	private JButton btnJoinRoom;
-	private JButton btnRoom;
+	private JButton btnOptions;
 	private JPopupMenu popupMenu;
+	private JMenu mnRooms;
+	private JMenuItem mntmNewRoom;
 
 	/**
 	 * Launch the application.
@@ -276,7 +279,7 @@ public class ClientGUI extends JFrame
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 601, 372);
-		contentPane =  new JPanel();
+		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
@@ -300,11 +303,12 @@ public class ClientGUI extends JFrame
 		gbc_comboBoxServerIDs.gridx = 1;
 		gbc_comboBoxServerIDs.gridy = 0;
 		contentPane.add(getComboBoxServerIDs(), gbc_comboBoxServerIDs);
-		GridBagConstraints gbc_btnRoom = new GridBagConstraints();
-		gbc_btnRoom.insets = new Insets(0, 0, 5, 5);
-		gbc_btnRoom.gridx = 2;
-		gbc_btnRoom.gridy = 0;
-		contentPane.add(getBtnRoom(), gbc_btnRoom);
+		addPopup(getBtnOptions(), getPopupMenu());
+		GridBagConstraints gbc_btnOptions = new GridBagConstraints();
+		gbc_btnOptions.insets = new Insets(0, 0, 5, 5);
+		gbc_btnOptions.gridx = 2;
+		gbc_btnOptions.gridy = 0;
+		contentPane.add(getBtnOptions(), gbc_btnOptions);
 		GridBagConstraints gbc_btnConnect = new GridBagConstraints();
 		gbc_btnConnect.fill = GridBagConstraints.BOTH;
 		gbc_btnConnect.insets = new Insets(0, 0, 5, 0);
@@ -494,12 +498,69 @@ public class ClientGUI extends JFrame
 		return btnJoinRoom;
 	}
 
-	private JButton getBtnRoom()
+	private JButton getBtnOptions()
 	{
-		if (btnRoom == null)
+		if (btnOptions == null)
 		{
-			btnRoom = new JButton("Room...");
+			btnOptions = new JButton("Options");
 		}
-		return btnRoom;
+		return btnOptions;
 	}
+
+	private JPopupMenu getPopupMenu()
+	{
+		if (popupMenu == null)
+		{
+			popupMenu = new JPopupMenu();
+			popupMenu.add(getMnRooms());
+		}
+		return popupMenu;
+	}
+
+	private static void addPopup(Component component, final JPopupMenu popup)
+	{
+		component.addMouseListener(new MouseAdapter()
+		{
+			public void mousePressed(MouseEvent e)
+			{
+				if (e.getButton() == MouseEvent.BUTTON1)
+				{
+					showMenu(e);
+				}
+			}
+
+			public void mouseReleased(MouseEvent e)
+			{
+				if (e.isPopupTrigger())
+				{
+					showMenu(e);
+				}
+			}
+
+			private void showMenu(MouseEvent e)
+			{
+				popup.show(e.getComponent(), 0, component.getHeight());
+			}
+		});
+	}
+
+	private JMenu getMnRooms()
+	{
+		if (mnRooms == null)
+		{
+			mnRooms = new JMenu("Rooms");
+			mnRooms.add(getMntmNewRoom());
+		}
+		return mnRooms;
+	}
+
+	private JMenuItem getMntmNewRoom()
+	{
+		if (mntmNewRoom == null)
+		{
+			mntmNewRoom = new JMenuItem("New Room");
+		}
+		return mntmNewRoom;
+	}
+
 }
