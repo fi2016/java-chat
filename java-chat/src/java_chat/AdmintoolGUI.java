@@ -154,7 +154,6 @@ public class AdmintoolGUI extends JFrame
 		contentPane.add(getLblChatroomMember());
 		contentPane.add(getScrollPane_2());
 		contentPane.add(getScrollPane_1_1());
-		//
 	}
 
 	private JLabel getLblChatRoomsChats()
