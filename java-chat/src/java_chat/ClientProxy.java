@@ -81,14 +81,7 @@ public class ClientProxy implements Runnable
 			String command = request;
 			ClientProxy cp = this;
 			
-			if (checkSpam())
-			{
-				System.out.println("Diese Nachricht war SPAM!");
-			}
-			else
-			{
-				server.checkCommandType(command, cp);;
-			}
+			server.checkCommandType(command, cp);;
 		}
 		else
 		{
@@ -152,6 +145,27 @@ public class ClientProxy implements Runnable
 			System.out.println("Failed closing client!");
 			e.printStackTrace();
 		}
+	}
+	
+
+	protected void sendCommand(String cmd, String pam)
+	{
+		try
+		{
+			if(out == null)
+			{
+				out = new ObjectOutputStream(socket.getOutputStream());
+			}
+			String message = "CMD" + cmd + "\u001ePAM" + pam; 
+			out.writeUTF(message);
+			out.flush();
+			System.out.println(message);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 	
 	public void setNickname(String nick)

@@ -98,10 +98,10 @@ public class ClientGUI extends JFrame
 				btnSend.setEnabled(true);
 				btnConnect.setEnabled(false);
 				btnDisconnect.setEnabled(true);
-
+/*
 				Room r = new Room("public");
 				createTab(r);
-				client.getRoomList().add(r);
+				client.getRoomList().add(r); Carry wars */
 
 				showHistory();
 
@@ -146,9 +146,7 @@ public class ClientGUI extends JFrame
 	{
 		String nick = getTextFieldNickname().getText();
 
-		String cmd = "CMD" + command + "\u1001ePAM" + nick;
-
-		client.sendCommand(cmd);
+		client.sendCommand(command, nick);
 	}
 
 	protected void showNotification(String message)
@@ -265,10 +263,10 @@ public class ClientGUI extends JFrame
 
 	}
 	
-	protected void createRoom()
+	protected void createNewRoom()
 	{
 		String input = JOptionPane.showInputDialog("New Room");
-		client.createNewRoom(input);
+		client.sendCommand("cnr",input);
 	}
 
 	/**
@@ -565,7 +563,7 @@ public class ClientGUI extends JFrame
 		if (mntmNewRoom == null)
 		{
 			mntmNewRoom = new JMenuItem("New Room");
-			mntmNewRoom.addActionListener(e ->  createRoom());
+			mntmNewRoom.addActionListener(e ->  createNewRoom());
 		}
 		return mntmNewRoom;
 	}
