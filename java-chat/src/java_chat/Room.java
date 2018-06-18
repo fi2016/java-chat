@@ -10,9 +10,15 @@ public class Room
 	
 	public Room()
 	{
-	
 	}
 	
+	public Room(String name)
+	{
+		memberList = new ArrayList<String>();
+		history = new ArrayList<String>();
+		history.add("Room opened");
+		this.name = name;
+	}
 	
 	public String getName()
 	{
@@ -43,12 +49,6 @@ public class Room
 	{
 		this.history = history;
 	}
-	public Room(String name)
-	{
-		memberList = new ArrayList<String>();
-		history = new ArrayList<String>();
-		history.add("Room opened");
-		this.name = name;
-	}
+
 	
 }

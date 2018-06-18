@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,13 +29,12 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JMenu;
 
 public class ClientGUI extends JFrame
-{
-	/**
-	 * 
-	 */
+{	
+	private Client client;
+	protected Socket clientSocket;
+	
 	private static final long serialVersionUID = 6803153492488659745L;
 	private JPanel contentPane;
 	private JLabel lblServer;
@@ -46,8 +45,6 @@ public class ClientGUI extends JFrame
 	protected JTextField textFieldMessage;
 	private JButton btnSend;
 	protected JComboBox<String> comboBoxServerIDs;
-	protected Socket clientSocket;
-	private Client client;
 	private DefaultListModel<String> text = new DefaultListModel<String>();
 	private DefaultListModel<String> user = new DefaultListModel<String>();
 	private ArrayList<String> userList = new ArrayList<String>();
@@ -56,6 +53,7 @@ public class ClientGUI extends JFrame
 	private DefaultListModel<String> history = new DefaultListModel<String>();
 	private JList<String> listRoom;
 	private JButton btnJoinRoom;
+	
 	private JButton btnOptions;
 	private JPopupMenu popupMenu;
 	private JMenu mnRooms;
@@ -156,7 +154,6 @@ public class ClientGUI extends JFrame
 	protected void showNotification(String message)
 	{
 		JOptionPane.showMessageDialog(null, message);
-		
 	}
 
 	protected void serverListeAbrufen()
@@ -200,7 +197,7 @@ public class ClientGUI extends JFrame
 	{
 		JPanel p = new JPanel();
 		JList<String> listHistory = new JList<String>();
-		tabsHistory.addTab(r.getName(), p); // HIER ACHTUNG TABS UND SO
+		tabsHistory.addTab(r.getName(), p);
 		p.setName(r.getName());
 
 		GridBagLayout gbl_panel = new GridBagLayout();
@@ -229,7 +226,7 @@ public class ClientGUI extends JFrame
 		p.add(new Label(r.getName()), gbc_lblNewLabel);
 	}
 
-	protected void updateHistory(String message) // aufrufen, wenn Pane offen
+	protected void updateHistory(String message) //Methode aufrufen, wenn Pane geöffnet ist
 	{
 		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
 
@@ -242,7 +239,7 @@ public class ClientGUI extends JFrame
 		}
 	}
 
-	protected void showHistory() // AUfrufen, wenn Pane geändert wird
+	protected void showHistory() // Methode aufrufen, wenn Pane geändert wird
 	{
 		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
 
@@ -271,10 +268,7 @@ public class ClientGUI extends JFrame
 	protected void createRoom()
 	{
 		String input = JOptionPane.showInputDialog("New Room");
-		
 		client.createNewRoom(input);
-				
-		System.out.println(input);
 	}
 
 	/**
