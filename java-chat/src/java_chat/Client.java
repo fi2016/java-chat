@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Client implements Runnable
 {
-	private ClientGUI client;
+	private ClientGUI clientGui;
 	private Socket socket;
 	private ObjectOutputStream out;
 	private String nickname;
@@ -35,7 +35,7 @@ public class Client implements Runnable
 	public Client(ClientGUI gui) throws UnknownHostException, IOException
 	{
 		t = new Thread(this);
-		this.client = gui;
+		this.clientGui = gui;
 		t.setName("ClientReadingThread");
 	}
 	
@@ -95,7 +95,7 @@ public class Client implements Runnable
 	
 	protected void showNotification(String message)
 	{
-		client.showNotification(message);
+		clientGui.showNotification(message);
 	}
 	
 	protected void addBlacklist()
@@ -145,9 +145,82 @@ public class Client implements Runnable
 			
 			this.distributeMessage(tsp, chn, msg);
 		}
+		else if (protocol[0].substring(0, 3).equals("CMD") && protocol[1].substring(0, 3).equals("PAM"))
+		{
+			String nick = protocol[1].substring(3, protocol[1].length());
+			
+			switch (protocol[0].substring(3, protocol[0].length()))
+			{
+				case "alt":
+					changeNick(nick);
+					break;
+				
+				case "add":
+					addNick(nick);
+					break;
+					
+				case "del":
+					deleteNick(nick);
+					break;
+
+			default:
+				break;
+			}
+		}
 		else
 		{
 			System.out.println("Ungültiges Protokoll im Client (read-Methode)!");
+		}
+	}
+	
+	private void deleteNick(String newNick)
+	{
+		if(nickname.equals(newNick))
+		{
+			clientGui.closeClient();
+		}
+		else
+		{
+			for (Room room : roomList)
+			{
+				room.getMemberList().remove(newNick);
+			}
+		}
+	}
+
+	private void addNick(String newNick)
+	{
+		if(nickname.equals("newNick"))
+		{
+			nickname = newNick;
+			clientGui.setOldNick(nickname);
+		}
+		else
+		{
+			for (Room room : roomList)
+			{
+				room.getMemberList().add(nickname);
+			}
+		}
+	}
+
+	private void changeNick(String newNick)
+	{
+		String oldNick = clientGui.getOldNick();
+		
+		if(oldNick.equals(nickname))
+		{
+			nickname = newNick;
+		}
+		else
+		{
+			for (Room room : roomList)
+			{
+				if(room.getMemberList().contains(oldNick))
+				{
+					oldNick = newNick;
+				}
+			}
 		}
 	}
 	
@@ -163,7 +236,7 @@ public class Client implements Runnable
 				System.out.println("driN");
 				//room.getHistory().add(msg); // tsp +
 				room.addMessage(msg);
-				client.showHistory();
+				clientGui.showHistory();
 				System.out.println(msg);
 			}
 			System.out.println("nach if" + msg);

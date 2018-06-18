@@ -53,7 +53,7 @@ public class ClientGUI extends JFrame
 	private DefaultListModel<String> history = new DefaultListModel<String>();
 	private JList<String> listRoom;
 	private JButton btnJoinRoom;
-	
+	private String oldNick;
 	private JButton btnOptions;
 	private JPopupMenu popupMenu;
 	private JMenu mnRooms;
@@ -568,5 +568,15 @@ public class ClientGUI extends JFrame
 			mntmNewRoom.addActionListener(e ->  createRoom());
 		}
 		return mntmNewRoom;
+	}
+
+	public String getOldNick()
+	{
+		return oldNick;
+	}
+
+	public void setOldNick(String oldNick)
+	{
+		this.oldNick = oldNick;
 	}
 }
