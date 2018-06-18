@@ -16,7 +16,7 @@ public class Admintool
 	protected void kickClient(ClientProxy clientProxy)
 	{
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
-		clientProxy.showNotification(message);
+		//ToDo: show message
 		clientProxy.closeClient();
 		refreshLists();
 	}
@@ -24,8 +24,8 @@ public class Admintool
 	protected void banClient(ClientProxy clientProxy)
 	{
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
-		clientProxy.showNotification(message);
-		clientProxy.getIp();
+		//ToDo: show message
+		//Ip bekommen und zur blacklist adden
 		clientProxy.closeClient();
 		refreshLists();
 	}

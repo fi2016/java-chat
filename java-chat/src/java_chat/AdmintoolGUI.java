@@ -166,7 +166,7 @@ public class AdmintoolGUI extends JFrame
 		return lblChatRoomsChats;
 	}
 
-	private JList<Client> getListAllMembers()
+	private JList<ClientProxy> getListAllMembers()
 	{
 		if (listAllMembers == null)
 		{
