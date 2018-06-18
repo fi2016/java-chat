@@ -98,6 +98,7 @@ public class ClientGUI extends JFrame
 
 				client.connectServer(hostName);
 				btnSend.setEnabled(true);
+				btnConnect.setEnabled(false);
 				btnDisconnect.setEnabled(true);
 
 				Room r = new Room("public");
@@ -155,6 +156,7 @@ public class ClientGUI extends JFrame
 	protected void showNotification(String message)
 	{
 		JOptionPane.showMessageDialog(null, message);
+		
 	}
 
 	protected void serverListeAbrufen()
@@ -268,8 +270,10 @@ public class ClientGUI extends JFrame
 	
 	protected void createRoom()
 	{
-		DialogNewRoom dialog = new DialogNewRoom();
-		
+		String input = JOptionPane.showInputDialog("New Room");
+	
+				
+		System.out.println(input);
 	}
 
 	/**
@@ -579,14 +583,12 @@ public class ClientGUI extends JFrame
 		public DialogNewRoom()
 		{
 	        JDialog newRoomDialog = new JDialog();
-	        // Titel wird gesetzt
 	        newRoomDialog.setTitle("New Room");
-	        // Breite und Höhe des Fensters werden 
-	        // auf 200 Pixel gesetzt
-	        newRoomDialog.setSize(200,200);
-	        // Dialog wird auf modal gesetzt
+	        newRoomDialog.setSize(500, 350);
+	        
+	        //newRoomDialog.setLocation(contentPane.getX(), contentPane.getY());
+	        
 	        newRoomDialog.setModal(true);
-	        // Wir lassen unseren Dialog anzeigen
 	        newRoomDialog.setVisible(true);
 		}
 		
