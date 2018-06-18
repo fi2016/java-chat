@@ -161,7 +161,7 @@ public class ClientProxy implements Runnable
 			
 			if(checkSpam(pam,timestamp))
 			{
-				System.out.println("THIS IS SPA(RTA)M");
+				System.out.println("THIS IS SPA(RTA!!!)M");
 			}
 			else
 			{
