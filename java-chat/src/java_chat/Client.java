@@ -243,10 +243,33 @@ public class Client implements Runnable
 		}
 	}
 	
-	protected void sendCommand(String cmd)
+	protected void sendCommand(String cmd, String pam)
 	{
+		try
+		{
+			if(out == null)
+			{
+				out = new ObjectOutputStream(socket.getOutputStream());
+			}
+			String message = "CMD" + cmd + "\u001ePAM" + pam; 
+			out.writeUTF(message);
+			out.flush();
+			System.out.println(message);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
 		
 	}
+	
+	protected void createNewRoom(String name)
+	{
+		sendCommand("new",name);
+	}
+	
 	
 	protected void setNickname(String nickname)
 	{

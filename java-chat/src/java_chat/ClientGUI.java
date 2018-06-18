@@ -146,9 +146,7 @@ public class ClientGUI extends JFrame
 	{
 		String nick = getTextFieldNickname().getText();
 
-		String cmd = "CMD" + command + "\u1001ePAM" + nick;
-
-		client.sendCommand(cmd);
+		client.sendCommand(command, nick);
 	}
 
 	protected void showNotification(String message)
@@ -268,7 +266,7 @@ public class ClientGUI extends JFrame
 	protected void createRoom()
 	{
 		String input = JOptionPane.showInputDialog("New Room");
-		client.createNewRoom(input);
+		client.sendCommand("new",input);
 	}
 
 	/**
