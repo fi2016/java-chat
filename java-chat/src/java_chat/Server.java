@@ -167,7 +167,7 @@ public class Server implements Runnable
 		}
 	}
 
-	private void createRoom(String name)
+	private void createRoom(String name, ClientProxy cp)
 	{
 		boolean vergeben = false;
 		for (ChatRoom room : roomList)
@@ -182,11 +182,11 @@ public class Server implements Runnable
 		{
 			ChatRoom c = new ChatRoom();
 			c.setName(name);
+			c.getClientProxyList().add(cp);
+			
 			roomList.add(c);
-		}
-		else
-		{
-			// Fehlermeldung zurückgeben
+			
+			cp.sendCommand("new", name);
 		}
 	}
 
@@ -233,6 +233,10 @@ public class Server implements Runnable
 			
 		case "ena":
 			
+			break;
+		
+		case "cnr":
+			createRoom(parameter, cp);
 			break;
 
 		default:
