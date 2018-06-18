@@ -167,6 +167,11 @@ public class Server implements Runnable
 		}
 	}
 
+	private void handoverRoom()
+	{
+		
+	}
+	
 	private void createRoom(String name, ClientProxy cp)
 	{
 		boolean vergeben = false;
@@ -187,6 +192,26 @@ public class Server implements Runnable
 			roomList.add(c);
 			
 			cp.sendCommand("new", name);
+		}
+	}
+	
+	private void createRoom(String name)
+	{
+		boolean vergeben = false;
+		for (ChatRoom room : roomList)
+		{
+			if (room.getName().equals(name))
+			{
+				vergeben = true;
+			}
+		}
+
+		if (vergeben == false)
+		{
+			ChatRoom c = new ChatRoom();
+			c.setName(name);
+			
+			roomList.add(c);
 		}
 	}
 

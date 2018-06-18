@@ -98,10 +98,8 @@ public class ClientGUI extends JFrame
 				btnSend.setEnabled(true);
 				btnConnect.setEnabled(false);
 				btnDisconnect.setEnabled(true);
-/*
-				Room r = new Room("public");
-				createTab(r);
-				client.getRoomList().add(r); Carry wars */
+				
+				client.createRoom("public");
 
 				showHistory();
 
