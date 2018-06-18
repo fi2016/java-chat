@@ -271,7 +271,8 @@ public class ClientGUI extends JFrame
 	protected void createRoom()
 	{
 		String input = JOptionPane.showInputDialog("New Room");
-	
+		
+		client.createNewRoom(input);
 				
 		System.out.println(input);
 	}
@@ -573,26 +574,5 @@ public class ClientGUI extends JFrame
 			mntmNewRoom.addActionListener(e ->  createRoom());
 		}
 		return mntmNewRoom;
-	}
-
-	
-	//---------- ROOMS
-	public class DialogNewRoom
-	{
-		JDialog newRoomDialog;
-		public DialogNewRoom()
-		{
-	        JDialog newRoomDialog = new JDialog();
-	        newRoomDialog.setTitle("New Room");
-	        newRoomDialog.setSize(500, 350);
-	        
-	        //newRoomDialog.setLocation(contentPane.getX(), contentPane.getY());
-	        
-	        newRoomDialog.setModal(true);
-	        newRoomDialog.setVisible(true);
-		}
-		
-		//---------- ROOMS ENDE		
-	   
 	}
 }
