@@ -75,6 +75,21 @@ public class ClientProxy implements Runnable
 				server.distributeMessage(fullmessage, chn);
 			}
 		}
+		else if(protocol[0].substring(0, 3).equals("CMD") && protocol[1].substring(0, 3).equals("PAM"))
+		{
+			
+			String command = request;
+			ClientProxy cp = this;
+			
+			if (checkSpam())
+			{
+				System.out.println("Diese Nachricht war SPAM!");
+			}
+			else
+			{
+				server.checkCommandType(command, cp);;
+			}
+		}
 		else
 		{
 			System.out.println("Ungültiges Protokoll in der ClientProxy (read-Methode)!");
