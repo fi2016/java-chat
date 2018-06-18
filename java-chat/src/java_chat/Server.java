@@ -254,7 +254,7 @@ public class Server implements Runnable
 		}
 		if(nickInUse == false)
 		{
-			String oldNick = c.getNickname();
+			//String oldNick = c.getNickname();
 			c.setNickname(nick);
 			
 			ArrayList<ClientProxy> cpList = temp.getClientProxyList();
