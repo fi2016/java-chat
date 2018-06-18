@@ -147,20 +147,24 @@ public class Client implements Runnable
 		}
 		else if (protocol[0].substring(0, 3).equals("CMD") && protocol[1].substring(0, 3).equals("PAM"))
 		{
-			String nick = protocol[1].substring(3, protocol[1].length());
+			String pam = protocol[1].substring(3, protocol[1].length());
 			
 			switch (protocol[0].substring(3, protocol[0].length()))
 			{
 				case "alt":
-					changeNick(nick);
+					changeNick(pam);
 					break;
 				
 				case "add":
-					addNick(nick);
+					addNick(pam);
 					break;
 					
 				case "del":
-					deleteNick(nick);
+					deleteNick(pam);
+					break;
+					
+				case "new":
+					createRoom(pam);
 					break;
 
 			default:
@@ -261,8 +265,6 @@ public class Client implements Runnable
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-		
-		
 	}
 	
 	protected void createNewRoom(String name)
@@ -270,6 +272,12 @@ public class Client implements Runnable
 		sendCommand("new",name);
 	}
 	
+	protected void createRoom(String name)
+	{
+		Room r = new Room(name);
+		clientGui.createTab(r);
+		getRoomList().add(r);
+	}
 	
 	protected void setNickname(String nickname)
 	{
