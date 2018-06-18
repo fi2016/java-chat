@@ -210,7 +210,7 @@ public class Server implements Runnable
 		return clientList;
 	}
 	
-	protected void checkCommandType(String cmd)
+	protected void checkCommandType(String cmd, ClientProxy cp)
 	{
 		String[] array = cmd.split("\u001e");
 		
@@ -220,7 +220,7 @@ public class Server implements Runnable
 		switch (command)
 		{
 		case "add":
-			addUser(parameter);
+			addUser(parameter, cp);
 			break;
 			
 		case "del":
@@ -228,7 +228,7 @@ public class Server implements Runnable
 			break;
 
 		case "alt":
-			changeUsername(parameter);
+			changeUsername(parameter, cp);
 			break;
 			
 		case "ena":
@@ -240,48 +240,61 @@ public class Server implements Runnable
 		}
 	}
 	
-	protected void changeUsername(String nick)
+	protected void changeUsername(String nick, ClientProxy c)
 	{
+		ChatRoom temp = null;
+		
 		for (ChatRoom room : roomList)
 		{
 			if(room.getName().equals("public"))
 			{
-				
-				nickInUse = room.searchUsername();
-				
+				temp = room;
+				nickInUse = room.searchUser(nick);	
 			}
 		}
 		if(nickInUse == false)
 		{
-			//Nick in Proxy setzen
-			//RoomList updaten
+			String oldNick = c.getNickname();
+			c.setNickname(nick);
+			
+			ArrayList<ClientProxy> cpList = temp.getClientProxyList();
+			for (ClientProxy cp : cpList)
+			{
+				cp.sendMessage("CMDalt\u100ePAM" + nick);
+			}
 		}
 		else
 		{
 			//Fehlermeldung
 		}
-	}
+	}//push try
 	
 	protected void deleteUser(String nick)
 	{
 		
 	}
 	
-	protected void addUser(String nick)
+	protected void addUser(String nick, ClientProxy c)
 	{
+		ChatRoom temp = null;
+		
 		for (ChatRoom room : roomList)
 		{
 			if(room.getName().equals("public"))
 			{
-				
-				nickInUse = room.searchUsername();
-				
+				temp = room;
+				nickInUse = room.searchUser(nick);
 			}
 		}
 		if(nickInUse == false)
 		{
-			//Nick in Proxy setzen
-			//RoomList updaten
+			c.setNickname(nick);
+			
+			ArrayList<ClientProxy> cpList = temp.getClientProxyList();
+			for (ClientProxy cp : cpList)
+			{
+				cp.sendMessage("CMDadd\u100ePAM" + nick);
+			}
 		}
 		else
 		{

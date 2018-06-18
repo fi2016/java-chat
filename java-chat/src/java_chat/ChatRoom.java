@@ -120,4 +120,19 @@ public class ChatRoom
 	{
 		this.clientProxyList = clientProxyList;
 	}
+	
+	protected boolean searchUser(String nick)
+	{
+		boolean check = false;
+		
+		for (ClientProxy clientProxy : clientProxyList)
+		{
+			if(nick.equals(clientProxy.getNickname()))
+			{
+				check = true;
+			}
+		}
+		
+		return check;
+	}
 }
