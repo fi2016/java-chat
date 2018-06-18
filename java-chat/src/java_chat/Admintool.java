@@ -13,20 +13,20 @@ public class Admintool
 		this.server = server;
 	}
 
-	protected void kickClient(Client client)
+	protected void kickClient(ClientProxy clientProxy)
 	{
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
-		client.showNotification(message);
-		client.closeClient();
+		clientProxy.showNotification(message);
+		clientProxy.closeClient();
 		refreshLists();
 	}
 
-	protected void banClient(Client client)
+	protected void banClient(ClientProxy clientProxy)
 	{
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
-		client.showNotification(message);
-		client.getIp();
-		client.closeClient();
+		clientProxy.showNotification(message);
+		clientProxy.getIp();
+		clientProxy.closeClient();
 		refreshLists();
 	}
 

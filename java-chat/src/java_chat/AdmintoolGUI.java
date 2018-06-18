@@ -28,12 +28,12 @@ public class AdmintoolGUI extends JFrame
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblChatRoomsChats;
-	private JList<Client> listAllMembers;
+	private JList<ClientProxy> listAllMembers;
 	private JLabel lblMember;
 	private JButton btnKick;
 	private JButton btnBan;
 	private JButton btnCloseChat;
-	private DefaultListModel<Client> lmMembers = new DefaultListModel<Client>();
+	private DefaultListModel<ClientProxy> lmMembers = new DefaultListModel<ClientProxy>();
 	private JComboBox<Room> comboBoxChatRooms;
 	private JButton btnKickClientRoom;
 	private JButton btnBanClientRoom;
@@ -170,7 +170,7 @@ public class AdmintoolGUI extends JFrame
 	{
 		if (listAllMembers == null)
 		{
-			listAllMembers = new JList<Client>(lmMembers);
+			listAllMembers = new JList<ClientProxy>(lmMembers);
 		}
 		return listAllMembers;
 	}
