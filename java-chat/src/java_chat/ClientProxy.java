@@ -81,7 +81,7 @@ public class ClientProxy implements Runnable
 			String command = request;
 			ClientProxy cp = this;
 			
-			server.checkCommandType(command, cp);;
+			server.checkCommandType(command, cp);
 		}
 		else
 		{
