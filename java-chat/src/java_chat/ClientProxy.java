@@ -159,7 +159,7 @@ public class ClientProxy implements Runnable
 			String message = "CMD" + cmd + "\u001ePAM" + pam; 
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 			
-			if(checkSpam("\u001eChangeNickname",timestamp))
+			if(checkSpam(pam,timestamp))
 			{
 				System.out.println("THIS IS SPA(RTA)M");
 			}
