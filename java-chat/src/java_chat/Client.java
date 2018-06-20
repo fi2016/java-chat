@@ -232,18 +232,12 @@ public class Client implements Runnable
 	{
 		for (Room room : roomList)
 		{
-			System.out.println("vor if" + msg);
-			System.out.println("room " + room.getName() + "!");
-			System.out.println("CHN " + chn+ "!");
 			if(room.getName().equals(chn))
 			{
-				System.out.println("driN");
-				//room.getHistory().add(msg); // tsp +
 				room.addMessage(msg);
 				clientGui.showHistory();
-				System.out.println(msg);
+				clientGui.updateHistory(msg);
 			}
-			System.out.println("nach if" + msg);
 		}
 	}
 	

@@ -215,11 +215,6 @@ public class ClientGUI extends JFrame
 
 		listHistory.setModel(history);
 		p.add(listHistory, gbc_listHistory);
-
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 0;
-		p.add(new Label(r.getName()), gbc_lblNewLabel);
 	}
 
 	protected void updateHistory(String message) //Methode aufrufen, wenn Pane geöffnet ist
