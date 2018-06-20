@@ -25,7 +25,6 @@ public class Admintool
 	protected void banClient(ClientProxy clientProxy)
 	{
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
-		//ToDo: show message
 		//Ip bekommen und zur blacklist adden
 		clientProxy.sendCommand("MSG", message); 
 		clientProxy.sendCommand("ban", "");

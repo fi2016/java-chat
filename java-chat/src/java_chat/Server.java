@@ -304,7 +304,6 @@ public class Server implements Runnable
 	
 	protected void deleteUser(String nick)
 	{
-		
 	}
 	
 	protected void addUser(String nick, ClientProxy c)
