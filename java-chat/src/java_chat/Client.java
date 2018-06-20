@@ -13,7 +13,7 @@ public class Client implements Runnable
 	private ClientGUI clientGui;
 	private Socket socket;
 	private ObjectOutputStream out;
-	private String nickname;
+	private String nickname = "newNick";
 	private ObjectInputStream in;
 	private Thread t;
 	private String request;
@@ -43,6 +43,8 @@ public class Client implements Runnable
 	{
 		socket = new Socket(server, 8008);
 		t.start();
+		
+		sendCommand("add", clientGui.textFieldNickname.getText());
 	}
 	
 	protected void sendMessage(String message, String chn) throws IOException
@@ -71,7 +73,6 @@ public class Client implements Runnable
 					if(socket.isConnected())
 					{
 						in = new ObjectInputStream(socket.getInputStream());
-						System.out.println("einmal hats geklappt");
 					}	
 				}
 		
@@ -127,8 +128,7 @@ public class Client implements Runnable
 	
 	protected void read(Object obj)
 	{
-		String request = (String) obj;
-		System.out.println("requst:" + request);
+		request = (String) obj;
 
 		String[] protocol = request.split("\u001e");
 
@@ -148,11 +148,11 @@ public class Client implements Runnable
 		else if (protocol[0].substring(0, 3).equals("CMD") && protocol[1].substring(0, 3).equals("PAM"))
 		{
 			String pam = protocol[1].substring(4, protocol[1].length());
+			switch (protocol[0].substring(3, protocol[0].length()))
+			{	
 			
-			switch (protocol[0].substring(4, protocol[0].length()))
-			{
 				case "alt":
-					changeNick(pam);
+				changeNick(pam);
 					break;
 				
 				case "add":

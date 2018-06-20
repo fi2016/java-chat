@@ -235,16 +235,17 @@ public class Server implements Runnable
 		return clientList;
 	}
 	
-	protected void checkCommandType(String cmd, ClientProxy cp)
+	protected void checkCommandType(String cmd, String pam, ClientProxy cp)
 	{
+				
+		String command = cmd.substring(3, cmd.length());
+		String parameter = pam.substring(3, pam.length());
+
 		System.out.println("Server Anfang Checkcommandtype   " + cmd);
 		String[] array = cmd.split("\u001e");
 		
-		String command = array[0].substring(3, 6);
-		String parameter = array[1].substring(3, array[1].length());
-		
-		System.out.println("Command " + command);
 		switch (command)
+
 		{
 		case "add":
 			addUser(parameter, cp);
@@ -326,12 +327,12 @@ public class Server implements Runnable
 			ArrayList<ClientProxy> cpList = temp.getClientProxyList();
 			for (ClientProxy cp : cpList)
 			{
-				cp.sendMessage("CMDadd\u100ePAM" + nick);
+				cp.sendMessage("CMDadd\u001ePAM" + nick);
 			}
 		}
 		else
 		{
-			//Fehlermeldung
+			//Fehlermeldung an den einen CP°!!
 		}
 	}
 }
