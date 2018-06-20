@@ -17,7 +17,7 @@ public class Admintool
 	{
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
 		//ToDo: show message
-		clientProxy.sendCommand("MSG", message); 
+		clientProxy.sendCommand("MSG", message);
 		clientProxy.closeClient();
 		refreshLists();
 	}
