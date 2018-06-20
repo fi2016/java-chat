@@ -56,10 +56,10 @@ public class ClientGUI extends JFrame
 	private JList<String> listRoom;
 	private JButton btnJoinRoom;
 	private String oldNick;
-	private JButton btnOptions;
+	private JButton btnRooms;
 	private JPopupMenu popupMenu;
-	private JMenu mnRooms;
 	private JMenuItem mntmNewRoom;
+	private JMenuItem mntmJoinRoom;
 
 	/**
 	 * Launch the application.
@@ -305,12 +305,12 @@ public class ClientGUI extends JFrame
 		gbc_comboBoxServerIDs.gridx = 1;
 		gbc_comboBoxServerIDs.gridy = 0;
 		contentPane.add(getComboBoxServerIDs(), gbc_comboBoxServerIDs);
-		addPopup(getBtnOptions(), getPopupMenu());
-		GridBagConstraints gbc_btnOptions = new GridBagConstraints();
-		gbc_btnOptions.insets = new Insets(0, 0, 5, 5);
-		gbc_btnOptions.gridx = 2;
-		gbc_btnOptions.gridy = 0;
-		contentPane.add(getBtnOptions(), gbc_btnOptions);
+		addPopup(getBtnRooms(), getPopupMenu());
+		GridBagConstraints gbc_btnRooms = new GridBagConstraints();
+		gbc_btnRooms.insets = new Insets(0, 0, 5, 5);
+		gbc_btnRooms.gridx = 2;
+		gbc_btnRooms.gridy = 0;
+		contentPane.add(getBtnRooms(), gbc_btnRooms);
 		GridBagConstraints gbc_btnConnect = new GridBagConstraints();
 		gbc_btnConnect.fill = GridBagConstraints.BOTH;
 		gbc_btnConnect.insets = new Insets(0, 0, 5, 0);
@@ -509,13 +509,13 @@ public class ClientGUI extends JFrame
 		return btnJoinRoom;
 	}
 
-	private JButton getBtnOptions()
+	private JButton getBtnRooms()
 	{
-		if (btnOptions == null)
+		if (btnRooms == null)
 		{
-			btnOptions = new JButton("Options");
+			btnRooms = new JButton("Rooms");
 		}
-		return btnOptions;
+		return btnRooms;
 	}
 
 	private JPopupMenu getPopupMenu()
@@ -523,7 +523,8 @@ public class ClientGUI extends JFrame
 		if (popupMenu == null)
 		{
 			popupMenu = new JPopupMenu();
-			popupMenu.add(getMnRooms());
+			popupMenu.add(getMntmNewRoom());
+			popupMenu.add(getMntmJoinRoom());
 		}
 		return popupMenu;
 	}
@@ -555,16 +556,6 @@ public class ClientGUI extends JFrame
 		});
 	}
 
-	private JMenu getMnRooms()
-	{
-		if (mnRooms == null)
-		{
-			mnRooms = new JMenu("Rooms");
-			mnRooms.add(getMntmNewRoom());
-		}
-		return mnRooms;
-	}
-
 	private JMenuItem getMntmNewRoom()
 	{
 		if (mntmNewRoom == null)
@@ -583,5 +574,11 @@ public class ClientGUI extends JFrame
 	public void setOldNick(String oldNick)
 	{
 		this.oldNick = oldNick;
+	}
+	private JMenuItem getMntmJoinRoom() {
+		if (mntmJoinRoom == null) {
+			mntmJoinRoom = new JMenuItem("Join Room");
+		}
+		return mntmJoinRoom;
 	}
 }
