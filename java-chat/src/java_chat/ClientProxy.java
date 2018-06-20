@@ -77,11 +77,9 @@ public class ClientProxy implements Runnable
 		}
 		else if(protocol[0].substring(0, 3).equals("CMD") && protocol[1].substring(0, 3).equals("PAM"))
 		{
-			
-			String command = request;
-			ClientProxy cp = this;
-			
-			server.checkCommandType(command, cp);;
+			System.out.println("read CP: " + request);
+						
+			server.checkCommandType(protocol[0], protocol[1], this);;
 		}
 		else
 		{
@@ -167,7 +165,6 @@ public class ClientProxy implements Runnable
 			{
 				out.writeUTF(message);
 				out.flush();
-				System.out.println(message);
 			}
 		}
 		catch (IOException e)
