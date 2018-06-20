@@ -29,12 +29,14 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class ClientGUI extends JFrame
-{	
+{
 	private Client client;
 	protected Socket clientSocket;
-	
+
 	private static final long serialVersionUID = 6803153492488659745L;
 	private JPanel contentPane;
 	private JLabel lblServer;
@@ -98,7 +100,7 @@ public class ClientGUI extends JFrame
 				btnSend.setEnabled(true);
 				btnConnect.setEnabled(false);
 				btnDisconnect.setEnabled(true);
-				
+
 				client.createRoom("public");
 
 				showHistory();
@@ -215,9 +217,12 @@ public class ClientGUI extends JFrame
 
 		listHistory.setModel(history);
 		p.add(listHistory, gbc_listHistory);
+
+		showHistory();
 	}
 
-	protected void updateHistory(String message) //Methode aufrufen, wenn Pane geöffnet ist
+	protected void updateHistory(String message) // Methode aufrufen, wenn Pane
+													// geöffnet ist
 	{
 		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
 
@@ -255,11 +260,11 @@ public class ClientGUI extends JFrame
 		}
 
 	}
-	
+
 	protected void createNewRoom()
 	{
 		String input = JOptionPane.showInputDialog("New Room");
-		client.sendCommand("cnr",input);
+		client.sendCommand("cnr", input);
 	}
 
 	/**
@@ -473,6 +478,15 @@ public class ClientGUI extends JFrame
 		if (tabsHistory == null)
 		{
 			tabsHistory = new JTabbedPane(JTabbedPane.TOP);
+			tabsHistory.addChangeListener(new ChangeListener()
+			{
+				@Override
+				public void stateChanged(ChangeEvent arg0)
+				{
+					showHistory();
+
+				}
+			});
 		}
 		return tabsHistory;
 	}
@@ -556,7 +570,7 @@ public class ClientGUI extends JFrame
 		if (mntmNewRoom == null)
 		{
 			mntmNewRoom = new JMenuItem("New Room");
-			mntmNewRoom.addActionListener(e ->  createNewRoom());
+			mntmNewRoom.addActionListener(e -> createNewRoom());
 		}
 		return mntmNewRoom;
 	}
