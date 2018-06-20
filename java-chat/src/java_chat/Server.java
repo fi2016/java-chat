@@ -141,7 +141,6 @@ public class Server implements Runnable
 				ClientProxy c = new ClientProxy(clientSocket, this);
 				clientList.add(c);
 				roomList.get(0).addClient(c);
-				//checkAdmin(c);
 			}
 		}
 		else
@@ -323,6 +322,7 @@ public class Server implements Runnable
 		if(nickInUse == false)
 		{
 			c.setNickname(nick);
+			checkAdmin(c);
 			
 			ArrayList<ClientProxy> cpList = temp.getClientProxyList();
 			for (ClientProxy cp : cpList)
