@@ -17,6 +17,7 @@ public class Admintool
 	{
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
 		//ToDo: show message
+		clientProxy.sendCommand("MSG", message); 
 		clientProxy.closeClient();
 		refreshLists();
 	}
@@ -26,6 +27,8 @@ public class Admintool
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
 		//ToDo: show message
 		//Ip bekommen und zur blacklist adden
+		clientProxy.sendCommand("MSG", message); 
+		clientProxy.sendCommand("ban", "");
 		clientProxy.closeClient();
 		refreshLists();
 	}
