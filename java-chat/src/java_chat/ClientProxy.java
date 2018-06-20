@@ -53,6 +53,7 @@ public class ClientProxy implements Runnable
 	private void read(Object obj)
 	{
 		String request = (String) obj;
+		System.out.println(request);
 
 		String[] protocol = request.split("\u001e");
 
