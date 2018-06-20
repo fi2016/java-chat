@@ -147,12 +147,12 @@ public class Client implements Runnable
 		}
 		else if (protocol[0].substring(0, 3).equals("CMD") && protocol[1].substring(0, 3).equals("PAM"))
 		{
-			String pam = protocol[1].substring(3, protocol[1].length());
-			
+			String pam = protocol[1].substring(4, protocol[1].length());
 			switch (protocol[0].substring(3, protocol[0].length()))
 			{	
+			
 				case "alt":
-					changeNick(pam);
+				changeNick(pam);
 					break;
 				
 				case "add":

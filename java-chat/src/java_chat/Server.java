@@ -141,7 +141,7 @@ public class Server implements Runnable
 				ClientProxy c = new ClientProxy(clientSocket, this);
 				clientList.add(c);
 				roomList.get(0).addClient(c);
-				// checkAdmin();
+				//checkAdmin(c);
 			}
 		}
 		else
@@ -150,21 +150,21 @@ public class Server implements Runnable
 		}
 	}
 
-	private void checkAdmin()
+	private void checkAdmin(ClientProxy cp)
 	{
-		for (ClientProxy cp : clientList)
-		{
+		//NICKNAME IST IMMERNOCH NULL
 			String nickname = cp.getNickname();
 			for (String admin : adminList)
 			{
 				if (nickname.equals(admin))
 				{
+					AdmintoolGUI aGUI = new AdmintoolGUI(this);
+					aGUI.setVisible(true);
 					cp.sendMessage("CMD\u001eENA\u001e4True");
 					// Client anpassen das er weis was das ist *hust* Nico
 					// machmal *hust*
 				}
 			}
-		}
 	}
 
 	private void handoverRoom()
@@ -240,9 +240,12 @@ public class Server implements Runnable
 				
 		String command = cmd.substring(3, cmd.length());
 		String parameter = pam.substring(3, pam.length());
+
+		System.out.println("Server Anfang Checkcommandtype   " + cmd);
+		String[] array = cmd.split("\u001e");
 		
-		switch (command)//if (command.equals("add"))
-			
+		switch (command)
+
 		{
 		case "add":
 			addUser(parameter, cp);
@@ -261,7 +264,9 @@ public class Server implements Runnable
 			break;
 		
 		case "cnr":
+			System.out.println("Server Vor Reate Room " + cmd);
 			createRoom(parameter, cp);
+			System.out.println("Server checktype: " + cmd);
 			break;
 
 		default:

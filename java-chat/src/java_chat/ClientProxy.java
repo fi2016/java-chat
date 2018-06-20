@@ -53,6 +53,7 @@ public class ClientProxy implements Runnable
 	private void read(Object obj)
 	{
 		String request = (String) obj;
+		System.out.println(request);
 
 		String[] protocol = request.split("\u001e");
 
@@ -76,10 +77,8 @@ public class ClientProxy implements Runnable
 			}
 		}
 		else if(protocol[0].substring(0, 3).equals("CMD") && protocol[1].substring(0, 3).equals("PAM"))
-		{
-			System.out.println("read CP: " + request);
-						
-			server.checkCommandType(protocol[0], protocol[1], this);;
+		{	
+			server.checkCommandType(protocol[0], protocol[1], this);	
 		}
 		else
 		{
@@ -157,9 +156,9 @@ public class ClientProxy implements Runnable
 			String message = "CMD" + cmd + "\u001ePAM" + pam; 
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 			
-			if(checkSpam("\u001eChangeNickname",timestamp))
+			if(checkSpam(pam,timestamp))
 			{
-				System.out.println("THIS IS SPA(RTA)M");
+				System.out.println("THIS IS SPA(RTA!!!)M");
 			}
 			else
 			{

@@ -1,20 +1,3 @@
-/*
-==="Neuer Raum erstellen"===
-
-- ClientGUI: GUI Knöpfe
-- Client: "Ich erstelle einen Raum"-Funktion (-> ChatRoom-Klasse) -> protected void createRoom() //an Protokoll halten
-- Socket
-- ClientProxy : in Read-Methode unsern Teil hinzufüngen (Protokoll)
-- Server: CreateRoom-Methode ausführen
-- ChatRoom erstellen
-
-
-
-
-
-//in Client Funktion zum Erstellen eines Rooms (-> Room-Klasse) (eigene Liste führen)
-
-*/
 package java_chat;
 
 import java.util.ArrayList;
@@ -23,8 +6,6 @@ public class ChatRoom
 {
 	private String name;
 	private String password = null;
-	
-	
 
 	private ArrayList<ClientProxy> clientProxyList;
 
@@ -62,8 +43,23 @@ public class ChatRoom
 		}
 	}
 	
-	
 	//-------------------------- Ab da ist das die Arbeit Anderer
+	
+	protected boolean searchUser(String nick)
+	{
+		boolean check = false;
+		
+		for (ClientProxy clientProxy : clientProxyList)
+		{
+			if(nick.equals(clientProxy.getNickname()))
+			{
+				check = true;
+			}
+		}
+		
+		return check;
+	}
+	
 	protected void closeRoom()
 	{
 		//Alle Clients ausm Raum schmeißen
@@ -121,18 +117,5 @@ public class ChatRoom
 		this.clientProxyList = clientProxyList;
 	}
 	
-	protected boolean searchUser(String nick)
-	{
-		boolean check = false;
-		
-		for (ClientProxy clientProxy : clientProxyList)
-		{
-			if(nick.equals(clientProxy.getNickname()))
-			{
-				check = true;
-			}
-		}
-		
-		return check;
-	}
+
 }
