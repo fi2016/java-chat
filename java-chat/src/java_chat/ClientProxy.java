@@ -81,7 +81,7 @@ public class ClientProxy implements Runnable
 			String command = request;
 			ClientProxy cp = this;
 			
-			server.checkCommandType(command, cp);;
+			server.checkCommandType(command, cp);
 		}
 		else
 		{
@@ -157,9 +157,18 @@ public class ClientProxy implements Runnable
 				out = new ObjectOutputStream(socket.getOutputStream());
 			}
 			String message = "CMD" + cmd + "\u001ePAM" + pam; 
-			out.writeUTF(message);
-			out.flush();
-			System.out.println(message);
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+			
+			if(checkSpam(pam,timestamp))
+			{
+				System.out.println("THIS IS SPA(RTA!!!)M");
+			}
+			else
+			{
+				out.writeUTF(message);
+				out.flush();
+				System.out.println(message);
+			}
 		}
 		catch (IOException e)
 		{

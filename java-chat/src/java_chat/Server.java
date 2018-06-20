@@ -237,11 +237,13 @@ public class Server implements Runnable
 	
 	protected void checkCommandType(String cmd, ClientProxy cp)
 	{
+		System.out.println("Server Anfang Checkcommandtype   " + cmd);
 		String[] array = cmd.split("\u001e");
 		
-		String command = array[0].substring(3, 5);
+		String command = array[0].substring(3, 6);
 		String parameter = array[1].substring(3, array[1].length());
 		
+		System.out.println("Command " + command);
 		switch (command)
 		{
 		case "add":
@@ -261,7 +263,9 @@ public class Server implements Runnable
 			break;
 		
 		case "cnr":
+			System.out.println("Server Vor Reate Room " + cmd);
 			createRoom(parameter, cp);
+			System.out.println("Server checktype: " + cmd);
 			break;
 
 		default:
