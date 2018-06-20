@@ -16,18 +16,16 @@ public class Admintool
 	protected void kickClient(ClientProxy clientProxy)
 	{
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
-		clientProxy.sendCommand("MSG", message);
-		clientProxy.closeClient();
+		//command ruft closeClient auf und zeigt die nachricht
+		clientProxy.sendCommand("KIK", message);
 		refreshLists();
 	}
 
 	protected void banClient(ClientProxy clientProxy)
 	{
 		String message = JOptionPane.showInputDialog(null, "Grund eingeben");
-
-		clientProxy.sendCommand("MSG", message); 
-		clientProxy.sendCommand("ban", "");
-		clientProxy.closeClient();
+		//command ruft getIP + closeClient auf und zeigt die nachricht
+		clientProxy.sendCommand("BAN", message); 
 		refreshLists();
 	}
 
