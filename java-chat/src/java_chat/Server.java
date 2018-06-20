@@ -54,15 +54,6 @@ public class Server implements Runnable
 
 	public void closeServer()
 	{
-		if (clientList.isEmpty() != true)
-		{
-			for (ClientProxy clientProxy : clientList)
-			{
-				clientProxy.closeClient();
-				clientList.remove(clientProxy);
-			}
-			clientList = null;
-		}
 		try
 		{
 			Socket dummySocket = new Socket(ip, port);
@@ -72,6 +63,16 @@ public class Server implements Runnable
 		catch (IOException e)
 		{
 			e.printStackTrace();
+		}
+		if (clientList.isEmpty() != true)
+		{
+			for (ClientProxy clientProxy : clientList)
+			{
+				clientProxy.sendCommand("EXT","We have shutdowned the server.");
+				clientProxy.closeClient();
+				clientList.remove(clientProxy);
+			}
+			clientList = null;
 		}
 	}
 

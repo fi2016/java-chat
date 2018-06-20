@@ -166,6 +166,10 @@ public class Client implements Runnable
 				case "new":
 					createRoom(pam);
 					break;
+				case "EXT":
+					clientGui.showNotification(pam);
+					closeClient();
+					break;
 
 				default:
 				break;
