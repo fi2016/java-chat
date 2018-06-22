@@ -6,11 +6,14 @@ import javax.swing.JOptionPane;
 public class Admintool
 {
 	private ArrayList<ClientProxy> clients = new ArrayList<ClientProxy>();
+	private ArrayList<ChatRoom> rooms = new ArrayList<ChatRoom>();
 	private Server server;
 
-	public Admintool(Server server)
+	public Admintool(Server server, ArrayList<ClientProxy> clientList, ArrayList<ChatRoom> roomList)
 	{
 		this.server = server;
+		clients = clientList;
+		rooms = roomList;
 	}
 
 	protected void kickClient(ClientProxy clientProxy)
@@ -31,7 +34,8 @@ public class Admintool
 
 	protected void closeChatroom(ChatRoom chatRoom)
 	{
-		chatRoom.closeRoom();
+		rooms.remove(chatRoom);
+		chatRoom.closeRoom();		
 	}
 
 	private void refreshLists()
@@ -41,12 +45,16 @@ public class Admintool
 		{
 			clients.add(client);
 		}
+		rooms.clear();
+		for(ChatRoom cr : server.getRoomList())
+		{
+			rooms.add(cr);
+		}
 	}
 
-	public ArrayList<Room> getRoomList()
+	public ArrayList<ChatRoom> getRoomList()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return rooms;
 	}
 }
 

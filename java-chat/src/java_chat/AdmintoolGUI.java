@@ -18,7 +18,6 @@ import java.awt.Label;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 
 public class AdmintoolGUI extends JFrame
 {
@@ -34,21 +33,21 @@ public class AdmintoolGUI extends JFrame
 	private JButton btnBan;
 	private JButton btnCloseChat;
 	private DefaultListModel<ClientProxy> lmMembers = new DefaultListModel<ClientProxy>();
-	private JComboBox<Room> comboBoxChatRooms;
+	private JComboBox<ChatRoom> comboBoxChatRooms;
 	private JButton btnKickClientRoom;
 	private JButton btnBanClientRoom;
 	private JLabel lblChatroomMember;
 	private JList<ClientProxy> listRoomMembers;
 	private DefaultListModel<ClientProxy> listModelPrivateMember = new DefaultListModel<ClientProxy>();
 	private Admintool admintool;
-	private JTabbedPane tabsHistory;
-	private DefaultListModel<String> history = new DefaultListModel<String>();
 	private JScrollPane scrollPane;
 	private JScrollPane scrollPane_1;
 	/**
 	 * Launch the application.
+	 * @param roomList 
+	 * @param clientList 
 	 **/
-	public AdmintoolGUI(Server server)
+	public AdmintoolGUI(Server server, ArrayList<ClientProxy> clientList, ArrayList<ChatRoom> roomList)
 	{
 		addWindowListener(new WindowAdapter()
 		{
@@ -59,7 +58,8 @@ public class AdmintoolGUI extends JFrame
 			}
 		});
 		initialize();
-		admintool = new Admintool(server);
+		admintool = new Admintool(server,clientList,roomList);
+		
 	}
 
 	private void closeWindow()
@@ -81,8 +81,8 @@ public class AdmintoolGUI extends JFrame
 	private void refreshRooms()
 	{
 		comboBoxChatRooms.removeAll();
-		ArrayList<Room> roomlist = admintool.getRoomList();
-		for (Room room : roomlist)
+		ArrayList<ChatRoom> roomlist = admintool.getRoomList();
+		for (ChatRoom room : roomlist)
 		{
 			comboBoxChatRooms.addItem(room);
 		}
@@ -106,7 +106,6 @@ public class AdmintoolGUI extends JFrame
 	{
 		JPanel p = new JPanel();
 		JList<String> listHistory = new JList<String>();
-		tabsHistory.addTab(r.getName(), p);
 
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]
@@ -125,7 +124,6 @@ public class AdmintoolGUI extends JFrame
 		gbc_listHistory.gridx = 0;
 		gbc_listHistory.gridy = 0;
 
-		listHistory.setModel(history);
 		p.add(listHistory, gbc_listHistory);
 
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -219,11 +217,11 @@ public class AdmintoolGUI extends JFrame
 		return btnCloseChat;
 	}
 
-	private JComboBox<Room> getComboBoxChatRooms()
+	private JComboBox<ChatRoom> getComboBoxChatRooms()
 	{
 		if (comboBoxChatRooms == null)
 		{
-			comboBoxChatRooms = new JComboBox<Room>();
+			comboBoxChatRooms = new JComboBox<ChatRoom>();
 			comboBoxChatRooms.addActionListener(e -> addChatRoomMember());
 			comboBoxChatRooms.setBounds(10, 221, 320, 25);
 		}

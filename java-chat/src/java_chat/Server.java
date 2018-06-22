@@ -4,7 +4,6 @@ package java_chat;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -76,9 +75,9 @@ public class Server implements Runnable
 		}
 	}
 
-	protected void openAdmintool() throws UnknownHostException, IOException
+	protected void openAdmintool()
 	{
-		admintoolGUI = new AdmintoolGUI(this);
+		admintoolGUI = new AdmintoolGUI(this,clientList,roomList);
 		admintoolGUI.setVisible(true);
 	}
 
@@ -159,8 +158,7 @@ public class Server implements Runnable
 			{
 				if (nickname.equals(admin))
 				{
-					AdmintoolGUI aGUI = new AdmintoolGUI(this);
-					aGUI.setVisible(true);
+					openAdmintool();
 					cp.sendMessage("CMD\u001eENA\u001e4True");
 				}
 			}

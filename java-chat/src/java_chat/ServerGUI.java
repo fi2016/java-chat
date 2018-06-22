@@ -3,7 +3,6 @@ package java_chat;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -78,21 +77,7 @@ public class ServerGUI extends JFrame
 	
 	private void openAdmintool()
 	{
-		try
-		{
 			server.openAdmintool();
-			btnAdmintool.setEnabled(false);
-		}
-		catch (UnknownHostException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	private void initialize()
