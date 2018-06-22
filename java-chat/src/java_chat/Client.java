@@ -147,7 +147,7 @@ public class Client implements Runnable
 		}
 		else if (protocol[0].substring(0, 3).equals("CMD") && protocol[1].substring(0, 3).equals("PAM"))
 		{
-			String pam = protocol[1].substring(4, protocol[1].length());
+			String pam = protocol[1].substring(3, protocol[1].length());
 			switch (protocol[0].substring(3, protocol[0].length()))
 			{	
 			
@@ -166,8 +166,12 @@ public class Client implements Runnable
 				case "new":
 					createRoom(pam);
 					break;
+				case "EXT":
+					clientGui.showNotification(pam);
+					closeClient();
+					break;
 
-			default:
+				default:
 				break;
 			}
 		}
@@ -232,18 +236,11 @@ public class Client implements Runnable
 	{
 		for (Room room : roomList)
 		{
-			System.out.println("vor if" + msg);
-			System.out.println("room " + room.getName() + "!");
-			System.out.println("CHN " + chn+ "!");
 			if(room.getName().equals(chn))
 			{
-				System.out.println("driN");
-				//room.getHistory().add(msg); // tsp +
 				room.addMessage(msg);
-				clientGui.showHistory();
-				System.out.println(msg);
+				clientGui.updateHistory(msg);
 			}
-			System.out.println("nach if" + msg);
 		}
 	}
 	

@@ -29,12 +29,14 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class ClientGUI extends JFrame
-{	
+{
 	private Client client;
 	protected Socket clientSocket;
-	
+
 	private static final long serialVersionUID = 6803153492488659745L;
 	private JPanel contentPane;
 	private JLabel lblServer;
@@ -54,10 +56,10 @@ public class ClientGUI extends JFrame
 	private JList<String> listRoom;
 	private JButton btnJoinRoom;
 	private String oldNick;
-	private JButton btnOptions;
+	private JButton btnRooms;
 	private JPopupMenu popupMenu;
-	private JMenu mnRooms;
 	private JMenuItem mntmNewRoom;
+	private JMenuItem mntmJoinRoom;
 
 	/**
 	 * Launch the application.
@@ -98,7 +100,7 @@ public class ClientGUI extends JFrame
 				btnSend.setEnabled(true);
 				btnConnect.setEnabled(false);
 				btnDisconnect.setEnabled(true);
-				
+
 				client.createRoom("public");
 
 				showHistory();
@@ -216,13 +218,11 @@ public class ClientGUI extends JFrame
 		listHistory.setModel(history);
 		p.add(listHistory, gbc_listHistory);
 
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 0;
-		p.add(new Label(r.getName()), gbc_lblNewLabel);
+		showHistory();
 	}
 
-	protected void updateHistory(String message) //Methode aufrufen, wenn Pane geöffnet ist
+	protected void updateHistory(String message) // Methode aufrufen, wenn Pane
+													// geöffnet ist
 	{
 		JPanel panel = (JPanel) tabsHistory.getSelectedComponent();
 
@@ -260,11 +260,11 @@ public class ClientGUI extends JFrame
 		}
 
 	}
-	
+
 	protected void createNewRoom()
 	{
 		String input = JOptionPane.showInputDialog("New Room");
-		client.sendCommand("cnr",input);
+		client.sendCommand("cnr", input);
 	}
 
 	/**
@@ -305,12 +305,12 @@ public class ClientGUI extends JFrame
 		gbc_comboBoxServerIDs.gridx = 1;
 		gbc_comboBoxServerIDs.gridy = 0;
 		contentPane.add(getComboBoxServerIDs(), gbc_comboBoxServerIDs);
-		addPopup(getBtnOptions(), getPopupMenu());
-		GridBagConstraints gbc_btnOptions = new GridBagConstraints();
-		gbc_btnOptions.insets = new Insets(0, 0, 5, 5);
-		gbc_btnOptions.gridx = 2;
-		gbc_btnOptions.gridy = 0;
-		contentPane.add(getBtnOptions(), gbc_btnOptions);
+		addPopup(getBtnRooms(), getPopupMenu());
+		GridBagConstraints gbc_btnRooms = new GridBagConstraints();
+		gbc_btnRooms.insets = new Insets(0, 0, 5, 5);
+		gbc_btnRooms.gridx = 2;
+		gbc_btnRooms.gridy = 0;
+		contentPane.add(getBtnRooms(), gbc_btnRooms);
 		GridBagConstraints gbc_btnConnect = new GridBagConstraints();
 		gbc_btnConnect.fill = GridBagConstraints.BOTH;
 		gbc_btnConnect.insets = new Insets(0, 0, 5, 0);
@@ -478,6 +478,15 @@ public class ClientGUI extends JFrame
 		if (tabsHistory == null)
 		{
 			tabsHistory = new JTabbedPane(JTabbedPane.TOP);
+			tabsHistory.addChangeListener(new ChangeListener()
+			{
+				@Override
+				public void stateChanged(ChangeEvent arg0)
+				{
+					showHistory();
+
+				}
+			});
 		}
 		return tabsHistory;
 	}
@@ -500,13 +509,13 @@ public class ClientGUI extends JFrame
 		return btnJoinRoom;
 	}
 
-	private JButton getBtnOptions()
+	private JButton getBtnRooms()
 	{
-		if (btnOptions == null)
+		if (btnRooms == null)
 		{
-			btnOptions = new JButton("Options");
+			btnRooms = new JButton("Rooms");
 		}
-		return btnOptions;
+		return btnRooms;
 	}
 
 	private JPopupMenu getPopupMenu()
@@ -514,7 +523,8 @@ public class ClientGUI extends JFrame
 		if (popupMenu == null)
 		{
 			popupMenu = new JPopupMenu();
-			popupMenu.add(getMnRooms());
+			popupMenu.add(getMntmNewRoom());
+			popupMenu.add(getMntmJoinRoom());
 		}
 		return popupMenu;
 	}
@@ -546,22 +556,12 @@ public class ClientGUI extends JFrame
 		});
 	}
 
-	private JMenu getMnRooms()
-	{
-		if (mnRooms == null)
-		{
-			mnRooms = new JMenu("Rooms");
-			mnRooms.add(getMntmNewRoom());
-		}
-		return mnRooms;
-	}
-
 	private JMenuItem getMntmNewRoom()
 	{
 		if (mntmNewRoom == null)
 		{
 			mntmNewRoom = new JMenuItem("New Room");
-			mntmNewRoom.addActionListener(e ->  createNewRoom());
+			mntmNewRoom.addActionListener(e -> createNewRoom());
 		}
 		return mntmNewRoom;
 	}
@@ -574,5 +574,11 @@ public class ClientGUI extends JFrame
 	public void setOldNick(String oldNick)
 	{
 		this.oldNick = oldNick;
+	}
+	private JMenuItem getMntmJoinRoom() {
+		if (mntmJoinRoom == null) {
+			mntmJoinRoom = new JMenuItem("Join Room");
+		}
+		return mntmJoinRoom;
 	}
 }
