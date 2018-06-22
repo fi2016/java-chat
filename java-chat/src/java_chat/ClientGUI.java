@@ -263,8 +263,20 @@ public class ClientGUI extends JFrame
 
 	protected void createNewRoom()
 	{
-		String input = JOptionPane.showInputDialog("New Room");
-		client.sendCommand("cnr", input);
+		String input = null;
+		input = JOptionPane.showInputDialog("New Room");
+		
+		if(input != null)
+		{
+			if(input.equals("") == false)
+			{
+				client.sendCommand("cnr", input);
+			}	
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Bitte einen Namen eingeben");
+			}
+		}
 	}
 
 	/**
