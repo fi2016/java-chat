@@ -164,8 +164,14 @@ public class Client implements Runnable
 					break;
 					
 				case "new":
+					System.out.println("Protokol: new");
 					createRoom(pam);
 					break;
+					
+				case "cnr":
+					System.out.println("Protokol: cnr");
+					createRoom(pam);
+					break;	
 				case "EXT":
 					clientGui.showNotification(pam);
 					closeClient();
@@ -261,11 +267,6 @@ public class Client implements Runnable
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-	}
-	
-	protected void createNewRoom(String name)
-	{
-		sendCommand("new",name);
 	}
 	
 	protected void createRoom(String name)

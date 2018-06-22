@@ -190,11 +190,14 @@ public class Server implements Runnable
 			
 			roomList.add(c);
 			
-			cp.sendCommand("new", name);
+			for (ClientProxy client : roomList.get(0).getClientProxyList())
+			{
+				client.sendCommand("new", name);
+			}
 		}
 	}
 	
-	private void createRoom(String name)
+	private void createRoom(String name) //für public
 	{
 		boolean vergeben = false;
 		for (ChatRoom room : roomList)
@@ -209,7 +212,6 @@ public class Server implements Runnable
 		{
 			ChatRoom c = new ChatRoom();
 			c.setName(name);
-			
 			roomList.add(c);
 		}
 	}
@@ -260,9 +262,13 @@ public class Server implements Runnable
 			break;
 		
 		case "cnr":
-			System.out.println("Server Vor Reate Room " + cmd);
+			System.out.println("Server: cnr");
 			createRoom(parameter, cp);
-			System.out.println("Server checktype: " + cmd);
+			break;
+			
+		case "new":
+			System.out.println("Server: new");
+			createRoom(parameter, cp);
 			break;
 
 		default:
