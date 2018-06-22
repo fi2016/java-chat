@@ -184,9 +184,10 @@ public class Server implements Runnable
 
 		if (vergeben == false)
 		{
-			ChatRoom c = new ChatRoom();
+			ChatRoom c = new ChatRoom(cp);
 			c.setName(name);
-			c.getClientProxyList().add(cp);
+			//c.getClientProxyList().add(cp);
+			cp.sendCommand("cnr", name);
 			
 			roomList.add(c);
 			
