@@ -21,8 +21,6 @@ public class Server implements Runnable
 	private boolean nickInUse;
 	private HashMap<String, Long> blacklist = new HashMap<>();
 	private ArrayList<String> adminList = new ArrayList<String>();
-	
-	
 
 	public Server(int port, String ip)
 	{

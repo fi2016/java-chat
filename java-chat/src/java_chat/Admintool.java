@@ -9,11 +9,12 @@ public class Admintool
 	private ArrayList<ChatRoom> rooms = new ArrayList<ChatRoom>();
 	private Server server;
 
-	public Admintool(Server server, ArrayList<ClientProxy> clientList, ArrayList<ChatRoom> roomList)
+	public Admintool(Server server, ArrayList<ClientProxy> clientList, ArrayList<ChatRoom> roomList )
 	{
 		this.server = server;
 		clients = clientList;
 		rooms = roomList;
+		refreshLists();
 	}
 
 	protected void kickClient(ClientProxy clientProxy)
