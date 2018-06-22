@@ -54,7 +54,6 @@ public class ClientGUI extends JFrame
 	private JTabbedPane tabsHistory;
 	private DefaultListModel<String> history = new DefaultListModel<String>();
 	private JList<String> listRoom;
-	private JButton btnJoinRoom;
 	private String oldNick;
 	private JButton btnRooms;
 	private JPopupMenu popupMenu;
@@ -356,19 +355,12 @@ public class ClientGUI extends JFrame
 		gbc_tabsHistory.gridy = 2;
 		contentPane.add(getTabsHistory(), gbc_tabsHistory);
 		GridBagConstraints gbc_listRoom = new GridBagConstraints();
-		gbc_listRoom.gridheight = 3;
+		gbc_listRoom.gridheight = 4;
 		gbc_listRoom.insets = new Insets(0, 0, 5, 0);
 		gbc_listRoom.fill = GridBagConstraints.BOTH;
 		gbc_listRoom.gridx = 3;
 		gbc_listRoom.gridy = 2;
 		contentPane.add(getListRoom(), gbc_listRoom);
-		GridBagConstraints gbc_btnJoinRoom = new GridBagConstraints();
-		gbc_btnJoinRoom.anchor = GridBagConstraints.NORTH;
-		gbc_btnJoinRoom.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnJoinRoom.insets = new Insets(0, 0, 5, 0);
-		gbc_btnJoinRoom.gridx = 3;
-		gbc_btnJoinRoom.gridy = 5;
-		contentPane.add(getBtnJoinRoom(), gbc_btnJoinRoom);
 		GridBagConstraints gbc_listUser = new GridBagConstraints();
 		gbc_listUser.gridheight = 4;
 		gbc_listUser.insets = new Insets(0, 0, 5, 0);
@@ -510,15 +502,6 @@ public class ClientGUI extends JFrame
 			listRoom = new JList<String>();
 		}
 		return listRoom;
-	}
-
-	private JButton getBtnJoinRoom()
-	{
-		if (btnJoinRoom == null)
-		{
-			btnJoinRoom = new JButton("Join Room");
-		}
-		return btnJoinRoom;
 	}
 
 	private JButton getBtnRooms()
