@@ -301,6 +301,21 @@ public class Server implements Runnable
 	
 	protected void deleteUser(String nick)
 	{
+		ChatRoom temp = null;
+		
+		for (ChatRoom room : roomList)
+		{
+			if(room.getName().equals("public"))
+			{
+				temp = room;
+			}
+		}
+		
+		ArrayList<ClientProxy> cpList = temp.getClientProxyList();
+		for (ClientProxy cp : cpList)
+		{
+			cp.sendMessage("CMDdel\u001ePAM" + nick);
+		}
 	}
 	
 	protected void addUser(String nick, ClientProxy c)
