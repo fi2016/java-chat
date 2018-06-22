@@ -54,15 +54,6 @@ public class Server implements Runnable
 
 	public void closeServer()
 	{
-		if (clientList.isEmpty() != true)
-		{
-			for (ClientProxy clientProxy : clientList)
-			{
-				clientProxy.closeClient();
-				clientList.remove(clientProxy);
-			}
-			clientList = null;
-		}
 		try
 		{
 			Socket dummySocket = new Socket(ip, port);
@@ -72,6 +63,16 @@ public class Server implements Runnable
 		catch (IOException e)
 		{
 			e.printStackTrace();
+		}
+		if (clientList.isEmpty() != true)
+		{
+			for (ClientProxy clientProxy : clientList)
+			{
+				clientProxy.sendCommand("EXT","We have shutdowned the server.");
+				clientProxy.closeClient();
+				clientList.remove(clientProxy);
+			}
+			clientList = null;
 		}
 	}
 
@@ -141,7 +142,6 @@ public class Server implements Runnable
 				ClientProxy c = new ClientProxy(clientSocket, this);
 				clientList.add(c);
 				roomList.get(0).addClient(c);
-				//checkAdmin(c);
 			}
 		}
 		else
@@ -152,7 +152,6 @@ public class Server implements Runnable
 
 	private void checkAdmin(ClientProxy cp)
 	{
-		//NICKNAME IST IMMERNOCH NULL
 			String nickname = cp.getNickname();
 			for (String admin : adminList)
 			{
@@ -161,8 +160,6 @@ public class Server implements Runnable
 					AdmintoolGUI aGUI = new AdmintoolGUI(this);
 					aGUI.setVisible(true);
 					cp.sendMessage("CMD\u001eENA\u001e4True");
-					// Client anpassen das er weis was das ist *hust* Nico
-					// machmal *hust*
 				}
 			}
 	}
@@ -305,7 +302,6 @@ public class Server implements Runnable
 	
 	protected void deleteUser(String nick)
 	{
-		
 	}
 	
 	protected void addUser(String nick, ClientProxy c)
@@ -323,7 +319,8 @@ public class Server implements Runnable
 		if(nickInUse == false)
 		{
 			c.setNickname(nick);
-			
+			checkAdmin(c);
+			checkAdmin(c);
 			ArrayList<ClientProxy> cpList = temp.getClientProxyList();
 			for (ClientProxy cp : cpList)
 			{
