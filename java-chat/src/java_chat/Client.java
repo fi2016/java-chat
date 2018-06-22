@@ -187,17 +187,17 @@ public class Client implements Runnable
 		}
 	}
 	
-	private void deleteNick(String newNick)
+	private void deleteNick(String nick)
 	{
-		if(nickname.equals(newNick))
+		if(nickname.equals(nick))
 		{
-			clientGui.closeClient();
+			closeClient();
 		}
 		else
 		{
 			for (Room room : roomList)
 			{
-				room.getMemberList().remove(newNick);
+				room.getMemberList().remove(nick);
 			}
 		}
 	}

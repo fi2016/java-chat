@@ -121,7 +121,11 @@ public class ClientGUI extends JFrame
 	{
 		btnSend.setEnabled(false);
 		btnDisconnect.setEnabled(false);
-		client.closeClient();
+		btnConnect.setEnabled(true);
+		
+		String nick = textFieldNickname.getText();
+		
+		client.sendCommand("del", nick);
 	}
 
 	protected void handoverMessage() // Message to client
