@@ -135,6 +135,7 @@ public class Server implements Runnable
 			if (spartanPhalanx.identifyDDos(clientSocket.getInetAddress().toString()))
 			{
 				clientSocket.close();
+				System.out.println("DDOS1");
 			}
 			else
 			{
@@ -147,6 +148,7 @@ public class Server implements Runnable
 		else
 		{
 			clientSocket.close();
+			System.out.println("DDOS2");
 		}
 	}
 
@@ -240,9 +242,6 @@ public class Server implements Runnable
 				
 		String command = cmd.substring(3, cmd.length());
 		String parameter = pam.substring(3, pam.length());
-
-		System.out.println("Server Anfang Checkcommandtype   " + cmd);
-		String[] array = cmd.split("\u001e");
 		
 		switch (command)
 
@@ -294,7 +293,7 @@ public class Server implements Runnable
 			ArrayList<ClientProxy> cpList = temp.getClientProxyList();
 			for (ClientProxy cp : cpList)
 			{
-				cp.sendMessage("CMDalt\u100ePAM" + nick);
+				cp.sendMessage("CMDalt\u001ePAM" + nick);
 			}
 		}
 		else
