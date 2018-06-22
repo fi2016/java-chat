@@ -320,7 +320,11 @@ public class Server implements Runnable
 		{
 			c.setNickname(nick);
 			checkAdmin(c);
+<<<<<<< HEAD
 			checkAdmin(c);
+=======
+			
+>>>>>>> branch 'master' of https://github.com/fi2016/java-chat.git
 			ArrayList<ClientProxy> cpList = temp.getClientProxyList();
 			for (ClientProxy cp : cpList)
 			{
