@@ -185,7 +185,7 @@ public class Client implements Runnable
 	{
 		if(nickname.equals(nick))
 		{
-			clientGui.closeClient();
+			closeClient();
 		}
 		else
 		{
