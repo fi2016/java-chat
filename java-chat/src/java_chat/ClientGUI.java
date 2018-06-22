@@ -47,7 +47,7 @@ public class ClientGUI extends JFrame
 	protected JTextField textFieldMessage;
 	private JButton btnSend;
 	protected JComboBox<String> comboBoxServerIDs;
-	private DefaultListModel<String> text = new DefaultListModel<String>();
+	private DefaultListModel<String> modelRoom = new DefaultListModel<String>();
 	private DefaultListModel<String> user = new DefaultListModel<String>();
 	private ArrayList<String> userList = new ArrayList<String>();
 	private JList<String> listUser;
@@ -281,6 +281,11 @@ public class ClientGUI extends JFrame
 			}
 		}
 	}
+	
+	protected void addRoomtoRoomlist(String name)
+	{
+		modelRoom.addElement(name);
+	}
 
 	/**
 	 * Create the frame.
@@ -504,6 +509,7 @@ public class ClientGUI extends JFrame
 		if (listRoom == null)
 		{
 			listRoom = new JList<String>();
+			listRoom.setModel(modelRoom);
 		}
 		return listRoom;
 	}
