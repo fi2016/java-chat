@@ -163,9 +163,14 @@ public class Client implements Runnable
 					deleteNick(pam);
 					break;
 					
-				case "new":
+				case "cnr":
 					createRoom(pam);
+					break;	
+					
+				case "new":
+					addRoomtoList(pam);
 					break;
+				
 				case "EXT":
 					clientGui.showNotification(pam);
 					closeClient();
@@ -263,16 +268,16 @@ public class Client implements Runnable
 		}		
 	}
 	
-	protected void createNewRoom(String name)
-	{
-		sendCommand("new",name);
-	}
-	
 	protected void createRoom(String name)
 	{
 		Room r = new Room(name);
 		clientGui.createTab(r);
 		getRoomList().add(r);
+	}
+	
+	private void addRoomtoList(String name)
+	{
+		clientGui.addRoomtoRoomlist(name);
 	}
 	
 	protected void setNickname(String nickname)

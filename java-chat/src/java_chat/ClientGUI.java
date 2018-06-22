@@ -47,7 +47,7 @@ public class ClientGUI extends JFrame
 	protected JTextField textFieldMessage;
 	private JButton btnSend;
 	protected JComboBox<String> comboBoxServerIDs;
-	private DefaultListModel<String> text = new DefaultListModel<String>();
+	private DefaultListModel<String> modelRoom = new DefaultListModel<String>();
 	private DefaultListModel<String> user = new DefaultListModel<String>();
 	private ArrayList<String> userList = new ArrayList<String>();
 	private JList<String> listUser;
@@ -59,6 +59,8 @@ public class ClientGUI extends JFrame
 	private JPopupMenu popupMenu;
 	private JMenuItem mntmNewRoom;
 	private JMenuItem mntmJoinRoom;
+	private JLabel lblRooms;
+	private JLabel lblUsers;
 
 	/**
 	 * Launch the application.
@@ -281,6 +283,11 @@ public class ClientGUI extends JFrame
 			}
 		}
 	}
+	
+	protected void addRoomtoRoomlist(String name)
+	{
+		modelRoom.addElement(name);
+	}
 
 	/**
 	 * Create the frame.
@@ -307,7 +314,7 @@ public class ClientGUI extends JFrame
 		gbl_contentPane.columnWeights = new double[]
 		{ 1.0, 1.0, 0.0, 1.0, Double.MIN_VALUE };
 		gbl_contentPane.rowWeights = new double[]
-		{ 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		{ 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 		GridBagConstraints gbc_lblServer = new GridBagConstraints();
 		gbc_lblServer.insets = new Insets(0, 0, 5, 5);
@@ -358,13 +365,25 @@ public class ClientGUI extends JFrame
 		gbc_tabsHistory.gridx = 0;
 		gbc_tabsHistory.gridy = 2;
 		contentPane.add(getTabsHistory(), gbc_tabsHistory);
+		GridBagConstraints gbc_lblRooms = new GridBagConstraints();
+		gbc_lblRooms.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblRooms.insets = new Insets(0, 0, 5, 0);
+		gbc_lblRooms.gridx = 3;
+		gbc_lblRooms.gridy = 2;
+		contentPane.add(getLblRooms(), gbc_lblRooms);
 		GridBagConstraints gbc_listRoom = new GridBagConstraints();
-		gbc_listRoom.gridheight = 4;
+		gbc_listRoom.gridheight = 2;
 		gbc_listRoom.insets = new Insets(0, 0, 5, 0);
 		gbc_listRoom.fill = GridBagConstraints.BOTH;
 		gbc_listRoom.gridx = 3;
-		gbc_listRoom.gridy = 2;
+		gbc_listRoom.gridy = 3;
 		contentPane.add(getListRoom(), gbc_listRoom);
+		GridBagConstraints gbc_lblUsers = new GridBagConstraints();
+		gbc_lblUsers.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblUsers.insets = new Insets(0, 0, 5, 0);
+		gbc_lblUsers.gridx = 3;
+		gbc_lblUsers.gridy = 5;
+		contentPane.add(getLblUsers(), gbc_lblUsers);
 		GridBagConstraints gbc_listUser = new GridBagConstraints();
 		gbc_listUser.gridheight = 4;
 		gbc_listUser.insets = new Insets(0, 0, 5, 0);
@@ -504,6 +523,7 @@ public class ClientGUI extends JFrame
 		if (listRoom == null)
 		{
 			listRoom = new JList<String>();
+			listRoom.setModel(modelRoom);
 		}
 		return listRoom;
 	}
@@ -579,5 +599,17 @@ public class ClientGUI extends JFrame
 			mntmJoinRoom = new JMenuItem("Join Room");
 		}
 		return mntmJoinRoom;
+	}
+	private JLabel getLblRooms() {
+		if (lblRooms == null) {
+			lblRooms = new JLabel("Rooms:");
+		}
+		return lblRooms;
+	}
+	private JLabel getLblUsers() {
+		if (lblUsers == null) {
+			lblUsers = new JLabel("Users:");
+		}
+		return lblUsers;
 	}
 }
