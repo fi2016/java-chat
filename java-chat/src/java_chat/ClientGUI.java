@@ -1,7 +1,11 @@
 package java_chat;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -16,8 +20,10 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -124,9 +130,9 @@ public class ClientGUI extends JFrame
 		btnSend.setEnabled(false);
 		btnDisconnect.setEnabled(false);
 		btnConnect.setEnabled(true);
-		
+
 		String nick = textFieldNickname.getText();
-		
+
 		client.sendCommand("del", nick);
 	}
 
@@ -226,6 +232,24 @@ public class ClientGUI extends JFrame
 		showHistory();
 	}
 
+	protected void joinRoom()
+	{
+		Object[] possibilities = modelRoom.toArray();
+			
+		String chn = (String)JOptionPane.showInputDialog(
+		                    this,
+		                    "Choose a room to join:\n",
+		                    "",
+		                    JOptionPane.PLAIN_MESSAGE,
+		                    null,
+		                    possibilities,
+		                    "ham");
+		
+		client.sendCommand("jor", chn);
+		
+		
+	}
+
 	protected void updateHistory(String message) // Methode aufrufen, wenn Pane
 													// geöffnet ist
 	{
@@ -270,20 +294,20 @@ public class ClientGUI extends JFrame
 	{
 		String input = null;
 		input = JOptionPane.showInputDialog("New Room");
-		
-		if(input != null)
+
+		if (input != null)
 		{
-			if(input.equals("") == false)
+			if (input.equals("") == false)
 			{
 				client.sendCommand("cnr", input);
-			}	
+			}
 			else
 			{
 				JOptionPane.showMessageDialog(null, "Bitte einen Namen eingeben");
 			}
 		}
 	}
-	
+
 	protected void addRoomtoRoomlist(String name)
 	{
 		modelRoom.addElement(name);
@@ -594,22 +618,33 @@ public class ClientGUI extends JFrame
 	{
 		this.oldNick = oldNick;
 	}
-	private JMenuItem getMntmJoinRoom() {
-		if (mntmJoinRoom == null) {
+
+	private JMenuItem getMntmJoinRoom()
+	{
+		if (mntmJoinRoom == null)
+		{
 			mntmJoinRoom = new JMenuItem("Join Room");
+			mntmJoinRoom.addActionListener(e ->  joinRoom());
 		}
 		return mntmJoinRoom;
 	}
-	private JLabel getLblRooms() {
-		if (lblRooms == null) {
+
+	private JLabel getLblRooms()
+	{
+		if (lblRooms == null)
+		{
 			lblRooms = new JLabel("Rooms:");
 		}
 		return lblRooms;
 	}
-	private JLabel getLblUsers() {
-		if (lblUsers == null) {
+
+	private JLabel getLblUsers()
+	{
+		if (lblUsers == null)
+		{
 			lblUsers = new JLabel("Users:");
 		}
 		return lblUsers;
 	}
+
 }
