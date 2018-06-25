@@ -108,7 +108,7 @@ public class ClientGUI extends JFrame
 				btnConnect.setEnabled(false);
 				btnDisconnect.setEnabled(true);
 
-				client.createRoom("public");
+				//client.createRoom("public");
 
 				showHistory();
 

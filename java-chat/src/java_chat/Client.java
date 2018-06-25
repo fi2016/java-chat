@@ -170,6 +170,10 @@ public class Client implements Runnable
 				case "new":
 					addRoomtoList(pam);
 					break;
+					
+				case "jor":
+					createRoom(pam);
+					break;
 				
 				case "EXT":
 					clientGui.showNotification(pam);
@@ -274,6 +278,7 @@ public class Client implements Runnable
 		clientGui.createTab(r);
 		getRoomList().add(r);
 	}
+	
 	
 	private void addRoomtoList(String name)
 	{

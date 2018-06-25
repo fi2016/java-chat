@@ -161,28 +161,26 @@ public class Server implements Runnable
 				}
 			}
 	}
-
-	private void handoverRoom()
-	{
-		
+	
+	private ChatRoom findRoom(String chn)
+	{		
+		for (ChatRoom room : roomList)
+		{
+			if (room.getName().equals(chn))
+			{
+				return room;
+			}
+		}
+		return null;
 	}
+	
 	
 	private void createRoom(String name, ClientProxy cp)
 	{
-		boolean vergeben = false;
-		for (ChatRoom room : roomList)
-		{
-			if (room.getName().equals(name))
-			{
-				vergeben = true;
-			}
-		}
-
-		if (vergeben == false)
+		if (findRoom(name) == null)
 		{
 			ChatRoom c = new ChatRoom(cp);
 			c.setName(name);
-			//c.getClientProxyList().add(cp);
 			cp.sendCommand("cnr", name);
 			
 			roomList.add(c);
@@ -196,16 +194,7 @@ public class Server implements Runnable
 	
 	private void createRoom(String name) //für public
 	{
-		boolean vergeben = false;
-		for (ChatRoom room : roomList)
-		{
-			if (room.getName().equals(name))
-			{
-				vergeben = true;
-			}
-		}
-
-		if (vergeben == false)
+		if (findRoom(name) == null)
 		{
 			ChatRoom c = new ChatRoom();
 			c.setName(name);
@@ -266,6 +255,12 @@ public class Server implements Runnable
 		case "new":
 			System.out.println("Server: new");
 			createRoom(parameter, cp);
+			break;
+			
+		case "jor":
+			ChatRoom r = findRoom(pam);
+			r.addClient(cp);
+			
 			break;
 
 		default:

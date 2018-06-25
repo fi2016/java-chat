@@ -30,7 +30,8 @@ public class ChatRoom
 	public void addClient(ClientProxy c)
 	{
 		clientProxyList.add(c);
-	//	c.joinRoom()
+		c.sendCommand("jor", name);
+		
 		//Nachricht an Client: Du wurdest hinzugefügt
 		//Nachricht an alle im Raum: Jemand neues ist da
 	}
