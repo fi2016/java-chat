@@ -174,6 +174,18 @@ public class Client implements Runnable
 				case "jor":
 					createRoom(pam);
 					break;
+					
+				case "ncm":
+					String[] parts = request.split(";");
+					String name = parts[0];
+					String chn = parts[1];
+					
+					addMembertoList(name, chn);
+					break;
+					
+				case "sdr":
+					getRooms(pam);
+					break;
 				
 				case "EXT":
 					clientGui.showNotification(pam);
@@ -274,15 +286,50 @@ public class Client implements Runnable
 	
 	protected void createRoom(String name)
 	{
+		System.out.println("Client: Anfang createRoom");
 		Room r = new Room(name);
 		clientGui.createTab(r);
 		getRoomList().add(r);
+		System.out.println("Client: Ende createRoom");
 	}
 	
 	
 	private void addRoomtoList(String name)
 	{
 		clientGui.addRoomtoRoomlist(name);
+	}
+	
+	private void addMembertoList(String name, String chn)
+	{
+		Room r = findRoom(chn);
+		
+		if(r != null)
+		{
+			r.getMemberList().add(name);
+		}
+	}
+	
+	private Room findRoom(String chn)
+	{		
+		for (Room room : roomList)
+		{
+			if (room.getName().equals(chn))
+			{
+				return room;
+			}
+		}
+		return null;
+	}
+	
+	private void getRooms(String rooms)
+	{
+		String[] parts = rooms.split(";");
+		
+		for (String chn : parts)
+		{
+			addRoomtoList(chn);
+		}
+		
 	}
 	
 	protected void setNickname(String nickname)

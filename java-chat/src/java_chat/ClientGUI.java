@@ -54,6 +54,7 @@ public class ClientGUI extends JFrame
 	private JButton btnSend;
 	protected JComboBox<String> comboBoxServerIDs;
 	private DefaultListModel<String> modelRoom = new DefaultListModel<String>();
+	private DefaultListModel<String> modelMember = new DefaultListModel<String>();
 	private DefaultListModel<String> user = new DefaultListModel<String>();
 	private ArrayList<String> userList = new ArrayList<String>();
 	private JList<String> listUser;
@@ -245,9 +246,13 @@ public class ClientGUI extends JFrame
 		                    possibilities,
 		                    "ham");
 		
-		client.sendCommand("jor", chn);
-		
-		
+		if(chn != null)
+		{
+			
+			client.sendCommand("jor", chn);
+			System.out.println("Client: Ende IF joinRoom");
+			System.out.println("Client: Chn " + chn);
+		}
 	}
 
 	protected void updateHistory(String message) // Methode aufrufen, wenn Pane
@@ -287,6 +292,25 @@ public class ClientGUI extends JFrame
 				}
 			}
 		}
+		
+		
+		//Member anzeigen
+		/*
+		modelMember.clear();
+		
+		for (String user : client.getRoomList())
+		{
+			if (r.getName().equals(panel.getName()))
+			{
+				ArrayList<String> al = r.getHistory();
+				for (String message : al)
+				{
+					history.addElement(message);
+				}
+			}
+			
+		}*/
+		
 
 	}
 
@@ -311,6 +335,11 @@ public class ClientGUI extends JFrame
 	protected void addRoomtoRoomlist(String name)
 	{
 		modelRoom.addElement(name);
+	}
+	
+	protected void addMembertoList(String name)
+	{
+		modelMember.addElement(name);
 	}
 
 	/**
@@ -520,6 +549,7 @@ public class ClientGUI extends JFrame
 		if (listUser == null)
 		{
 			listUser = new JList<String>(user);
+			listUser.setModel(modelMember);
 		}
 		return listUser;
 	}

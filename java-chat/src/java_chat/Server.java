@@ -140,6 +140,7 @@ public class Server implements Runnable
 				ClientProxy c = new ClientProxy(clientSocket, this);
 				clientList.add(c);
 				roomList.get(0).addClient(c);
+				handoverInfos(c);
 			}
 		}
 		else
@@ -248,19 +249,19 @@ public class Server implements Runnable
 			break;
 		
 		case "cnr":
-			System.out.println("Server: cnr");
 			createRoom(parameter, cp);
 			break;
 			
 		case "new":
-			System.out.println("Server: new");
 			createRoom(parameter, cp);
 			break;
 			
 		case "jor":
-			ChatRoom r = findRoom(pam);
-			r.addClient(cp);
-			
+			ChatRoom r = findRoom(parameter);
+			if(r != null)
+			{
+				r.addClient(cp);
+			}			
 			break;
 
 		default:
@@ -342,5 +343,23 @@ public class Server implements Runnable
 		{
 			//Fehlermeldung an den einen CP°!!
 		}
+	}
+	
+	private void handoverInfos(ClientProxy cp)
+	{
+		//cp.sendCommand("sdm", );
+		String rooms = "";
+		
+		for (ChatRoom chn : roomList)
+		{
+			if(rooms.equals(""))
+			{
+				rooms = chn.getName(); 
+			}
+			
+			rooms = rooms + ";" + chn.getName(); 
+		}
+		
+		cp.sendCommand("sdr", rooms);
 	}
 }

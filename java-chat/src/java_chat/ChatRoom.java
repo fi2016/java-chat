@@ -30,9 +30,13 @@ public class ChatRoom
 	public void addClient(ClientProxy c)
 	{
 		clientProxyList.add(c);
+		
 		c.sendCommand("jor", name);
 		
-		//Nachricht an Client: Du wurdest hinzugefügt
+		String pam = c.getNickname() + ";" + this.name;
+		c.sendCommand("ncm", pam);
+		
+		System.out.println("ChatRoom: Ende addClient");
 		//Nachricht an alle im Raum: Jemand neues ist da
 	}
 	
