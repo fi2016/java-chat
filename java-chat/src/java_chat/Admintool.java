@@ -35,7 +35,7 @@ public class Admintool
 
 	protected void closeChatroom(ChatRoom chatRoom)
 	{
-		rooms.remove(chatRoom);
+		rooms.remove(chatRoom); 
 		chatRoom.closeRoom();		
 	}
 

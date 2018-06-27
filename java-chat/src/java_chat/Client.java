@@ -150,7 +150,14 @@ public class Client implements Runnable
 			String pam = protocol[1].substring(3, protocol[1].length());
 			switch (protocol[0].substring(3, protocol[0].length()))
 			{	
-			
+				case "kik":
+					clientGui.showNotification(pam);
+					closeClient();
+					break;
+				case "ban":
+					clientGui.showNotification(pam);
+					getIp();
+					closeClient();
 				case "alt":
 				changeNick(pam);
 					break;
@@ -193,6 +200,7 @@ public class Client implements Runnable
 					break;
 
 				default:
+					System.out.println(protocol);
 				break;
 			}
 		}
